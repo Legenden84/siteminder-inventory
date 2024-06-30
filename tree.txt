@@ -6,8 +6,7 @@
     ├── App.js
     ├── actions
     │   ├── MainWindowActions.js
-    │   ├── NavbarActions.js
-    │   └── OccupancyActions.js
+    │   └── NavbarActions.js
     ├── components
     │   ├── MainWindow.css
     │   ├── MainWindow.js
@@ -21,11 +20,8 @@
     ├── reducers
     │   ├── MainWindowReducer.js
     │   ├── NavbarReducer.js
-    │   ├── OccupancyReducer.js
     │   └── index.js
-    ├── store
-    │   └── store.js
-    └── utils
-        └── parseHTM.js
+    └── store
+        └── store.js
 
-7 directories, 21 files
+6 directories, 18 files
