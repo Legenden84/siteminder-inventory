@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Navbar from '../components/Navbar';
-import { loadHTMData } from '../actions/NavbarActions';
+import { parseHTMFiles } from '../actions/NavbarActions';
 
 const mapStateToProps = (state) => ({
   inventory: state.navbar.inventory,
@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  loadHTMData
+  parseHTMFiles
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
