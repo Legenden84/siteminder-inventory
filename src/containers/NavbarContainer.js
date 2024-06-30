@@ -1,13 +1,15 @@
-// src/containers/NavbarContainer.js
 import { connect } from 'react-redux';
 import Navbar from '../components/Navbar';
+import { setOccupancyData, toggleInventoryVisibility } from '../actions/NavbarActions';
 
-const mapStateToProps = state => ({
-    // Add any required state mappings here
+const mapStateToProps = (state) => ({
+  inventoryVisible: state.navbar.inventoryVisible,
+  inventory: state.navbar.inventory
 });
 
 const mapDispatchToProps = {
-    // Add any required dispatch mappings here
+  toggleInventoryVisibility,
+  setOccupancyData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

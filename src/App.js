@@ -1,14 +1,16 @@
-// src/App.js
 import React, { Component } from 'react';
 import NavbarContainer from './containers/NavbarContainer';
-import MainwindowContainer from './containers/MainWindowContainer';
+import MainWindowContainer from './containers/MainWindowContainer';
+import './App.css';
 
 class App extends Component {
     render() {
         return (
             <div>
                 <NavbarContainer />
-                <MainwindowContainer />
+                <MainWindowContainer>
+                    {/* Add any other components or containers here */}
+                </MainWindowContainer>
             </div>
         );
     }
