@@ -1,5 +1,8 @@
 import {
-    PARSE_HTM_FILES
+    PARSE_HTM_FILES,
+    FILE_UPLOAD_WARNING,
+    TRACK_UPLOADED_FILES,
+    CLEAR_WARNING
 } from '../actions/NavbarActions';
 
 const initialState = {
@@ -22,7 +25,9 @@ const initialState = {
         W4B: 4,
         WE1: 11
     },
-    htmData: []
+    htmData: [],
+    uploadedFiles: [],
+    warning: null,
 };
 
 const navbarReducer = (state = initialState, action) => {
@@ -30,7 +35,23 @@ const navbarReducer = (state = initialState, action) => {
         case PARSE_HTM_FILES:
             return {
                 ...state,
-                htmData: action.payload
+                htmData: action.payload,
+                warning: null, // Clear any previous warnings
+            };
+        case FILE_UPLOAD_WARNING:
+            return {
+                ...state,
+                warning: action.payload
+            };
+        case TRACK_UPLOADED_FILES:
+            return {
+                ...state,
+                uploadedFiles: action.payload
+            };
+        case CLEAR_WARNING:
+            return {
+                ...state,
+                warning: null
             };
         default:
             return state;

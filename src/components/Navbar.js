@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Navbar.css';
+import WarningModal from '../utils/WarningModal';
 
 class Navbar extends Component {
     state = {
@@ -17,9 +18,13 @@ class Navbar extends Component {
         this.props.parseHTMFiles(files);
     };
 
+    handleCloseModal = () => {
+        this.props.clearWarning();
+    };
+
     render() {
         const { inventoryVisible } = this.state;
-        const { inventory, htmData } = this.props;
+        const { inventory, warning } = this.props;
 
         return (
             <div className="navbar">
@@ -40,14 +45,10 @@ class Navbar extends Component {
                                     {key}: {value}
                                 </div>
                             ))}
-                            {htmData.map((data, index) => (
-                                <div key={index} className="dropdown-item">
-                                    {data.VType}: {data.Dato} {data.År} - Kapacitet: {data.Kapacitet}, Reserveret: {data.Reserveret}, Allotment: {data.Allotment}, Ledige: {data.Ledige}, Belægn.%: {data.BelægnProcent}, Led. u. Al.: {data.LedUAl}, Belægn. % u. Allot.: {data.BelægnProcentUAl}
-                                </div>
-                            ))}
                         </div>
                     )}
                 </div>
+                <WarningModal warning={warning} onClose={this.handleCloseModal} />
             </div>
         );
     }

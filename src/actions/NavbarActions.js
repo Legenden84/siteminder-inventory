@@ -1,15 +1,68 @@
 import { parseFile } from "../utils/parseHTM";
 
 export const PARSE_HTM_FILES = 'PARSE_HTM_FILES';
+export const FILE_UPLOAD_WARNING = 'FILE_UPLOAD_WARNING';
+export const TRACK_UPLOADED_FILES = 'TRACK_UPLOADED_FILES';
+export const CLEAR_WARNING = 'CLEAR_WARNING';
+
+const getFileOrder = (fileName) => {
+    const match = fileName.match(/Page(\d+)\.HTM$/);
+    return match ? parseInt(match[1], 10) : (fileName.includes('.HTM') ? 1 : 0);
+};
+
+const sortFilesByOrder = (files) => {
+    return files.sort((a, b) => {
+        const orderA = getFileOrder(a.name);
+        const orderB = getFileOrder(b.name);
+        return orderA - orderB;
+    });
+};
+
+const checkForSkippedFiles = (uploadedFiles, newFiles) => {
+    const files = [...uploadedFiles, ...newFiles];
+    const sortedFiles = sortFilesByOrder(files);
+    let lastOrder = 0; // Start with 0 because the first file has no suffix and is treated as order 1
+    const warnings = [];
+
+    sortedFiles.forEach((file, index) => {
+        const currentOrder = getFileOrder(file.name);
+        if (index === 0 && currentOrder !== 1) {
+            warnings.push(`The first file must be the base file without suffix.`);
+        } else if (lastOrder !== 0 && currentOrder !== lastOrder + 1) {
+            warnings.push(`Skipped from Page${lastOrder + 1} to Page${currentOrder}`);
+        }
+        lastOrder = currentOrder;
+    });
+
+    return warnings;
+};
 
 export const parseHTMFiles = (files) => {
-    return (dispatch) => {
-        Promise.all(files.map(parseFile))
+    return (dispatch, getState) => {
+        const state = getState();
+        const uploadedFiles = state.navbar.uploadedFiles;
+        const sortedFiles = sortFilesByOrder(files);
+        const warnings = checkForSkippedFiles(uploadedFiles, sortedFiles);
+
+        if (warnings.length > 0) {
+            dispatch({
+                type: FILE_UPLOAD_WARNING,
+                payload: warnings.join(', '),
+            });
+            return; // Stop processing if there are warnings
+        }
+
+        Promise.all(sortedFiles.map(parseFile))
             .then((results) => {
                 const combinedData = results.flat();
+                const currentData = state.navbar.htmData;
                 dispatch({
                     type: PARSE_HTM_FILES,
-                    payload: combinedData,
+                    payload: [...currentData, ...combinedData],
+                });
+                dispatch({
+                    type: TRACK_UPLOADED_FILES,
+                    payload: [...uploadedFiles, ...sortedFiles.map(file => ({ name: file.name, size: file.size }))],
                 });
             })
             .catch((error) => {
@@ -17,3 +70,7 @@ export const parseHTMFiles = (files) => {
             });
     };
 };
+
+export const clearWarning = () => ({
+    type: CLEAR_WARNING,
+});
