@@ -5,4 +5,10 @@ const mapStateToProps = state => ({
     inventory: state.navbar.inventory,
 });
 
-export default connect(mapStateToProps)(MainWindow);
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    startDate: ownProps.startDate,
+});
+
+export default connect(mapStateToProps, null, mergeProps)(MainWindow);

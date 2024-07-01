@@ -4,13 +4,19 @@ import { parseHTMFiles, clearWarning } from '../actions/NavbarActions';
 
 const mapStateToProps = (state) => ({
     inventory: state.navbar.inventory,
-    htmData: state.navbar.htmData,
     warning: state.navbar.warning,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    parseHTMFiles: (files) => dispatch(parseHTMFiles(files)),
-    clearWarning: () => dispatch(clearWarning()),
+const mapDispatchToProps = {
+    parseHTMFiles,
+    clearWarning,
+};
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    onDateChange: ownProps.onDateChange,
+    resetDate: ownProps.resetDate,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Navbar);

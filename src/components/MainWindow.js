@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import './MainWindow.css';
-import moment from 'moment';
 
 class MainWindow extends Component {
-    generateDates = () => {
+    generateDates = (startDate) => {
         const dates = [];
-        const currentDate = moment();
+        const currentDate = startDate.clone();
 
         for (let i = 0; i < 14; i++) {
             dates.push(currentDate.clone().add(i, 'days').format('DD-MM-YYYY'));
@@ -15,8 +14,8 @@ class MainWindow extends Component {
     }
 
     render() {
-        const { inventory = {} } = this.props;
-        const dates = this.generateDates();
+        const { inventory = {}, startDate } = this.props;
+        const dates = this.generateDates(startDate);
 
         return (
             <div className="main-window">

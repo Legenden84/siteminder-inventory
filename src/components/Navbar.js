@@ -34,7 +34,7 @@ class Navbar extends Component {
 
     render() {
         const { inventoryVisible } = this.state;
-        const { inventory, warning } = this.props;
+        const { inventory, warning, onDateChange, resetDate } = this.props;
 
         return (
             <div className="navbar">
@@ -57,10 +57,13 @@ class Navbar extends Component {
                     </div>
                 </div>
                 <div className="navbar-section right">
-                    <button className="placeholder-button">-7</button>
-                    <button className="placeholder-button">-1</button>
-                    <button className="placeholder-button">+1</button>
-                    <button className="placeholder-button">+7</button>
+                    <div className="placeholder-buttons">
+                        <button className="placeholder-button" onClick={resetDate}>Reset</button>
+                        <button className="placeholder-button" onClick={() => onDateChange(-7)}>-7</button>
+                        <button className="placeholder-button" onClick={() => onDateChange(-1)}>-1</button>
+                        <button className="placeholder-button" onClick={() => onDateChange(1)}>+1</button>
+                        <button className="placeholder-button" onClick={() => onDateChange(7)}>+7</button>
+                    </div>
                     <button className="inventory-button" onClick={this.handleInventoryClick}>
                         Inventory
                     </button>
