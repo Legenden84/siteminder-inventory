@@ -1,6 +1,4 @@
 .
-├── package-lock.json
-├── package.json
 └── src
     ├── App.css
     ├── App.js
@@ -21,7 +19,11 @@
     │   ├── MainWindowReducer.js
     │   ├── NavbarReducer.js
     │   └── index.js
-    └── store
-        └── store.js
+    ├── store
+    │   └── store.js
+    └── utils
+        ├── WarningModal.css
+        ├── WarningModal.js
+        └── parseHTM.js
 
-6 directories, 18 files
+7 directories, 19 files

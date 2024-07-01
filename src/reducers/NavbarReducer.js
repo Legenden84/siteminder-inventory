@@ -14,6 +14,11 @@ const initialState = {
         D3D: 7,
         D4D: 1,
         E1: 3,
+        F1: 4,
+        F2: 17,
+        F2S: 7,
+        F3D: 2,
+        F3DS: 2,
         HY1: 1,
         HY2: 5,
         HY3: 3,
@@ -25,7 +30,7 @@ const initialState = {
         W4B: 4,
         WE1: 11
     },
-    htmData: [],
+    htmData: {},
     uploadedFiles: [],
     warning: null,
 };

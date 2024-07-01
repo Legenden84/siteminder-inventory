@@ -49,6 +49,20 @@ const setVTypes = (data) => {
     });
 };
 
+const groupByVTypeAndDate = (data) => {
+    return data.reduce((acc, row) => {
+        const { VType, Dato, ...rest } = row;
+        if (!acc[VType]) {
+            acc[VType] = {};
+        }
+        if (!acc[VType][Dato]) {
+            acc[VType][Dato] = [];
+        }
+        acc[VType][Dato].push(rest);
+        return acc;
+    }, {});
+};
+
 export const parseHTMFiles = (files) => {
     return (dispatch, getState) => {
         const state = getState();
@@ -68,10 +82,11 @@ export const parseHTMFiles = (files) => {
             .then((results) => {
                 const combinedData = results.flat();
                 const processedData = setVTypes(combinedData);
+                const groupedData = groupByVTypeAndDate(processedData);
                 const currentData = state.navbar.htmData;
                 dispatch({
                     type: PARSE_HTM_FILES,
-                    payload: [...currentData, ...processedData],
+                    payload: { ...currentData, ...groupedData },
                 });
                 dispatch({
                     type: TRACK_UPLOADED_FILES,
