@@ -37,6 +37,18 @@ const checkForSkippedFiles = (uploadedFiles, newFiles) => {
     return warnings;
 };
 
+const setVTypes = (data) => {
+    let currentVType = '';
+    return data.map(row => {
+        if (row.VType) {
+            currentVType = row.VType;
+        } else {
+            row.VType = currentVType;
+        }
+        return row;
+    });
+};
+
 export const parseHTMFiles = (files) => {
     return (dispatch, getState) => {
         const state = getState();
@@ -55,10 +67,11 @@ export const parseHTMFiles = (files) => {
         Promise.all(sortedFiles.map(parseFile))
             .then((results) => {
                 const combinedData = results.flat();
+                const processedData = setVTypes(combinedData);
                 const currentData = state.navbar.htmData;
                 dispatch({
                     type: PARSE_HTM_FILES,
-                    payload: [...currentData, ...combinedData],
+                    payload: [...currentData, ...processedData],
                 });
                 dispatch({
                     type: TRACK_UPLOADED_FILES,

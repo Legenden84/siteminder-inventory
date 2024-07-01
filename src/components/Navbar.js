@@ -18,6 +18,16 @@ class Navbar extends Component {
         this.props.parseHTMFiles(files);
     };
 
+    handleDrop = (event) => {
+        event.preventDefault();
+        const files = Array.from(event.dataTransfer.files);
+        this.props.parseHTMFiles(files);
+    };
+
+    handleDragOver = (event) => {
+        event.preventDefault();
+    };
+
     handleCloseModal = () => {
         this.props.clearWarning();
     };
@@ -32,7 +42,19 @@ class Navbar extends Component {
                     <h1>Ascot SiteMinder Inventory Manager</h1>
                 </div>
                 <div className="navbar-section middle">
-                    <input type="file" multiple onChange={this.handleFileUpload} />
+                    <div 
+                        className="dropzone" 
+                        onDrop={this.handleDrop} 
+                        onDragOver={this.handleDragOver}
+                    >
+                        Drag and drop files here or click to upload
+                        <input
+                            type="file"
+                            multiple
+                            onChange={this.handleFileUpload}
+                            style={{ display: 'none' }}
+                        />
+                    </div>
                 </div>
                 <div className="navbar-section right">
                     <button className="inventory-button" onClick={this.handleInventoryClick}>
