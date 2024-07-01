@@ -3,7 +3,6 @@ import {
 } from '../actions/NavbarActions';
 
 const initialState = {
-    inventoryVisible: false,
     inventory: {
         D2: 52,
         D2D: 27,
