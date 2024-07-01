@@ -1,7 +1,5 @@
 import {
   TOGGLE_INVENTORY_VISIBILITY,
-  SET_OCCUPANCY_DATA,
-  LOAD_HTM_DATA,
   PARSE_HTM_FILES
 } from '../actions/NavbarActions';
 
@@ -35,16 +33,6 @@ const navbarReducer = (state = initialState, action) => {
       return {
         ...state,
         inventoryVisible: !state.inventoryVisible
-      };
-    case SET_OCCUPANCY_DATA:
-      return {
-        ...state,
-        inventory: action.payload
-      };
-    case LOAD_HTM_DATA:
-      return {
-        ...state,
-        htmData: action.payload
       };
     case PARSE_HTM_FILES:
       return {

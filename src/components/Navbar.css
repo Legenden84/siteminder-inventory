@@ -5,48 +5,48 @@
     padding: 20px;
     background-color: #333;
     color: #fff;
-  }
+}
   
-  .navbar-section {
+.navbar-section {
     flex: 1;
-  }
+}
   
-  .left {
+.left {
     text-align: left;
-  }
+}
   
-  .middle {
+.middle {
     text-align: center;
-  }
+}
   
-  .right {
+.right {
     text-align: right;
     position: relative;
-  }
+}
   
-  .dropzone input {
+.dropzone input {
     padding: 20px;
     background-color: #f5f5f5;
     border: 2px dashed #ccc;
     border-radius: 4px;
     cursor: pointer;
     width: 300px; /* Adjust width as necessary */
-  }
+}
   
-  button {
+button {
     padding: 10px 20px;
     background-color: #008cba;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
+}
   
-  button:hover {
+button:hover {
     background-color: #005f5f;
   }
   
-  .dropdown {
+.dropdown {
     position: absolute;
     top: 40px;
     right: 0;
@@ -56,14 +56,13 @@
     border-radius: 4px;
     padding: 10px;
     z-index: 1000;
-  }
+}
   
-  .dropdown div {
+.dropdown div {
     padding: 5px 10px;
     cursor: pointer;
-  }
+}
   
-  .dropdown div:hover {
+.dropdown div:hover {
     background-color: #f1f1f1;
-  }
-  
+}  
