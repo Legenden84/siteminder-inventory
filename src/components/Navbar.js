@@ -57,6 +57,10 @@ class Navbar extends Component {
                     </div>
                 </div>
                 <div className="navbar-section right">
+                    <button className="placeholder-button">-7</button>
+                    <button className="placeholder-button">-1</button>
+                    <button className="placeholder-button">+1</button>
+                    <button className="placeholder-button">+7</button>
                     <button className="inventory-button" onClick={this.handleInventoryClick}>
                         Inventory
                     </button>

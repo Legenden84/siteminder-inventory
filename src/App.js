@@ -8,9 +8,7 @@ class App extends Component {
         return (
             <div>
                 <NavbarContainer />
-                <MainWindowContainer>
-                    {/* Add any other components or containers here */}
-                </MainWindowContainer>
+                <MainWindowContainer />
             </div>
         );
     }
