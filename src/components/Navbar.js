@@ -28,7 +28,8 @@ class Navbar extends Component {
         return (
             <div className="navbar">
                 <div className="navbar-section left">
-                    <h1>Ascot SiteMinder Inventory Manager</h1>
+                    <h1>Ascot SiteMinder</h1>
+                    <h1>Inventory Manager</h1>
                 </div>
                 <div className="navbar-section middle">
                     <div 

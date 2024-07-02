@@ -15,7 +15,15 @@
 }
 
 .left {
+    display: flex;
+    flex-direction: column;
     text-align: left;
+    gap: 0;
+}
+
+.left > * {
+    margin: 0; /* Remove any default margin on the flex items */
+    padding: 0; /* Remove any default padding on the flex items */
 }
 
 .middle {
