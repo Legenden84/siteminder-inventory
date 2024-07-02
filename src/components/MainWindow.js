@@ -14,13 +14,16 @@ class MainWindow extends Component {
     }
 
     getDisplayValue = (roomType, date) => {
-        const { htmData = {} } = this.props; // Provide a default empty object if htmData is undefined
+        const { htmData = {}, showKapacitet } = this.props; // Include showKapacitet prop
         const [day, month, year] = date.split('-');
         const shortDate = `${day}-${month}`;
 
         if (htmData[roomType] && htmData[roomType][shortDate]) {
             const dateEntry = htmData[roomType][shortDate].find(entry => entry.År === year);
             if (dateEntry) {
+                if (showKapacitet) {
+                    return dateEntry.Kapacitet; // Return Kapacitet if showKapacitet is true
+                }
                 const kapasitet = parseInt(dateEntry.Kapacitet, 10);
                 const reserveret = parseInt(dateEntry.Reserveret, 10);
                 return kapasitet - reserveret;

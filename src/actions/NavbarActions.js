@@ -4,6 +4,7 @@ export const PARSE_HTM_FILES = 'PARSE_HTM_FILES';
 export const FILE_UPLOAD_WARNING = 'FILE_UPLOAD_WARNING';
 export const TRACK_UPLOADED_FILES = 'TRACK_UPLOADED_FILES';
 export const CLEAR_WARNING = 'CLEAR_WARNING';
+export const TOGGLE_SHOW_KAPACITET = 'TOGGLE_SHOW_KAPACITET';
 
 const getFileOrder = (fileName) => {
     const match = fileName.match(/Page(\d+)\.HTM$/);
@@ -101,4 +102,8 @@ export const parseHTMFiles = (files) => {
 
 export const clearWarning = () => ({
     type: CLEAR_WARNING,
+});
+
+export const toggleShowKapacitet = () => ({
+    type: TOGGLE_SHOW_KAPACITET,
 });

@@ -3,7 +3,8 @@ import MainWindow from '../components/MainWindow';
 
 const mapStateToProps = state => ({
     inventory: state.navbar.inventory,
-    htmData: state.navbar.htmData, // Ensure htmData is passed as a prop
+    htmData: state.navbar.htmData,
+    showKapacitet: state.navbar.showKapacitet, // Pass showKapacitet state
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({

@@ -2,7 +2,8 @@ import {
     PARSE_HTM_FILES,
     FILE_UPLOAD_WARNING,
     TRACK_UPLOADED_FILES,
-    CLEAR_WARNING
+    CLEAR_WARNING,
+    TOGGLE_SHOW_KAPACITET,
 } from '../actions/NavbarActions';
 
 const initialState = {
@@ -33,6 +34,7 @@ const initialState = {
     htmData: {},
     uploadedFiles: [],
     warning: null,
+    showKapacitet: false,
 };
 
 const navbarReducer = (state = initialState, action) => {
@@ -57,6 +59,11 @@ const navbarReducer = (state = initialState, action) => {
             return {
                 ...state,
                 warning: null
+            };
+        case TOGGLE_SHOW_KAPACITET:
+            return {
+                ...state,
+                showKapacitet: !state.showKapacitet,
             };
         default:
             return state;

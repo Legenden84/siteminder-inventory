@@ -3,16 +3,6 @@ import './Navbar.css';
 import WarningModal from '../utils/WarningModal';
 
 class Navbar extends Component {
-    state = {
-        inventoryVisible: false,
-    };
-
-    handleInventoryClick = () => {
-        this.setState((prevState) => ({
-            inventoryVisible: !prevState.inventoryVisible,
-        }));
-    };
-
     handleFileUpload = (event) => {
         const files = Array.from(event.target.files);
         this.props.parseHTMFiles(files);
@@ -33,8 +23,7 @@ class Navbar extends Component {
     };
 
     render() {
-        const { inventoryVisible } = this.state;
-        const { inventory, warning, onDateChange, resetDate } = this.props;
+        const { warning, onDateChange, resetDate, toggleShowKapacitet, showKapacitet } = this.props;
 
         return (
             <div className="navbar">
@@ -64,18 +53,12 @@ class Navbar extends Component {
                         <button className="placeholder-button" onClick={() => onDateChange(1)}>+1</button>
                         <button className="placeholder-button" onClick={() => onDateChange(7)}>+7</button>
                     </div>
-                    <button className="inventory-button" onClick={this.handleInventoryClick}>
+                    <button 
+                        className={`inventory-button ${showKapacitet ? 'active' : ''}`} 
+                        onClick={toggleShowKapacitet}
+                    >
                         Inventory
                     </button>
-                    {inventoryVisible && (
-                        <div className="dropdown">
-                            {Object.entries(inventory).map(([key, value]) => (
-                                <div key={key} className="dropdown-item">
-                                    {key}: {value}
-                                </div>
-                            ))}
-                        </div>
-                    )}
                 </div>
                 <WarningModal warning={warning} onClose={this.handleCloseModal} />
             </div>
