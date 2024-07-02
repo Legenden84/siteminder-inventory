@@ -6,6 +6,7 @@ const mapStateToProps = (state) => ({
     warning: state.navbar.warning,
     showKapacitet: state.navbar.showKapacitet,
     showOccupancy: state.navbar.showOccupancy,
+    uploadedFiles: state.navbar.uploadedFiles
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -7,6 +7,8 @@
     padding: 20px;
     background-color: #333;
     color: #fff;
+    position: relative;
+    z-index: 2; /* Ensure the navbar is above other content */
 }
 
 .navbar-section {
@@ -28,6 +30,7 @@
 
 .middle {
     text-align: center;
+    position: relative;
 }
 
 .right {
@@ -68,17 +71,52 @@
     width: 300px;
 }
 
-button {
+.uploaded-files-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.uploaded-files-button {
     padding: 10px 20px;
     background-color: #008cba;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    position: relative;
+    z-index: 1;
 }
 
-button:hover {
+.uploaded-files-button:hover {
     background-color: #005f5f;
+}
+
+.uploaded-files-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 200px; /* Minimum width to match button */
+    width: auto; /* Allow width to auto-adjust */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    z-index: 2; /* Ensure the dropdown is above other content */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.uploaded-files-dropdown li {
+    padding: 10px;
+    cursor: pointer;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.uploaded-files-dropdown li:hover {
+    background-color: #f1f1f1;
 }
 
 .placeholder-buttons {
@@ -105,7 +143,6 @@ button:hover {
     justify-content: space-between;
     margin: 15px;
 }
-
 
 .mode-button.active {
     background-color: #ff5733;

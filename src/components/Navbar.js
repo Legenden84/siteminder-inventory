@@ -1,8 +1,13 @@
+// Navbar.js
 import React, { Component } from 'react';
 import './Navbar.css';
 import WarningModal from '../utils/WarningModal';
 
 class Navbar extends Component {
+    state = {
+        showDropdown: false,
+    };
+
     handleFileUpload = (event) => {
         const files = Array.from(event.target.files);
         this.props.parseHTMFiles(files);
@@ -22,8 +27,15 @@ class Navbar extends Component {
         this.props.clearWarning();
     };
 
+    toggleDropdown = () => {
+        this.setState(prevState => ({
+            showDropdown: !prevState.showDropdown
+        }));
+    };
+
     render() {
-        const { warning, onDateChange, resetDate, toggleShowKapacitet, toggleShowOccupancy, showKapacitet, showOccupancy } = this.props;
+        const { warning, onDateChange, resetDate, toggleShowKapacitet, toggleShowOccupancy, showKapacitet, showOccupancy, uploadedFiles } = this.props;
+        const { showDropdown } = this.state;
 
         return (
             <div className="navbar">
@@ -46,6 +58,18 @@ class Navbar extends Component {
                         />
                     </div>
                 </div>
+                <div className="uploaded-files-container">
+                        <button className="uploaded-files-button" onClick={this.toggleDropdown}>
+                            Uploaded Files {uploadedFiles.length > 0 && `(${uploadedFiles.length})`}
+                        </button>
+                        {showDropdown && (
+                            <ul className="uploaded-files-dropdown">
+                                {uploadedFiles.map(file => (
+                                    <li key={file.name}>{file.name}</li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
                 <div className="navbar-section right">
                     <div className="placeholder-buttons">
                         <button className="placeholder-button" onClick={resetDate}>Reset</button>
