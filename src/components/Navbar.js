@@ -1,4 +1,3 @@
-// Navbar.js
 import React, { Component } from 'react';
 import './Navbar.css';
 import WarningModal from '../utils/WarningModal';
@@ -7,6 +6,8 @@ class Navbar extends Component {
     state = {
         showDropdown: false,
     };
+
+    fileInputRef = React.createRef();  // Create a ref for the file input
 
     handleFileUpload = (event) => {
         const files = Array.from(event.target.files);
@@ -21,6 +22,10 @@ class Navbar extends Component {
 
     handleDragOver = (event) => {
         event.preventDefault();
+    };
+
+    handleClick = () => {
+        this.fileInputRef.current.click();  // Trigger the file input dialog
     };
 
     handleCloseModal = () => {
@@ -48,9 +53,11 @@ class Navbar extends Component {
                         className="dropzone" 
                         onDrop={this.handleDrop} 
                         onDragOver={this.handleDragOver}
+                        onClick={this.handleClick}  // Add click event to trigger file input
                     >
-                        Drag and drop files here or click to upload
+                        Tryk eller træk og slip Belægningsstatistik filer (.HTM)
                         <input
+                            ref={this.fileInputRef}
                             type="file"
                             multiple
                             onChange={this.handleFileUpload}
@@ -59,17 +66,17 @@ class Navbar extends Component {
                     </div>
                 </div>
                 <div className="uploaded-files-container">
-                        <button className="uploaded-files-button" onClick={this.toggleDropdown}>
-                            Uploaded Files {uploadedFiles.length > 0 && `(${uploadedFiles.length})`}
-                        </button>
-                        {showDropdown && (
-                            <ul className="uploaded-files-dropdown">
-                                {uploadedFiles.map(file => (
-                                    <li key={file.name}>{file.name}</li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
+                    <button className="uploaded-files-button" onClick={this.toggleDropdown}>
+                        Uploaded Files {uploadedFiles.length > 0 && `(${uploadedFiles.length})`}
+                    </button>
+                    {showDropdown && (
+                        <ul className="uploaded-files-dropdown">
+                            {uploadedFiles.map(file => (
+                                <li key={file.name}>{file.name}</li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
                 <div className="navbar-section right">
                     <div className="mode-div">
                         <button 
