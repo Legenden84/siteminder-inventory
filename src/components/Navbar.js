@@ -53,18 +53,23 @@ class Navbar extends Component {
                         <button className="placeholder-button" onClick={() => onDateChange(1)}>+1</button>
                         <button className="placeholder-button" onClick={() => onDateChange(7)}>+7</button>
                     </div>
-                    <button 
-                        className={`inventory-button ${showKapacitet ? 'active' : ''}`} 
-                        onClick={toggleShowKapacitet}
-                    >
-                        Inventory
-                    </button>
-                    <button 
-                        className={`occupancy-button ${showOccupancy ? 'active' : ''}`} 
-                        onClick={toggleShowOccupancy}
-                    >
-                        Belægning
-                    </button>
+                    <div className="mode-div">
+                        <button 
+                            className={`mode-button ${showKapacitet ? 'active' : ''}`} 
+                            onClick={toggleShowKapacitet}
+                        >
+                            Inventory
+                        </button>
+                        <button 
+                            className={`mode-button ${showOccupancy ? 'active' : ''}`} 
+                            onClick={toggleShowOccupancy}
+                        >
+                            Belægning
+                        </button>
+                        <button className='mode-button'>
+                            Settings
+                        </button>
+                    </div>
                 </div>
                 <WarningModal warning={warning} onClose={this.handleCloseModal} />
             </div>
