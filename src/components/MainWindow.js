@@ -67,11 +67,18 @@ class MainWindow extends Component {
     }
 
     render() {
-        const { startDate } = this.props;
+        const { onDateChange, resetDate, startDate } = this.props;
         const dates = this.generateDates(startDate);
 
         return (
             <div className="main-window">
+                <div className="placeholder-buttons">
+                    <button className="placeholder-button" onClick={resetDate}>Reset</button>
+                    <button className="placeholder-button" onClick={() => onDateChange(-7)}>-7</button>
+                    <button className="placeholder-button" onClick={() => onDateChange(-1)}>-1</button>
+                    <button className="placeholder-button" onClick={() => onDateChange(1)}>+1</button>
+                    <button className="placeholder-button" onClick={() => onDateChange(7)}>+7</button>
+                </div>
                 <table>
                     <thead>
                         <tr>

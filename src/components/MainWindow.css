@@ -1,14 +1,15 @@
 /* MainWindow.css */
 .main-window {
     background-color: #f5f5f5;
-    padding: 2rem;
+    padding: 15px;
     flex: 1;
 }
 
-.buttons-container {
+.placeholder-buttons {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 1rem;
+    justify-content: center; /* Center buttons horizontally */
+    margin: 1rem auto; /* Center the div and provide margin around it */
+    gap: 10px; /* Optional: add space between buttons */
 }
 
 .placeholder-button {

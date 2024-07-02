@@ -34,7 +34,7 @@ class Navbar extends Component {
     };
 
     render() {
-        const { warning, onDateChange, resetDate, toggleShowKapacitet, toggleShowOccupancy, showKapacitet, showOccupancy, uploadedFiles } = this.props;
+        const { warning, toggleShowKapacitet, toggleShowOccupancy, showKapacitet, showOccupancy, uploadedFiles } = this.props;
         const { showDropdown } = this.state;
 
         return (
@@ -71,13 +71,6 @@ class Navbar extends Component {
                         )}
                     </div>
                 <div className="navbar-section right">
-                    <div className="placeholder-buttons">
-                        <button className="placeholder-button" onClick={resetDate}>Reset</button>
-                        <button className="placeholder-button" onClick={() => onDateChange(-7)}>-7</button>
-                        <button className="placeholder-button" onClick={() => onDateChange(-1)}>-1</button>
-                        <button className="placeholder-button" onClick={() => onDateChange(1)}>+1</button>
-                        <button className="placeholder-button" onClick={() => onDateChange(7)}>+7</button>
-                    </div>
                     <div className="mode-div">
                         <button 
                             className={`mode-button ${showKapacitet ? 'active' : ''}`} 

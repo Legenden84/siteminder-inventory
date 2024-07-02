@@ -24,8 +24,12 @@ class App extends Component {
     render() {
         return (
             <div>
-                <NavbarContainer onDateChange={this.handleDateChange} resetDate={this.resetDate} />
-                <MainWindowContainer startDate={this.state.startDate} />
+                <NavbarContainer />
+                <MainWindowContainer 
+                    startDate={this.state.startDate}
+                    onDateChange={this.handleDateChange} 
+                    resetDate={this.resetDate}
+                />
             </div>
         );
     }
