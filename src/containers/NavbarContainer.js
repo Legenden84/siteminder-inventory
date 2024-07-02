@@ -3,7 +3,6 @@ import Navbar from '../components/Navbar';
 import { clearWarning, parseHTMFiles, toggleShowOccupancy, toggleShowKapacitet } from '../actions/NavbarActions';
 
 const mapStateToProps = (state) => ({
-    inventory: state.navbar.inventory,
     warning: state.navbar.warning,
     showKapacitet: state.navbar.showKapacitet,
     showOccupancy: state.navbar.showOccupancy,

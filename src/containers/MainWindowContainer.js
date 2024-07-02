@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import MainWindow from '../components/MainWindow';
 
 const mapStateToProps = state => ({
-    inventory: state.navbar.inventory,
     htmData: state.navbar.htmData,
     showKapacitet: state.navbar.showKapacitet, 
     showOccupancy: state.navbar.showOccupancy,

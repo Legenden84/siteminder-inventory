@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import './MainWindow.css';
 
+const roomTypes = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "F1", "F2", "F2S", "F3D", "F3DS", "HY1", "HY2", "HY3", "TRP", "W2B", "W2D", "W3B", "W4B", "WE1"];
+
 class MainWindow extends Component {
+
     generateDates = (startDate) => {
         const dates = [];
         const currentDate = startDate.clone();
@@ -36,7 +39,7 @@ class MainWindow extends Component {
     }
 
     render() {
-        const { inventory = {}, startDate } = this.props;
+        const { startDate } = this.props;
         const dates = this.generateDates(startDate);
 
         return (
@@ -51,7 +54,7 @@ class MainWindow extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {Object.entries(inventory).map(([room]) => (
+                        {roomTypes.map(room => (
                             <tr key={room}>
                                 <td>{room}</td>
                                 {dates.map(date => (
