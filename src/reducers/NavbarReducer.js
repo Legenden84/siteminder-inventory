@@ -4,6 +4,7 @@ import {
     TRACK_UPLOADED_FILES,
     CLEAR_WARNING,
     TOGGLE_SHOW_KAPACITET,
+    TOGGLE_SHOW_OCCUPANCY,
 } from '../actions/NavbarActions';
 
 const initialState = {
@@ -35,6 +36,7 @@ const initialState = {
     uploadedFiles: [],
     warning: null,
     showKapacitet: false,
+    showOccupancy: false,
 };
 
 const navbarReducer = (state = initialState, action) => {
@@ -43,7 +45,7 @@ const navbarReducer = (state = initialState, action) => {
             return {
                 ...state,
                 htmData: action.payload,
-                warning: null, // Clear any previous warnings
+                warning: null,
             };
         case FILE_UPLOAD_WARNING:
             return {
@@ -64,6 +66,13 @@ const navbarReducer = (state = initialState, action) => {
             return {
                 ...state,
                 showKapacitet: !state.showKapacitet,
+                showOccupancy: state.showKapacitet ? state.showOccupancy : false,
+            };
+        case TOGGLE_SHOW_OCCUPANCY:
+            return {
+                ...state,
+                showOccupancy: !state.showOccupancy,
+                showKapacitet: state.showOccupancy ? state.showKapacitet : false,
             };
         default:
             return state;

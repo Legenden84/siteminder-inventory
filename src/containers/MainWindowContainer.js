@@ -4,7 +4,8 @@ import MainWindow from '../components/MainWindow';
 const mapStateToProps = state => ({
     inventory: state.navbar.inventory,
     htmData: state.navbar.htmData,
-    showKapacitet: state.navbar.showKapacitet, // Pass showKapacitet state
+    showKapacitet: state.navbar.showKapacitet, 
+    showOccupancy: state.navbar.showOccupancy,
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({

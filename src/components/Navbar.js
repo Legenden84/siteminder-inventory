@@ -23,7 +23,7 @@ class Navbar extends Component {
     };
 
     render() {
-        const { warning, onDateChange, resetDate, toggleShowKapacitet, showKapacitet } = this.props;
+        const { warning, onDateChange, resetDate, toggleShowKapacitet, toggleShowOccupancy, showKapacitet, showOccupancy } = this.props;
 
         return (
             <div className="navbar">
@@ -58,6 +58,12 @@ class Navbar extends Component {
                         onClick={toggleShowKapacitet}
                     >
                         Inventory
+                    </button>
+                    <button 
+                        className={`occupancy-button ${showOccupancy ? 'active' : ''}`} 
+                        onClick={toggleShowOccupancy}
+                    >
+                        Belægning
                     </button>
                 </div>
                 <WarningModal warning={warning} onClose={this.handleCloseModal} />

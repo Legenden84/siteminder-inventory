@@ -1,10 +1,11 @@
 import { parseFile } from "../utils/parseHTM";
 
-export const PARSE_HTM_FILES = 'PARSE_HTM_FILES';
-export const FILE_UPLOAD_WARNING = 'FILE_UPLOAD_WARNING';
-export const TRACK_UPLOADED_FILES = 'TRACK_UPLOADED_FILES';
 export const CLEAR_WARNING = 'CLEAR_WARNING';
+export const FILE_UPLOAD_WARNING = 'FILE_UPLOAD_WARNING';
+export const PARSE_HTM_FILES = 'PARSE_HTM_FILES';
+export const TRACK_UPLOADED_FILES = 'TRACK_UPLOADED_FILES';
 export const TOGGLE_SHOW_KAPACITET = 'TOGGLE_SHOW_KAPACITET';
+export const TOGGLE_SHOW_OCCUPANCY = 'TOGGLE_SHOW_OCCUPANCY';
 
 const getFileOrder = (fileName) => {
     const match = fileName.match(/Page(\d+)\.HTM$/);
@@ -22,7 +23,7 @@ const sortFilesByOrder = (files) => {
 const checkForSkippedFiles = (uploadedFiles, newFiles) => {
     const files = [...uploadedFiles, ...newFiles];
     const sortedFiles = sortFilesByOrder(files);
-    let lastOrder = 0; // Start with 0 because the first file has no suffix and is treated as order 1
+    let lastOrder = 0;
     const warnings = [];
 
     sortedFiles.forEach((file, index) => {
@@ -64,6 +65,10 @@ const groupByVTypeAndDate = (data) => {
     }, {});
 };
 
+export const clearWarning = () => ({
+    type: CLEAR_WARNING,
+});
+
 export const parseHTMFiles = (files) => {
     return (dispatch, getState) => {
         const state = getState();
@@ -100,10 +105,10 @@ export const parseHTMFiles = (files) => {
     };
 };
 
-export const clearWarning = () => ({
-    type: CLEAR_WARNING,
-});
-
 export const toggleShowKapacitet = () => ({
     type: TOGGLE_SHOW_KAPACITET,
+});
+
+export const toggleShowOccupancy = () => ({
+    type: TOGGLE_SHOW_OCCUPANCY,
 });

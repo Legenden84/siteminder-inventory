@@ -14,7 +14,7 @@ class MainWindow extends Component {
     }
 
     getDisplayValue = (roomType, date) => {
-        const { htmData = {}, showKapacitet } = this.props; // Include showKapacitet prop
+        const { htmData = {}, showKapacitet, showOccupancy } = this.props;
         const [day, month, year] = date.split('-');
         const shortDate = `${day}-${month}`;
 
@@ -22,7 +22,10 @@ class MainWindow extends Component {
             const dateEntry = htmData[roomType][shortDate].find(entry => entry.År === year);
             if (dateEntry) {
                 if (showKapacitet) {
-                    return dateEntry.Kapacitet; // Return Kapacitet if showKapacitet is true
+                    return dateEntry.Kapacitet;
+                }
+                if (showOccupancy) {
+                    return dateEntry.BelægnProcent;
                 }
                 const kapasitet = parseInt(dateEntry.Kapacitet, 10);
                 const reserveret = parseInt(dateEntry.Reserveret, 10);
