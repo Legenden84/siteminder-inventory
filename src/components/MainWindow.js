@@ -13,6 +13,22 @@ class MainWindow extends Component {
         return dates;
     }
 
+    getDisplayValue = (roomType, date) => {
+        const { htmData = {} } = this.props; // Provide a default empty object if htmData is undefined
+        const [day, month, year] = date.split('-');
+        const shortDate = `${day}-${month}`;
+
+        if (htmData[roomType] && htmData[roomType][shortDate]) {
+            const dateEntry = htmData[roomType][shortDate].find(entry => entry.År === year);
+            if (dateEntry) {
+                const kapasitet = parseInt(dateEntry.Kapacitet, 10);
+                const reserveret = parseInt(dateEntry.Reserveret, 10);
+                return kapasitet - reserveret;
+            }
+        }
+        return '';
+    }
+
     render() {
         const { inventory = {}, startDate } = this.props;
         const dates = this.generateDates(startDate);
@@ -29,11 +45,13 @@ class MainWindow extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {Object.entries(inventory).map(([room, value]) => (
+                        {Object.entries(inventory).map(([room]) => (
                             <tr key={room}>
                                 <td>{room}</td>
                                 {dates.map(date => (
-                                    <td key={date}></td>
+                                    <td key={date}>
+                                        {this.getDisplayValue(room, date)}
+                                    </td>
                                 ))}
                             </tr>
                         ))}
