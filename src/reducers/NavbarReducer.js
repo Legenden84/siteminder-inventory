@@ -5,6 +5,7 @@ import {
     CLEAR_WARNING,
     TOGGLE_SHOW_KAPACITET,
     TOGGLE_SHOW_OCCUPANCY,
+    UPDATE_KAPACITET
 } from '../actions/NavbarActions';
 
 const initialState = {
@@ -73,6 +74,22 @@ const navbarReducer = (state = initialState, action) => {
                 ...state,
                 showOccupancy: !state.showOccupancy,
                 showKapacitet: state.showOccupancy ? state.showKapacitet : false,
+            };
+        case UPDATE_KAPACITET:
+            const { roomType, date, newValue } = action.payload;
+            const [day, month, year] = date.split('-'); // Extract year from date
+            const shortDate = `${day}-${month}`;
+            const updatedData = { ...state.htmData };
+
+            if (updatedData[roomType] && updatedData[roomType][shortDate]) {
+                updatedData[roomType][shortDate] = updatedData[roomType][shortDate].map(entry =>
+                    entry.År === year ? { ...entry, Kapacitet: newValue } : entry
+                );
+            }
+
+            return {
+                ...state,
+                htmData: updatedData,
             };
         default:
             return state;

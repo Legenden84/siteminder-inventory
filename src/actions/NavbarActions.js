@@ -6,6 +6,7 @@ export const PARSE_HTM_FILES = 'PARSE_HTM_FILES';
 export const TRACK_UPLOADED_FILES = 'TRACK_UPLOADED_FILES';
 export const TOGGLE_SHOW_KAPACITET = 'TOGGLE_SHOW_KAPACITET';
 export const TOGGLE_SHOW_OCCUPANCY = 'TOGGLE_SHOW_OCCUPANCY';
+export const UPDATE_KAPACITET = 'UPDATE_KAPACITET';
 
 const getFileOrder = (fileName) => {
     const match = fileName.match(/Page(\d+)\.HTM$/);
@@ -111,4 +112,9 @@ export const toggleShowKapacitet = () => ({
 
 export const toggleShowOccupancy = () => ({
     type: TOGGLE_SHOW_OCCUPANCY,
+});
+
+export const updateKapacitet = (roomType, date, newValue) => ({
+    type: UPDATE_KAPACITET,
+    payload: { roomType, date, newValue },
 });
