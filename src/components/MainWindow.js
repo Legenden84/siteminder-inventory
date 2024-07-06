@@ -114,27 +114,29 @@ class MainWindow extends Component {
     render() {
         return (
             <div className="main-window">
-                <div className="placeholder-buttons">
-                    <button className="placeholder-button" onClick={this.props.resetDate}>Reset</button>
-                    <button className="placeholder-button" onClick={() => this.props.onDateChange(-7)}>-7</button>
-                    <button className="placeholder-button" onClick={() => this.props.onDateChange(-1)}>-1</button>
-                    <button className="placeholder-button" onClick={() => this.props.onDateChange(1)}>+1</button>
-                    <button className="placeholder-button" onClick={() => this.props.onDateChange(7)}>+7</button>
+                <div className="header-titles">
+                    <h2>Hotel Status</h2>
+                    <div className="placeholder-buttons">
+                        <button className="placeholder-button" onClick={this.props.resetDate}>Reset</button>
+                        <button className="placeholder-button" onClick={() => this.props.onDateChange(-7)}>-7</button>
+                        <button className="placeholder-button" onClick={() => this.props.onDateChange(-1)}>-1</button>
+                        <button className="placeholder-button" onClick={() => this.props.onDateChange(1)}>+1</button>
+                        <button className="placeholder-button" onClick={() => this.props.onDateChange(7)}>+7</button>
+                    </div>
+                    <h2>SideMinder Statistics</h2>
                 </div>
                 <div className="tables-container">
                     <div className="table-section">
-                        <h2>Hotel Status</h2>
-                        {this.renderTable(ascotRoomTypes, 'Ascot')}
-                        {this.renderTable(wideRoomTypes, 'Wide')}
-                        {this.renderTable(fiftySevenRoomTypes, '57 House')}
-                        {this.renderTable(hyperNymRoomTypes, 'HyperNym')}
+                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms')}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms')}
+                        {this.renderTable(hyperNymRoomTypes, 'Hyper Nym Rooms')}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms')}
                     </div>
                     <div className="table-section">
-                        <h2>SideMinder Statistics</h2>
-                        {this.renderTable(ascotRoomTypes, 'Ascot', false)}
-                        {this.renderTable(wideRoomTypes, 'Wide', false)}
-                        {this.renderTable(fiftySevenRoomTypes, '57 House', false)}
-                        {this.renderTable(hyperNymRoomTypes, 'HyperNym', false)}
+                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false)}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false)}
+                        {this.renderTable(hyperNymRoomTypes, 'Hyper Nym Rooms', false)}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false)}
                     </div>
                 </div>
             </div>

@@ -7,10 +7,22 @@
     align-items: center;
 }
 
+.header-titles {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.header-titles h2 {
+    flex: 1;
+    text-align: center;
+}
+
 .placeholder-buttons {
     display: flex;
     justify-content: center; /* Center buttons horizontally */
-    margin: 1rem auto; /* Center the div and provide margin around it */
     gap: 10px; /* Optional: add space between buttons */
 }
 
