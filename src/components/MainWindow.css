@@ -36,6 +36,7 @@
 
 .table-section {
     width: 50%;
+    text-align: center; /* Center the header */
 }
 
 .table-container {
@@ -53,6 +54,7 @@ th, td {
     padding: 0.5rem;
     text-align: center;
     position: relative; /* Added to support absolute positioning */
+    font-size: 0.8rem; /* Apply consistent font size */
 }
 
 th {
@@ -61,6 +63,7 @@ th {
 
 td {
     background-color: #fff;
+    padding: 0.5rem;
 }
 
 .edit-input {

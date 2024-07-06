@@ -123,16 +123,18 @@ class MainWindow extends Component {
                 </div>
                 <div className="tables-container">
                     <div className="table-section">
-                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms')}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms')}
-                        {this.renderTable(hyperNymRoomTypes, 'Hyper Nym Rooms')}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms')}
+                        <h2>Hotel Status</h2>
+                        {this.renderTable(ascotRoomTypes, 'Ascot')}
+                        {this.renderTable(wideRoomTypes, 'Wide')}
+                        {this.renderTable(fiftySevenRoomTypes, '57 House')}
+                        {this.renderTable(hyperNymRoomTypes, 'HyperNym')}
                     </div>
                     <div className="table-section">
-                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false)}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false)}
-                        {this.renderTable(hyperNymRoomTypes, 'Hyper Nym Rooms', false)}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false)}
+                        <h2>SideMinder Statistics</h2>
+                        {this.renderTable(ascotRoomTypes, 'Ascot', false)}
+                        {this.renderTable(wideRoomTypes, 'Wide', false)}
+                        {this.renderTable(fiftySevenRoomTypes, '57 House', false)}
+                        {this.renderTable(hyperNymRoomTypes, 'HyperNym', false)}
                     </div>
                 </div>
             </div>
