@@ -117,7 +117,7 @@ class MainWindow extends Component {
                 <div className="header-titles">
                     <h2>Hotel Status</h2>
                     <div className="placeholder-buttons">
-                        <button className="placeholder-button" onClick={this.props.resetDate}>Reset</button>
+                        <button className="placeholder-button" onClick={this.props.resetDate}>Today</button>
                         <button className="placeholder-button" onClick={() => this.props.onDateChange(-7)}>-7</button>
                         <button className="placeholder-button" onClick={() => this.props.onDateChange(-1)}>-1</button>
                         <button className="placeholder-button" onClick={() => this.props.onDateChange(1)}>+1</button>
