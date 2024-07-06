@@ -69,9 +69,8 @@ class MainWindow extends Component {
         });
     };
 
-    renderTable = (roomTypes, title) => {
-        const { onDateChange, resetDate, startDate } = this.props;
-        const dates = this.generateDates(startDate);
+    renderTable = (roomTypes, title, displayValues = true) => {
+        const dates = this.generateDates(this.props.startDate);
 
         return (
             <div className="table-container">
@@ -91,7 +90,7 @@ class MainWindow extends Component {
                                 <td>{room}</td>
                                 {dates.map(date => (
                                     <td key={date} onDoubleClick={() => this.handleDoubleClick(room, date)}>
-                                        {this.state.editing[`${room}-${date}`] ? (
+                                        {displayValues && this.state.editing[`${room}-${date}`] ? (
                                             <input
                                                 className="edit-input"
                                                 type="text"
@@ -100,7 +99,7 @@ class MainWindow extends Component {
                                                 onBlur={() => this.handleBlur(room, date)}
                                             />
                                         ) : (
-                                            this.getDisplayValue(room, date)
+                                            displayValues ? this.getDisplayValue(room, date) : ''
                                         )}
                                     </td>
                                 ))}
@@ -122,10 +121,20 @@ class MainWindow extends Component {
                     <button className="placeholder-button" onClick={() => this.props.onDateChange(1)}>+1</button>
                     <button className="placeholder-button" onClick={() => this.props.onDateChange(7)}>+7</button>
                 </div>
-                {this.renderTable(ascotRoomTypes, 'Ascot Rooms')}
-                {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms')}
-                {this.renderTable(hyperNymRoomTypes, 'Hyper Nym Rooms')}
-                {this.renderTable(wideRoomTypes, 'Wide Rooms')}
+                <div className="tables-container">
+                    <div className="table-section">
+                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms')}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms')}
+                        {this.renderTable(hyperNymRoomTypes, 'Hyper Nym Rooms')}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms')}
+                    </div>
+                    <div className="table-section">
+                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false)}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false)}
+                        {this.renderTable(hyperNymRoomTypes, 'Hyper Nym Rooms', false)}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false)}
+                    </div>
+                </div>
             </div>
         );
     }
