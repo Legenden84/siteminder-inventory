@@ -64,18 +64,18 @@ class Navbar extends Component {
                             style={{ display: 'none' }}
                         />
                     </div>
-                </div>
-                <div className="uploaded-files-container">
-                    <button className="uploaded-files-button" onClick={this.toggleDropdown}>
-                        Uploaded Files {uploadedFiles.length > 0 && `(${uploadedFiles.length})`}
-                    </button>
-                    {showDropdown && (
-                        <ul className="uploaded-files-dropdown">
-                            {uploadedFiles.map(file => (
-                                <li key={file.name}>{file.name}</li>
-                            ))}
-                        </ul>
-                    )}
+                    <div className="uploaded-files-container">
+                        <button className="uploaded-files-button" onClick={this.toggleDropdown}>
+                            Uploaded Files {uploadedFiles.length > 0 && `(${uploadedFiles.length})`}
+                        </button>
+                        {showDropdown && (
+                            <ul className="uploaded-files-dropdown">
+                                {uploadedFiles.map(file => (
+                                    <li key={file.name}>{file.name}</li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
                 </div>
                 <div className="navbar-section right">
                     <div className="mode-div">
