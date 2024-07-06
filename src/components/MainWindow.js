@@ -2,7 +2,10 @@
 import React, { Component } from 'react';
 import './MainWindow.css';
 
-const roomTypes = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "F1", "F2", "F2S", "F3D", "F3DS", "HY1", "HY2", "HY3", "TRP", "W2B", "W2D", "W3B", "W4B", "WE1"];
+const ascotRoomTypes = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
+const fiftySevenRoomTypes = ["F1", "F2", "F2S", "F3D", "F3DS"];
+const hyperNymRoomTypes = ["HY1", "HY2", "HY3"];
+const wideRoomTypes = ["W2B", "W2D", "W3B", "W4B", "WE1"];
 
 class MainWindow extends Component {
     state = {
@@ -19,7 +22,7 @@ class MainWindow extends Component {
         }
 
         return dates;
-    }
+    };
 
     getDisplayValue = (roomType, date) => {
         const { htmData = {}, showKapacitet, showOccupancy } = this.props;
@@ -41,7 +44,7 @@ class MainWindow extends Component {
             }
         }
         return '';
-    }
+    };
 
     handleDoubleClick = (roomType, date) => {
         if (this.props.showKapacitet) { // Check if the Inventory button is toggled on
@@ -50,13 +53,13 @@ class MainWindow extends Component {
                 editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date) }
             });
         }
-    }
+    };
 
     handleChange = (e, roomType, date) => {
         this.setState({
             editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: e.target.value }
         });
-    }
+    };
 
     handleBlur = (roomType, date) => {
         const newValue = this.state.editedValues[`${roomType}-${date}`];
@@ -64,21 +67,15 @@ class MainWindow extends Component {
         this.setState({
             editing: { ...this.state.editing, [`${roomType}-${date}`]: false }
         });
-    }
+    };
 
-    render() {
+    renderTable = (roomTypes, title) => {
         const { onDateChange, resetDate, startDate } = this.props;
         const dates = this.generateDates(startDate);
 
         return (
-            <div className="main-window">
-                <div className="placeholder-buttons">
-                    <button className="placeholder-button" onClick={resetDate}>Reset</button>
-                    <button className="placeholder-button" onClick={() => onDateChange(-7)}>-7</button>
-                    <button className="placeholder-button" onClick={() => onDateChange(-1)}>-1</button>
-                    <button className="placeholder-button" onClick={() => onDateChange(1)}>+1</button>
-                    <button className="placeholder-button" onClick={() => onDateChange(7)}>+7</button>
-                </div>
+            <div className="table-container">
+                <h3>{title}</h3>
                 <table>
                     <thead>
                         <tr>
@@ -111,6 +108,24 @@ class MainWindow extends Component {
                         ))}
                     </tbody>
                 </table>
+            </div>
+        );
+    };
+
+    render() {
+        return (
+            <div className="main-window">
+                <div className="placeholder-buttons">
+                    <button className="placeholder-button" onClick={this.props.resetDate}>Reset</button>
+                    <button className="placeholder-button" onClick={() => this.props.onDateChange(-7)}>-7</button>
+                    <button className="placeholder-button" onClick={() => this.props.onDateChange(-1)}>-1</button>
+                    <button className="placeholder-button" onClick={() => this.props.onDateChange(1)}>+1</button>
+                    <button className="placeholder-button" onClick={() => this.props.onDateChange(7)}>+7</button>
+                </div>
+                {this.renderTable(ascotRoomTypes, 'Ascot Rooms')}
+                {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms')}
+                {this.renderTable(hyperNymRoomTypes, 'Hyper Nym Rooms')}
+                {this.renderTable(wideRoomTypes, 'Wide Rooms')}
             </div>
         );
     }
