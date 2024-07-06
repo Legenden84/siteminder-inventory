@@ -90,11 +90,33 @@ export const parseHTMFiles = (files) => {
                 const combinedData = results.flat();
                 const processedData = setVTypes(combinedData);
                 const groupedData = groupByVTypeAndDate(processedData);
+                
+                // Merge new data with existing data rather than replacing it
                 const currentData = state.navbar.htmData;
+                const updatedData = { ...currentData };
+                
+                for (const [vType, dates] of Object.entries(groupedData)) {
+                    if (!updatedData[vType]) {
+                        updatedData[vType] = { ...dates };
+                    } else {
+                        for (const [date, data] of Object.entries(dates)) {
+                            if (!updatedData[vType][date]) {
+                                updatedData[vType][date] = [...data];
+                            } else {
+                                updatedData[vType][date] = [
+                                    ...updatedData[vType][date],
+                                    ...data
+                                ];
+                            }
+                        }
+                    }
+                }
+
                 dispatch({
                     type: PARSE_HTM_FILES,
-                    payload: { ...currentData, ...groupedData },
+                    payload: updatedData,
                 });
+
                 dispatch({
                     type: TRACK_UPLOADED_FILES,
                     payload: [...uploadedFiles, ...sortedFiles.map(file => ({ name: file.name, size: file.size }))],
@@ -105,6 +127,7 @@ export const parseHTMFiles = (files) => {
             });
     };
 };
+
 
 export const toggleShowKapacitet = () => ({
     type: TOGGLE_SHOW_KAPACITET,
