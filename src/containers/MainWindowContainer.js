@@ -1,4 +1,3 @@
-// MainWindowContainer.js
 import { connect } from 'react-redux';
 import MainWindow from '../components/MainWindow';
 import { updateKapacitet } from '../actions/NavbarActions';

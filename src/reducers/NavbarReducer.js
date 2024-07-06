@@ -9,30 +9,6 @@ import {
 } from '../actions/NavbarActions';
 
 const initialState = {
-    inventory: {
-        D2: 52,
-        D2D: 27,
-        D2G: 11,
-        D3: 8,
-        D3D: 7,
-        D4D: 1,
-        E1: 3,
-        F1: 4,
-        F2: 17,
-        F2S: 7,
-        F3D: 2,
-        F3DS: 2,
-        HY1: 1,
-        HY2: 5,
-        HY3: 3,
-        TRP: 4,
-        W2B: 10,
-        W2D: 45,
-        W3B: 2,
-        W3D: 31,
-        W4B: 4,
-        WE1: 11
-    },
     htmData: {},
     uploadedFiles: [],
     warning: null,
@@ -77,7 +53,7 @@ const navbarReducer = (state = initialState, action) => {
             };
         case UPDATE_KAPACITET:
             const { roomType, date, newValue } = action.payload;
-            const [day, month, year] = date.split('-'); // Extract year from date
+            const [day, month, year] = date.split('-');
             const shortDate = `${day}-${month}`;
             const updatedData = { ...state.htmData };
 

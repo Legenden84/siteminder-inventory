@@ -29,9 +29,9 @@ export const parseFile = (file) => {
                         BelægnProcentUAl: columns[9].textContent.trim(),
                     };
                 } else {
-                    return null; // If row doesn't have the correct number of columns, return null
+                    return null;
                 }
-            }).filter(row => row !== null); // Filter out any null rows
+            }).filter(row => row !== null);
 
             resolve(parsedData);
         };

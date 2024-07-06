@@ -7,7 +7,7 @@ class Navbar extends Component {
         showDropdown: false,
     };
 
-    fileInputRef = React.createRef();  // Create a ref for the file input
+    fileInputRef = React.createRef();
 
     handleFileUpload = (event) => {
         const files = Array.from(event.target.files);
@@ -25,7 +25,7 @@ class Navbar extends Component {
     };
 
     handleClick = () => {
-        this.fileInputRef.current.click();  // Trigger the file input dialog
+        this.fileInputRef.current.click();
     };
 
     handleCloseModal = () => {
@@ -53,7 +53,7 @@ class Navbar extends Component {
                         className="dropzone" 
                         onDrop={this.handleDrop} 
                         onDragOver={this.handleDragOver}
-                        onClick={this.handleClick}  // Add click event to trigger file input
+                        onClick={this.handleClick}
                     >
                         Tryk eller træk og slip Belægningsstatistik filer (.HTM)
                         <input

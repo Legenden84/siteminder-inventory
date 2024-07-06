@@ -1,4 +1,3 @@
-// MainWindow.js
 import React, { Component } from 'react';
 import './MainWindow.css';
 
@@ -47,7 +46,7 @@ class MainWindow extends Component {
     };
 
     handleDoubleClick = (roomType, date) => {
-        if (this.props.showKapacitet) { // Check if the Inventory button is toggled on
+        if (this.props.showKapacitet) {
             this.setState({
                 editing: { ...this.state.editing, [`${roomType}-${date}`]: true },
                 editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date) }
