@@ -82,7 +82,7 @@ export const parseHTMFiles = (files) => {
                 type: FILE_UPLOAD_WARNING,
                 payload: warnings.join(', '),
             });
-            return; // Stop processing if there are warnings
+            return;
         }
 
         Promise.all(sortedFiles.map(parseFile))

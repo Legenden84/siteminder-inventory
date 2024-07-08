@@ -76,8 +76,8 @@ class MainWindow extends Component {
         }
 
         const { htmData = {}, showKapacitet, showOccupancy } = this.props;
-        const [day, month] = fullDate.split('-'); // Assumes 'DD-MM-YYYY'
-        const year = new Date().getFullYear().toString(); // Simplistic approach; consider adapting based on app context
+        const [day, month] = fullDate.split('-');
+        const year = new Date().getFullYear().toString();
 
         if (htmData[roomType] && htmData[roomType][`${day}-${month}`]) {
             const dateEntries = htmData[roomType][`${day}-${month}`];
@@ -143,7 +143,7 @@ class MainWindow extends Component {
                     <tbody>
                         {roomTypes.map(room => (
                             <tr key={room}>
-                                <td style={{ zIndex: 2 }}>{room}</td> {/* Ensure this cell has a higher z-index */}
+                                <td style={{ zIndex: 2 }}>{room}</td>
                                 {dates.map(({ fullDate }) => (
                                     <td key={fullDate} className={slideDirection ? slideClass : ''}>
                                         {displayValues && this.state.editing[`${room}-${fullDate}`] ? (
