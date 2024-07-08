@@ -125,7 +125,7 @@ class MainWindow extends Component {
         const slideClass = daysToShift === 7 
             ? (slideDirection === 'left' ? 'slide-left-7' : 'slide-right-7') 
             : (slideDirection === 'left' ? 'slide-left' : 'slide-right');
-
+    
         return (
             <div className="table-container">
                 <h3>{title}</h3>
@@ -143,9 +143,9 @@ class MainWindow extends Component {
                     <tbody>
                         {roomTypes.map(room => (
                             <tr key={room}>
-                                <td>{room}</td>
+                                <td style={{ zIndex: 2 }}>{room}</td> {/* Ensure this cell has a higher z-index */}
                                 {dates.map(({ fullDate }) => (
-                                    <td key={fullDate} className={slideDirection ? slideClass : ''} onDoubleClick={() => this.handleDoubleClick(room, fullDate)}>
+                                    <td key={fullDate} className={slideDirection ? slideClass : ''}>
                                         {displayValues && this.state.editing[`${room}-${fullDate}`] ? (
                                             <input
                                                 className="edit-input"

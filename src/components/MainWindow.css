@@ -57,11 +57,13 @@
     width: 100%;
 }
 
-.table-container table tr td:first-child {
+.table-container table tr td:first-child,
+.table-container table th:first-child {
     background-color: #eee;
     font-weight: bold;
-    position: relative;
-    z-index: 10; /* Keep the first column always in front */
+    position: sticky;
+    left: 0;
+    z-index: 3; /* Ensure index column is above sliding columns */
 }
 
 table {
@@ -76,16 +78,17 @@ th, td {
     text-align: center;
     position: relative;
     font-size: 0.8rem;
-    z-index: 1; /* Default z-index for other cells */
 }
 
 th {
     background-color: #eee;
+    z-index: 2; /* Lower z-index than the first column but above normal cells */
 }
 
 td {
     background-color: #fff;
     padding: 0.5rem;
+    z-index: 1; /* Default z-index for cells except the first column */
 }
 
 .edit-input {
