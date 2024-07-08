@@ -78,16 +78,12 @@ th, td {
     text-align: center;
     position: relative;
     font-size: 0.8rem;
-}
-
-th {
+    white-space: nowrap; /* Prevent text from wrapping */
     background-color: #eee;
-    z-index: 2; /* Lower z-index than the first column but above normal cells */
 }
 
 td {
     background-color: #fff;
-    padding: 0.5rem;
     z-index: 1; /* Default z-index for cells except the first column */
 }
 
