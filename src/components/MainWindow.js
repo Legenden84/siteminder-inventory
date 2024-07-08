@@ -10,27 +10,17 @@ const wideRoomTypes = ["W2B", "W2D", "W3B", "W4B", "WE1"];
 class MainWindow extends Component {
     initialStartDate = moment();
 
-    state = {
-        editing: {}, // { 'roomType-date': true }
-        editedValues: {}, // { 'roomType-date': value }
-        slideDirection: '', // 'left' or 'right'
-        startDate: this.initialStartDate,
-    };
-
-    handleDateChange = (days) => {
-        const direction = days > 0 ? 'left' : 'right';
-        this.setState({ slideDirection: direction });
-        setTimeout(() => {
-            this.setState((prevState) => ({
-                startDate: prevState.startDate.clone().add(days, 'days'),
-                slideDirection: ''
-            }));
-        }, 500); // Duration should match the CSS animation duration
-    };
-
-    resetDate = () => {
-        this.setState({ startDate: this.initialStartDate });
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            editing: {}, // { 'roomType-date': true }
+            editedValues: {}, // { 'roomType-date': value }
+            slideDirection: '', // 'left' or 'right'
+            startDate: this.initialStartDate,
+            preloadedDates: this.generateDates(this.initialStartDate),
+            preloadedData: {}
+        };
+    }
 
     generateDates = (startDate) => {
         const dates = [];
@@ -46,7 +36,35 @@ class MainWindow extends Component {
         return dates;
     };
 
+    handleDateChange = (days) => {
+        const direction = days > 0 ? 'left' : 'right';
+        const newStartDate = this.state.startDate.clone().add(days, 'days');
+        const preloadedDates = this.generateDates(newStartDate);
+
+        // Preload new data
+        const preloadedData = {};
+        preloadedDates.forEach(({ fullDate }) => {
+            ascotRoomTypes.concat(fiftySevenRoomTypes, hyperNymRoomTypes, wideRoomTypes).forEach(roomType => {
+                preloadedData[`${roomType}-${fullDate}`] = this.getDisplayValue(roomType, fullDate);
+            });
+        });
+
+        this.setState({ slideDirection: direction, preloadedDates, preloadedData });
+        setTimeout(() => {
+            this.setState((prevState) => ({
+                startDate: newStartDate,
+                slideDirection: ''
+            }));
+        }, 500); // Duration should match the CSS animation duration
+    };
+
     getDisplayValue = (roomType, fullDate) => {
+        const key = `${roomType}-${fullDate}`;
+        const { preloadedData, slideDirection } = this.state;
+        if (slideDirection) {
+            return preloadedData[key] !== undefined ? preloadedData[key] : '';
+        }
+
         const { htmData = {}, showKapacitet, showOccupancy } = this.props;
         const [day, month] = fullDate.split('-'); // Assumes 'DD-MM-YYYY'
         const year = new Date().getFullYear().toString(); // Simplistic approach; consider adapting based on app context
@@ -92,7 +110,7 @@ class MainWindow extends Component {
     };
 
     renderTable = (roomTypes, title, displayValues = true) => {
-        const dates = this.generateDates(this.state.startDate);
+        const dates = this.state.slideDirection ? this.state.preloadedDates : this.generateDates(this.state.startDate);
         const { slideDirection } = this.state;
 
         return (
