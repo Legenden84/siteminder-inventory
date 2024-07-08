@@ -17,19 +17,23 @@ class MainWindow extends Component {
         const currentDate = startDate.clone();
 
         for (let i = 0; i < 14; i++) {
-            dates.push(currentDate.clone().add(i, 'days').format('DD-MM-YYYY'));
+            dates.push({
+                displayDate: currentDate.clone().add(i, 'days').format('DD-MM'),
+                fullDate: currentDate.clone().add(i, 'days').format('DD-MM-YYYY')
+            });
         }
 
         return dates;
     };
 
-    getDisplayValue = (roomType, date) => {
+    getDisplayValue = (roomType, fullDate) => {
         const { htmData = {}, showKapacitet, showOccupancy } = this.props;
-        const [day, month, year] = date.split('-');
-        const shortDate = `${day}-${month}`;
+        const [day, month] = fullDate.split('-'); // Assumes 'DD-MM-YYYY'
+        const year = new Date().getFullYear().toString(); // Simplistic approach; consider adapting based on app context
 
-        if (htmData[roomType] && htmData[roomType][shortDate]) {
-            const dateEntry = htmData[roomType][shortDate].find(entry => entry.År === year);
+        if (htmData[roomType] && htmData[roomType][`${day}-${month}`]) {
+            const dateEntries = htmData[roomType][`${day}-${month}`];
+            const dateEntry = dateEntries.find(entry => entry.År === year);
             if (dateEntry) {
                 if (showKapacitet) {
                     return dateEntry.Kapacitet;
@@ -37,6 +41,7 @@ class MainWindow extends Component {
                 if (showOccupancy) {
                     return dateEntry.BelægnProcent;
                 }
+                // Default case to show available capacity minus reserved
                 const kapasitet = parseInt(dateEntry.Kapacitet, 10);
                 const reserveret = parseInt(dateEntry.Reserveret, 10);
                 return kapasitet - reserveret;
@@ -46,12 +51,10 @@ class MainWindow extends Component {
     };
 
     handleDoubleClick = (roomType, date) => {
-        if (this.props.showKapacitet) {
-            this.setState({
-                editing: { ...this.state.editing, [`${roomType}-${date}`]: true },
-                editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date) }
-            });
-        }
+        this.setState({
+            editing: { ...this.state.editing, [`${roomType}-${date}`]: true },
+            editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date) }
+        });
     };
 
     handleChange = (e, roomType, date) => {
@@ -78,8 +81,8 @@ class MainWindow extends Component {
                     <thead>
                         <tr>
                             <th>Room</th>
-                            {dates.map(date => (
-                                <th key={date}>{date}</th>
+                            {dates.map(({ displayDate }) => (
+                                <th key={displayDate}>{displayDate}</th>
                             ))}
                         </tr>
                     </thead>
@@ -87,18 +90,18 @@ class MainWindow extends Component {
                         {roomTypes.map(room => (
                             <tr key={room}>
                                 <td>{room}</td>
-                                {dates.map(date => (
-                                    <td key={date} onDoubleClick={() => this.handleDoubleClick(room, date)}>
-                                        {displayValues && this.state.editing[`${room}-${date}`] ? (
+                                {dates.map(({ fullDate, displayDate }) => (
+                                    <td key={fullDate} onDoubleClick={() => this.handleDoubleClick(room, fullDate)}>
+                                        {displayValues && this.state.editing[`${room}-${fullDate}`] ? (
                                             <input
                                                 className="edit-input"
                                                 type="text"
-                                                value={this.state.editedValues[`${room}-${date}`]}
-                                                onChange={(e) => this.handleChange(e, room, date)}
-                                                onBlur={() => this.handleBlur(room, date)}
+                                                value={this.state.editedValues[`${room}-${fullDate}`]}
+                                                onChange={(e) => this.handleChange(e, room, fullDate)}
+                                                onBlur={() => this.handleBlur(room, fullDate)}
                                             />
                                         ) : (
-                                            displayValues ? this.getDisplayValue(room, date) : ''
+                                            displayValues ? this.getDisplayValue(room, fullDate) : ''
                                         )}
                                     </td>
                                 ))}
@@ -127,15 +130,15 @@ class MainWindow extends Component {
                 <div className="tables-container">
                     <div className="table-section">
                         {this.renderTable(ascotRoomTypes, 'Ascot Rooms')}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms')}
-                        {this.renderTable(hyperNymRoomTypes, 'Hyper Nym Rooms')}
                         {this.renderTable(wideRoomTypes, 'Wide Rooms')}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms')}
+                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms')}
                     </div>
                     <div className="table-section">
                         {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false)}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false)}
                         {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false)}
                         {this.renderTable(hyperNymRoomTypes, 'Hyper Nym Rooms', false)}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false)}
                     </div>
                 </div>
             </div>

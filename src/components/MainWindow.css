@@ -54,6 +54,11 @@
     margin-bottom: 20px;
 }
 
+.table-container table tr td:first-child {
+    background-color: #eee;
+    font-weight: bold;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
