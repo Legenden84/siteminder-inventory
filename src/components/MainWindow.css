@@ -47,13 +47,14 @@
 }
 
 .table-section {
-    width: 50%;
-    text-align: center;
+    width: 100%;
+    overflow: hidden; /* Ensure table columns do not overflow the container */
 }
 
 .table-container {
     margin-bottom: 20px;
     position: relative;
+    width: 100%;
 }
 
 .table-container table tr td:first-child {
@@ -99,63 +100,51 @@ td {
 @keyframes slideLeft {
     from {
         transform: translateX(100%);
-        z-index: 0; /* Ensure sliding from behind */
     }
     to {
         transform: translateX(0);
-        z-index: 1; /* Ensure sliding from behind */
     }
 }
 
 @keyframes slideRight {
     from {
         transform: translateX(-100%);
-        z-index: 0; /* Ensure sliding from behind */
     }
     to {
         transform: translateX(0);
-        z-index: 1; /* Ensure sliding from behind */
     }
-}
-
-.slide-left {
-    animation: slideLeft 0.5s forwards;
-    z-index: 1; /* Ensure sliding from behind */
-}
-
-.slide-right {
-    animation: slideRight 0.5s forwards;
-    z-index: 1; /* Ensure sliding from behind */
 }
 
 @keyframes slideLeft7 {
     from {
         transform: translateX(700%);
-        z-index: 0; /* Ensure sliding from behind */
     }
     to {
         transform: translateX(0);
-        z-index: 1; /* Ensure sliding from behind */
     }
 }
 
 @keyframes slideRight7 {
     from {
         transform: translateX(-700%);
-        z-index: 0; /* Ensure sliding from behind */
     }
     to {
         transform: translateX(0);
-        z-index: 1; /* Ensure sliding from behind */
     }
+}
+
+.slide-left {
+    animation: slideLeft 0.5s forwards;
+}
+
+.slide-right {
+    animation: slideRight 0.5s forwards;
 }
 
 .slide-left-7 {
     animation: slideLeft7 0.5s forwards;
-    z-index: 1; /* Ensure sliding from behind */
 }
 
 .slide-right-7 {
     animation: slideRight7 0.5s forwards;
-    z-index: 1; /* Ensure sliding from behind */
 }
