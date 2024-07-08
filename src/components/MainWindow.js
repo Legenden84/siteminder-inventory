@@ -18,7 +18,8 @@ class MainWindow extends Component {
             slideDirection: '', // 'left' or 'right'
             startDate: this.initialStartDate,
             preloadedDates: this.generateDates(this.initialStartDate),
-            preloadedData: {}
+            preloadedData: {},
+            daysToShift: 1, // New state to differentiate the number of days to shift
         };
     }
 
@@ -49,13 +50,22 @@ class MainWindow extends Component {
             });
         });
 
-        this.setState({ slideDirection: direction, preloadedDates, preloadedData });
+        this.setState({ 
+            slideDirection: direction, 
+            preloadedDates, 
+            preloadedData, 
+            daysToShift: Math.abs(days) 
+        });
         setTimeout(() => {
             this.setState((prevState) => ({
                 startDate: newStartDate,
                 slideDirection: ''
             }));
         }, 500); // Duration should match the CSS animation duration
+    };
+
+    resetDate = () => {
+        this.setState({ startDate: this.initialStartDate });
     };
 
     getDisplayValue = (roomType, fullDate) => {
@@ -111,7 +121,10 @@ class MainWindow extends Component {
 
     renderTable = (roomTypes, title, displayValues = true) => {
         const dates = this.state.slideDirection ? this.state.preloadedDates : this.generateDates(this.state.startDate);
-        const { slideDirection } = this.state;
+        const { slideDirection, daysToShift } = this.state;
+        const slideClass = daysToShift === 7 
+            ? (slideDirection === 'left' ? 'slide-left-7' : 'slide-right-7') 
+            : (slideDirection === 'left' ? 'slide-left' : 'slide-right');
 
         return (
             <div className="table-container">
@@ -121,7 +134,7 @@ class MainWindow extends Component {
                         <tr>
                             <th>Room</th>
                             {dates.map(({ displayDate }) => (
-                                <th key={displayDate} className={slideDirection ? `slide-${slideDirection}` : ''}>
+                                <th key={displayDate} className={slideDirection ? slideClass : ''}>
                                     {displayDate}
                                 </th>
                             ))}
@@ -132,7 +145,7 @@ class MainWindow extends Component {
                             <tr key={room}>
                                 <td>{room}</td>
                                 {dates.map(({ fullDate }) => (
-                                    <td key={fullDate} className={slideDirection ? `slide-${slideDirection}` : ''} onDoubleClick={() => this.handleDoubleClick(room, fullDate)}>
+                                    <td key={fullDate} className={slideDirection ? slideClass : ''} onDoubleClick={() => this.handleDoubleClick(room, fullDate)}>
                                         {displayValues && this.state.editing[`${room}-${fullDate}`] ? (
                                             <input
                                                 className="edit-input"
