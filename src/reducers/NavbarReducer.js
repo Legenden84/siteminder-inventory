@@ -1,10 +1,11 @@
 import {
-    PARSE_HTM_FILES,
-    FILE_UPLOAD_WARNING,
-    TRACK_UPLOADED_FILES,
     CLEAR_WARNING,
+    FILE_UPLOAD_WARNING,
+    PARSE_HTM_FILES,
+    RESET_STATE,
     TOGGLE_SHOW_KAPACITET,
     TOGGLE_SHOW_OCCUPANCY,
+    TRACK_UPLOADED_FILES,
     UPDATE_KAPACITET
 } from '../actions/NavbarActions';
 
@@ -18,27 +19,24 @@ const initialState = {
 
 const navbarReducer = (state = initialState, action) => {
     switch (action.type) {
-        case PARSE_HTM_FILES:
+        case CLEAR_WARNING:
             return {
                 ...state,
-                htmData: action.payload,
-                warning: null,
+                warning: null
             };
         case FILE_UPLOAD_WARNING:
             return {
                 ...state,
                 warning: action.payload
             };
-        case TRACK_UPLOADED_FILES:
+        case PARSE_HTM_FILES:
             return {
                 ...state,
-                uploadedFiles: action.payload
+                htmData: action.payload,
+                warning: null,
             };
-        case CLEAR_WARNING:
-            return {
-                ...state,
-                warning: null
-            };
+        case RESET_STATE:
+            return initialState;
         case TOGGLE_SHOW_KAPACITET:
             return {
                 ...state,
@@ -50,6 +48,11 @@ const navbarReducer = (state = initialState, action) => {
                 ...state,
                 showOccupancy: !state.showOccupancy,
                 showKapacitet: state.showOccupancy ? state.showKapacitet : false,
+            };
+        case TRACK_UPLOADED_FILES:
+            return {
+                ...state,
+                uploadedFiles: action.payload
             };
         case UPDATE_KAPACITET:
             const { roomType, date, newValue } = action.payload;

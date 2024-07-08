@@ -3,6 +3,7 @@ import { parseFile } from "../utils/parseHTM";
 export const CLEAR_WARNING = 'CLEAR_WARNING';
 export const FILE_UPLOAD_WARNING = 'FILE_UPLOAD_WARNING';
 export const PARSE_HTM_FILES = 'PARSE_HTM_FILES';
+export const RESET_STATE = 'RESET_STATE';
 export const TRACK_UPLOADED_FILES = 'TRACK_UPLOADED_FILES';
 export const TOGGLE_SHOW_KAPACITET = 'TOGGLE_SHOW_KAPACITET';
 export const TOGGLE_SHOW_OCCUPANCY = 'TOGGLE_SHOW_OCCUPANCY';
@@ -128,6 +129,9 @@ export const parseHTMFiles = (files) => {
     };
 };
 
+export const resetState = () => ({
+    type: RESET_STATE,
+});
 
 export const toggleShowKapacitet = () => ({
     type: TOGGLE_SHOW_KAPACITET,
