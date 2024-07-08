@@ -9,19 +9,6 @@ export const TOGGLE_SHOW_KAPACITET = 'TOGGLE_SHOW_KAPACITET';
 export const TOGGLE_SHOW_OCCUPANCY = 'TOGGLE_SHOW_OCCUPANCY';
 export const UPDATE_KAPACITET = 'UPDATE_KAPACITET';
 
-const getFileOrder = (fileName) => {
-    const match = fileName.match(/Page(\d+)\.HTM$/);
-    return match ? parseInt(match[1], 10) : (fileName.includes('.HTM') ? 1 : 0);
-};
-
-const sortFilesByOrder = (files) => {
-    return files.sort((a, b) => {
-        const orderA = getFileOrder(a.name);
-        const orderB = getFileOrder(b.name);
-        return orderA - orderB;
-    });
-};
-
 const checkForSkippedFiles = (uploadedFiles, newFiles) => {
     const files = [...uploadedFiles, ...newFiles];
     const sortedFiles = sortFilesByOrder(files);
@@ -41,16 +28,9 @@ const checkForSkippedFiles = (uploadedFiles, newFiles) => {
     return warnings;
 };
 
-const setVTypes = (data) => {
-    let currentVType = '';
-    return data.map(row => {
-        if (row.VType) {
-            currentVType = row.VType;
-        } else {
-            row.VType = currentVType;
-        }
-        return row;
-    });
+const getFileOrder = (fileName) => {
+    const match = fileName.match(/Page(\d+)\.HTM$/);
+    return match ? parseInt(match[1], 10) : (fileName.includes('.HTM') ? 1 : 0);
 };
 
 const groupByVTypeAndDate = (data) => {
@@ -65,6 +45,26 @@ const groupByVTypeAndDate = (data) => {
         acc[VType][Dato].push(rest);
         return acc;
     }, {});
+};
+
+const setVTypes = (data) => {
+    let currentVType = '';
+    return data.map(row => {
+        if (row.VType) {
+            currentVType = row.VType;
+        } else {
+            row.VType = currentVType;
+        }
+        return row;
+    });
+};
+
+const sortFilesByOrder = (files) => {
+    return files.sort((a, b) => {
+        const orderA = getFileOrder(a.name);
+        const orderB = getFileOrder(b.name);
+        return orderA - orderB;
+    });
 };
 
 export const clearWarning = () => ({
@@ -91,11 +91,11 @@ export const parseHTMFiles = (files) => {
                 const combinedData = results.flat();
                 const processedData = setVTypes(combinedData);
                 const groupedData = groupByVTypeAndDate(processedData);
-                
+
                 // Merge new data with existing data rather than replacing it
                 const currentData = state.navbar.htmData;
                 const updatedData = { ...currentData };
-                
+
                 for (const [vType, dates] of Object.entries(groupedData)) {
                     if (!updatedData[vType]) {
                         updatedData[vType] = { ...dates };

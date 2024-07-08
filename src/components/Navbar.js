@@ -9,21 +9,6 @@ class Navbar extends Component {
 
     fileInputRef = React.createRef();
 
-    handleFileUpload = (event) => {
-        const files = Array.from(event.target.files);
-        this.props.parseHTMFiles(files);
-    };
-
-    handleDrop = (event) => {
-        event.preventDefault();
-        const files = Array.from(event.dataTransfer.files);
-        this.props.parseHTMFiles(files);
-    };
-
-    handleDragOver = (event) => {
-        event.preventDefault();
-    };
-
     handleClick = () => {
         this.fileInputRef.current.click();
     };
@@ -32,7 +17,22 @@ class Navbar extends Component {
         this.props.clearWarning();
     };
 
-    toggleDropdown = () => {
+    handleDragOver = (event) => {
+        event.preventDefault();
+    };
+
+    handleDrop = (event) => {
+        event.preventDefault();
+        const files = Array.from(event.dataTransfer.files);
+        this.props.parseHTMFiles(files);
+    };
+
+    handleFileUpload = (event) => {
+        const files = Array.from(event.target.files);
+        this.props.parseHTMFiles(files);
+    };
+
+    handleToggleDropdown = () => {
         this.setState(prevState => ({
             showDropdown: !prevState.showDropdown
         }));
@@ -54,9 +54,9 @@ class Navbar extends Component {
                     <h1>Inventory Manager</h1>
                 </div>
                 <div className="navbar-section middle">
-                    <div 
-                        className="dropzone" 
-                        onDrop={this.handleDrop} 
+                    <div
+                        className="dropzone"
+                        onDrop={this.handleDrop}
                         onDragOver={this.handleDragOver}
                         onClick={this.handleClick}
                     >
@@ -70,7 +70,7 @@ class Navbar extends Component {
                         />
                     </div>
                     <div className="uploaded-files-container">
-                        <button className="uploaded-files-button" onClick={this.toggleDropdown}>
+                        <button className="uploaded-files-button" onClick={this.handleToggleDropdown}>
                             Uploaded Files {uploadedFiles.length > 0 && `(${uploadedFiles.length})`}
                         </button>
                         {showDropdown && (
@@ -87,17 +87,17 @@ class Navbar extends Component {
                 </div>
                 <div className="navbar-section right">
                     <div className="mode-div">
-                        <button 
-                            className={`mode-button ${showKapacitet ? 'active' : ''}`} 
+                        <button
+                            className={`mode-button ${showKapacitet ? 'active' : ''}`}
                             onClick={toggleShowKapacitet}
                         >
                             Inventory
                         </button>
-                        <button 
-                            className={`mode-button ${showOccupancy ? 'active' : ''}`} 
+                        <button
+                            className={`mode-button ${showOccupancy ? 'active' : ''}`}
                             onClick={toggleShowOccupancy}
                         >
-                            Belægning
+                            Occupancy
                         </button>
                         <button className='mode-button'>
                             Settings

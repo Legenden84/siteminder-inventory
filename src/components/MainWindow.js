@@ -37,37 +37,6 @@ class MainWindow extends Component {
         return dates;
     };
 
-    handleDateChange = (days) => {
-        const direction = days > 0 ? 'left' : 'right';
-        const newStartDate = this.state.startDate.clone().add(days, 'days');
-        const preloadedDates = this.generateDates(newStartDate);
-
-        // Preload new data
-        const preloadedData = {};
-        preloadedDates.forEach(({ fullDate }) => {
-            ascotRoomTypes.concat(fiftySevenRoomTypes, hyperNymRoomTypes, wideRoomTypes).forEach(roomType => {
-                preloadedData[`${roomType}-${fullDate}`] = this.getDisplayValue(roomType, fullDate);
-            });
-        });
-
-        this.setState({ 
-            slideDirection: direction, 
-            preloadedDates, 
-            preloadedData, 
-            daysToShift: Math.abs(days) 
-        });
-        setTimeout(() => {
-            this.setState((prevState) => ({
-                startDate: newStartDate,
-                slideDirection: ''
-            }));
-        }, 500); // Duration should match the CSS animation duration
-    };
-
-    resetDate = () => {
-        this.setState({ startDate: this.initialStartDate });
-    };
-
     getDisplayValue = (roomType, fullDate) => {
         const key = `${roomType}-${fullDate}`;
         const { preloadedData, slideDirection } = this.state;
@@ -98,16 +67,43 @@ class MainWindow extends Component {
         return '';
     };
 
+    handleChange = (e, roomType, date) => {
+        this.setState({
+            editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: e.target.value }
+        });
+    };
+
+    handleDateChange = (days) => {
+        const direction = days > 0 ? 'left' : 'right';
+        const newStartDate = this.state.startDate.clone().add(days, 'days');
+        const preloadedDates = this.generateDates(newStartDate);
+
+        // Preload new data
+        const preloadedData = {};
+        preloadedDates.forEach(({ fullDate }) => {
+            ascotRoomTypes.concat(fiftySevenRoomTypes, hyperNymRoomTypes, wideRoomTypes).forEach(roomType => {
+                preloadedData[`${roomType}-${fullDate}`] = this.getDisplayValue(roomType, fullDate);
+            });
+        });
+
+        this.setState({
+            slideDirection: direction,
+            preloadedDates,
+            preloadedData,
+            daysToShift: Math.abs(days)
+        });
+        setTimeout(() => {
+            this.setState((prevState) => ({
+                startDate: newStartDate,
+                slideDirection: ''
+            }));
+        }, 500); // Duration should match the CSS animation duration
+    };
+
     handleDoubleClick = (roomType, date) => {
         this.setState({
             editing: { ...this.state.editing, [`${roomType}-${date}`]: true },
             editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date) }
-        });
-    };
-
-    handleChange = (e, roomType, date) => {
-        this.setState({
-            editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: e.target.value }
         });
     };
 
@@ -122,10 +118,10 @@ class MainWindow extends Component {
     renderTable = (roomTypes, title, displayValues = true) => {
         const dates = this.state.slideDirection ? this.state.preloadedDates : this.generateDates(this.state.startDate);
         const { slideDirection, daysToShift } = this.state;
-        const slideClass = daysToShift === 7 
-            ? (slideDirection === 'left' ? 'slide-left-7' : 'slide-right-7') 
+        const slideClass = daysToShift === 7
+            ? (slideDirection === 'left' ? 'slide-left-7' : 'slide-right-7')
             : (slideDirection === 'left' ? 'slide-left' : 'slide-right');
-    
+
         return (
             <div className="table-container">
                 <h3>{title}</h3>
@@ -165,6 +161,10 @@ class MainWindow extends Component {
                 </table>
             </div>
         );
+    };
+
+    resetDate = () => {
+        this.setState({ startDate: this.initialStartDate });
     };
 
     render() {
