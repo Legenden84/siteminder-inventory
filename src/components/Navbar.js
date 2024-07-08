@@ -38,6 +38,11 @@ class Navbar extends Component {
         }));
     };
 
+    handleReset = () => {
+        this.props.resetState();
+        localStorage.removeItem('state');
+    };
+
     render() {
         const { warning, toggleShowKapacitet, toggleShowOccupancy, showKapacitet, showOccupancy, uploadedFiles } = this.props;
         const { showDropdown } = this.state;
@@ -75,6 +80,9 @@ class Navbar extends Component {
                                 ))}
                             </ul>
                         )}
+                        <button className="reset-button" onClick={this.handleReset}>
+                            Reset
+                        </button>
                     </div>
                 </div>
                 <div className="navbar-section right">

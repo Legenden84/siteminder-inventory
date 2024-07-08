@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Navbar from '../components/Navbar';
-import { clearWarning, parseHTMFiles, toggleShowOccupancy, toggleShowKapacitet } from '../actions/NavbarActions';
+import { clearWarning, parseHTMFiles, resetState, toggleShowOccupancy, toggleShowKapacitet } from '../actions/NavbarActions';
 
 const mapStateToProps = (state) => ({
     warning: state.navbar.warning,
@@ -12,6 +12,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     clearWarning: () => dispatch(clearWarning()),
     parseHTMFiles: (files) => dispatch(parseHTMFiles(files)),
+    resetState: () => dispatch(resetState()),
     toggleShowOccupancy: () => dispatch(toggleShowOccupancy()),
     toggleShowKapacitet: () => dispatch(toggleShowKapacitet())
 })
