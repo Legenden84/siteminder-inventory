@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './MainWindow.css';
+import moment from 'moment';
 
 const ascotRoomTypes = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
 const fiftySevenRoomTypes = ["F1", "F2", "F2S", "F3D", "F3DS"];
@@ -7,9 +8,28 @@ const hyperNymRoomTypes = ["HY1", "HY2", "HY3"];
 const wideRoomTypes = ["W2B", "W2D", "W3B", "W4B", "WE1"];
 
 class MainWindow extends Component {
+    initialStartDate = moment();
+
     state = {
         editing: {}, // { 'roomType-date': true }
         editedValues: {}, // { 'roomType-date': value }
+        slideDirection: '', // 'left' or 'right'
+        startDate: this.initialStartDate,
+    };
+
+    handleDateChange = (days) => {
+        const direction = days > 0 ? 'left' : 'right';
+        this.setState({ slideDirection: direction });
+        setTimeout(() => {
+            this.setState((prevState) => ({
+                startDate: prevState.startDate.clone().add(days, 'days'),
+                slideDirection: ''
+            }));
+        }, 500); // Duration should match the CSS animation duration
+    };
+
+    resetDate = () => {
+        this.setState({ startDate: this.initialStartDate });
     };
 
     generateDates = (startDate) => {
@@ -72,7 +92,8 @@ class MainWindow extends Component {
     };
 
     renderTable = (roomTypes, title, displayValues = true) => {
-        const dates = this.generateDates(this.props.startDate);
+        const dates = this.generateDates(this.state.startDate);
+        const { slideDirection } = this.state;
 
         return (
             <div className="table-container">
@@ -82,7 +103,9 @@ class MainWindow extends Component {
                         <tr>
                             <th>Room</th>
                             {dates.map(({ displayDate }) => (
-                                <th key={displayDate}>{displayDate}</th>
+                                <th key={displayDate} className={slideDirection ? `slide-${slideDirection}` : ''}>
+                                    {displayDate}
+                                </th>
                             ))}
                         </tr>
                     </thead>
@@ -90,8 +113,8 @@ class MainWindow extends Component {
                         {roomTypes.map(room => (
                             <tr key={room}>
                                 <td>{room}</td>
-                                {dates.map(({ fullDate, displayDate }) => (
-                                    <td key={fullDate} onDoubleClick={() => this.handleDoubleClick(room, fullDate)}>
+                                {dates.map(({ fullDate }) => (
+                                    <td key={fullDate} className={slideDirection ? `slide-${slideDirection}` : ''} onDoubleClick={() => this.handleDoubleClick(room, fullDate)}>
                                         {displayValues && this.state.editing[`${room}-${fullDate}`] ? (
                                             <input
                                                 className="edit-input"
@@ -119,11 +142,11 @@ class MainWindow extends Component {
                 <div className="header-titles">
                     <h2>Hotel Status</h2>
                     <div className="placeholder-buttons">
-                        <button className="placeholder-button" onClick={this.props.resetDate}>Today</button>
-                        <button className="placeholder-button" onClick={() => this.props.onDateChange(-7)}>-7</button>
-                        <button className="placeholder-button" onClick={() => this.props.onDateChange(-1)}>-1</button>
-                        <button className="placeholder-button" onClick={() => this.props.onDateChange(1)}>+1</button>
-                        <button className="placeholder-button" onClick={() => this.props.onDateChange(7)}>+7</button>
+                        <button className="placeholder-button" onClick={this.resetDate}>Today</button>
+                        <button className="placeholder-button" onClick={() => this.handleDateChange(-7)}>-7</button>
+                        <button className="placeholder-button" onClick={() => this.handleDateChange(-1)}>-1</button>
+                        <button className="placeholder-button" onClick={() => this.handleDateChange(1)}>+1</button>
+                        <button className="placeholder-button" onClick={() => this.handleDateChange(7)}>+7</button>
                     </div>
                     <h2>SideMinder Statistics</h2>
                 </div>

@@ -43,6 +43,7 @@
     justify-content: center;
     gap: 20px;
     width: 100%;
+    overflow: hidden; /* Hide overflow to manage sliding effect */
 }
 
 .table-section {
@@ -52,11 +53,14 @@
 
 .table-container {
     margin-bottom: 20px;
+    position: relative;
 }
 
 .table-container table tr td:first-child {
     background-color: #eee;
     font-weight: bold;
+    position: relative;
+    z-index: 10; /* Keep the first column always in front */
 }
 
 table {
@@ -71,6 +75,7 @@ th, td {
     text-align: center;
     position: relative;
     font-size: 0.8rem;
+    z-index: 1; /* Default z-index for other cells */
 }
 
 th {
@@ -89,4 +94,36 @@ td {
     padding: 2px;
     margin: 0 auto;
     display: block;
+}
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(100%);
+        z-index: 0; /* Ensure sliding from behind */
+    }
+    to {
+        transform: translateX(0);
+        z-index: 1; /* Ensure sliding from behind */
+    }
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(-100%);
+        z-index: 0; /* Ensure sliding from behind */
+    }
+    to {
+        transform: translateX(0);
+        z-index: 1; /* Ensure sliding from behind */
+    }
+}
+
+.slide-left {
+    animation: slideLeft 0.5s forwards;
+    z-index: 1; /* Ensure sliding from behind */
+}
+
+.slide-right {
+    animation: slideRight 0.5s forwards;
+    z-index: 1; /* Ensure sliding from behind */
 }
