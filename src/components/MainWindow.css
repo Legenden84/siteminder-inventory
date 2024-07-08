@@ -43,20 +43,27 @@
     justify-content: center;
     gap: 20px;
     width: 100%;
+    overflow: hidden; /* Hide overflow to manage sliding effect */
 }
 
 .table-section {
-    width: 50%;
-    text-align: center;
+    width: 100%;
+    overflow: hidden; /* Ensure table columns do not overflow the container */
 }
 
 .table-container {
     margin-bottom: 20px;
+    position: relative;
+    width: 100%;
 }
 
-.table-container table tr td:first-child {
+.table-container table tr td:first-child,
+.table-container table th:first-child {
     background-color: #eee;
     font-weight: bold;
+    position: sticky;
+    left: 0;
+    z-index: 3; /* Ensure index column is above sliding columns */
 }
 
 table {
@@ -71,15 +78,13 @@ th, td {
     text-align: center;
     position: relative;
     font-size: 0.8rem;
-}
-
-th {
+    white-space: nowrap; /* Prevent text from wrapping */
     background-color: #eee;
 }
 
 td {
     background-color: #fff;
-    padding: 0.5rem;
+    z-index: 1; /* Default z-index for cells except the first column */
 }
 
 .edit-input {
@@ -89,4 +94,56 @@ td {
     padding: 2px;
     margin: 0 auto;
     display: block;
+}
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideLeft7 {
+    from {
+        transform: translateX(700%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideRight7 {
+    from {
+        transform: translateX(-700%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.slide-left {
+    animation: slideLeft 0.5s forwards;
+}
+
+.slide-right {
+    animation: slideRight 0.5s forwards;
+}
+
+.slide-left-7 {
+    animation: slideLeft7 0.5s forwards;
+}
+
+.slide-right-7 {
+    animation: slideRight7 0.5s forwards;
 }
