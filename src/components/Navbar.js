@@ -8,6 +8,15 @@ class Navbar extends Component {
     };
 
     fileInputRef = React.createRef();
+    dropdownButtonRef = React.createRef(); // Reference to the dropdown button
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleOutsideClick);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleOutsideClick);
+    }
 
     handleClick = () => {
         this.fileInputRef.current.click();
@@ -30,6 +39,12 @@ class Navbar extends Component {
     handleFileUpload = (event) => {
         const files = Array.from(event.target.files);
         this.props.parseHTMFiles(files);
+    };
+
+    handleOutsideClick = (event) => {
+        if (this.state.showDropdown && this.dropdownButtonRef.current && !this.dropdownButtonRef.current.contains(event.target)) {
+            this.setState({ showDropdown: false });
+        }
     };
 
     handleToggleDropdown = () => {
@@ -70,7 +85,11 @@ class Navbar extends Component {
                         />
                     </div>
                     <div className="uploaded-files-container">
-                        <button className="uploaded-files-button" onClick={this.handleToggleDropdown}>
+                        <button
+                            className="uploaded-files-button"
+                            onClick={this.handleToggleDropdown}
+                            ref={this.dropdownButtonRef}
+                        >
                             Uploaded Files {uploadedFiles.length > 0 && `(${uploadedFiles.length})`}
                         </button>
                         {showDropdown && (
