@@ -21,6 +21,8 @@
 
 .placeholder-buttons {
     display: flex;
+    background-color: #F1EEE9;
+    border-radius: 15px;
     justify-content: center;
     gap: 10px;
 }
@@ -32,6 +34,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin: 15px;
 }
 
 .placeholder-button:hover {
