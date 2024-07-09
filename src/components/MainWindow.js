@@ -101,10 +101,13 @@ class MainWindow extends Component {
     };
 
     handleDoubleClick = (roomType, date) => {
-        this.setState({
-            editing: { ...this.state.editing, [`${roomType}-${date}`]: true },
-            editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date) }
-        });
+        console.log("this.props.showKapacitet", this.props.showKapacitet);
+        if (this.props.showKapacitet) {  // Only allow editing if showKapacitet is true
+            this.setState({
+                editing: { ...this.state.editing, [`${roomType}-${date}`]: true },
+                editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date) }
+            });
+        }
     };
 
     handleBlur = (roomType, date) => {
@@ -141,7 +144,8 @@ class MainWindow extends Component {
                             <tr key={room}>
                                 <td style={{ zIndex: 2 }}>{room}</td>
                                 {dates.map(({ fullDate }) => (
-                                    <td key={fullDate} className={slideDirection ? slideClass : ''}>
+                                    <td key={fullDate} className={slideDirection ? slideClass : ''}
+                                        onDoubleClick={() => this.handleDoubleClick(room, fullDate)}>
                                         {displayValues && this.state.editing[`${room}-${fullDate}`] ? (
                                             <input
                                                 className="edit-input"

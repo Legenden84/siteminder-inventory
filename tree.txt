@@ -20,12 +20,11 @@
     │   ├── NavbarReducer.js
     │   └── index.js
     ├── store
+    │   ├── localStorage.js
     │   └── store.js
     └── utils
         ├── WarningModal.css
         ├── WarningModal.js
         └── parseHTM.js
 
-7 directories, 19 files
-
-
+7 directories, 20 files
