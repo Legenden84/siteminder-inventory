@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import Navbar from '../components/Navbar';
 import { clearWarning, parseHTMFiles, resetState, toggleShowOccupancy, toggleShowKapacitet } from '../actions/NavbarActions';
+import Navbar from '../components/Navbar';
 
 const mapStateToProps = (state) => ({
     warning: state.navbar.warning,

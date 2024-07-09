@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './MainWindow.css';
 import moment from 'moment';
+import './MainWindow.css';
 
 const ascotRoomTypes = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
 const fiftySevenRoomTypes = ["F1", "F2", "F2S", "F3D", "F3DS"];

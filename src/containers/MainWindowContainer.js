@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import MainWindow from '../components/MainWindow';
 import { updateKapacitet } from '../actions/NavbarActions';
+import MainWindow from '../components/MainWindow';
 
 const mapStateToProps = (state) => ({
     htmData: state.navbar.htmData,

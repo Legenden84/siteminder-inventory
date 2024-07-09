@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './Navbar.css';
 import WarningModal from '../utils/WarningModal';
+import './Navbar.css';
 
 class Navbar extends Component {
     state = {
