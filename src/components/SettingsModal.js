@@ -24,8 +24,11 @@ class SettingsModal extends Component {
         const { deleteScheme } = this.props;
         const { selectedSchemeName } = this.state;
         if (selectedSchemeName) {
-            deleteScheme(selectedSchemeName);
-            this.setState({ selectedSchemeName: null });
+            const confirmDelete = window.confirm(`Are you sure you want to delete ${selectedSchemeName}?`);
+            if (confirmDelete) {
+                deleteScheme(selectedSchemeName);
+                this.setState({ selectedSchemeName: null });
+            }
         }
     };
 
@@ -109,19 +112,27 @@ class SettingsModal extends Component {
                             {selectedScheme ? (
                                 <div className="scheme-details">
                                     <div className="date-inputs">
-                                        <input
-                                            type="date"
-                                            className="date-picker button"
-                                            value={selectedScheme.startDate}
-                                            onChange={this.handleStartDateChange}
-                                        />
-                                        <input
-                                            type="date"
-                                            className="date-picker button"
-                                            value={selectedScheme.endDate}
-                                            onChange={this.handleEndDateChange}
-                                        />
-                                        <button className="button" onClick={this.handleDeleteScheme}>
+                                        <div className="date-picker-container">
+                                            <label htmlFor="start-date" className="date-label">Start Date</label>
+                                            <input
+                                                id="start-date"
+                                                type="date"
+                                                className="date-picker button"
+                                                value={selectedScheme.startDate}
+                                                onChange={this.handleStartDateChange}
+                                            />
+                                        </div>
+                                        <div className="date-picker-container">
+                                            <label htmlFor="end-date" className="date-label">End Date</label>
+                                            <input
+                                                id="end-date"
+                                                type="date"
+                                                className="date-picker button"
+                                                value={selectedScheme.endDate}
+                                                onChange={this.handleEndDateChange}
+                                            />
+                                        </div>
+                                        <button className="delete-button" onClick={this.handleDeleteScheme}>
                                             Delete Scheme
                                         </button>
                                     </div>
