@@ -37,34 +37,31 @@ class MainWindow extends Component {
         return dates;
     };
 
-    getDisplayValue = (roomType, fullDate) => {
-        const key = `${roomType}-${fullDate}`;
-        const { preloadedData, slideDirection } = this.state;
-        if (slideDirection) {
-            return preloadedData[key] !== undefined ? preloadedData[key] : '';
-        }
-
-        const { htmData = {}, showKapacitet, showOccupancy } = this.props;
+    getDisplayValue = (roomType, fullDate, showKapacitet, showOccupancy, data) => {
         const [day, month] = fullDate.split('-');
-        const year = new Date().getFullYear().toString();
+        const year = new Date().getFullYear().toString(); // or other logic to handle the year if necessary
 
-        if (htmData[roomType] && htmData[roomType][`${day}-${month}`]) {
-            const dateEntries = htmData[roomType][`${day}-${month}`];
-            const dateEntry = dateEntries.find(entry => entry.År === year);
-            if (dateEntry) {
-                if (showKapacitet) {
-                    return dateEntry.Kapacitet;
-                }
-                if (showOccupancy) {
-                    return dateEntry.BelægnProcent;
-                }
-                // Default case to show available capacity minus reserved
-                const kapasitet = parseInt(dateEntry.Kapacitet, 10);
-                const reserveret = parseInt(dateEntry.Reserveret, 10);
-                return kapasitet - reserveret;
-            }
+        // Check if the data for the specified room type and date exists
+        if (!data || !data[roomType] || !data[roomType][`${day}-${month}`]) {
+            console.error('Data is missing for:', roomType, fullDate);
+            return ''; // Return empty string if data is missing
         }
-        return '';
+
+        const dateEntries = data[roomType][`${day}-${month}`];
+        const dateEntry = dateEntries.find(entry => entry.År === year);
+        if (!dateEntry) return '';
+
+        if (showKapacitet) {
+            return dateEntry.Kapacitet;
+        } else if (showOccupancy) {
+            return dateEntry.BelægnProcent;
+        }
+
+        const kapacitet = parseInt(dateEntry.Kapacitet, 10);
+        const reserveret = parseInt(dateEntry.Reserveret, 10);
+        const available = isNaN(kapacitet - reserveret) ? '' : (kapacitet - reserveret).toString();
+
+        return available;
     };
 
     handleChange = (e, roomType, date) => {
@@ -102,7 +99,7 @@ class MainWindow extends Component {
 
     handleDoubleClick = (roomType, date) => {
         console.log("this.props.showKapacitet", this.props.showKapacitet);
-        if (this.props.showKapacitet) {  // Only allow editing if showKapacitet is true
+        if (this.props.showKapacitet) {
             this.setState({
                 editing: { ...this.state.editing, [`${roomType}-${date}`]: true },
                 editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date) }
@@ -118,7 +115,7 @@ class MainWindow extends Component {
         });
     };
 
-    renderTable = (roomTypes, title, displayValues = true) => {
+    renderTable = (roomTypes, title, showKapacitet, showOccupancy, data, displayValues = true) => {
         const dates = this.state.slideDirection ? this.state.preloadedDates : this.generateDates(this.state.startDate);
         const { slideDirection, daysToShift } = this.state;
         const slideClass = daysToShift === 7
@@ -155,7 +152,7 @@ class MainWindow extends Component {
                                                 onBlur={() => this.handleBlur(room, fullDate)}
                                             />
                                         ) : (
-                                            displayValues ? this.getDisplayValue(room, fullDate) : ''
+                                            this.getDisplayValue(room, fullDate, showKapacitet, showOccupancy, data)
                                         )}
                                     </td>
                                 ))}
@@ -187,16 +184,16 @@ class MainWindow extends Component {
                 </div>
                 <div className="tables-container">
                     <div className="table-section">
-                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms')}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms')}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms')}
-                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms')}
+                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
+                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
                     </div>
                     <div className="table-section">
-                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', true, this.props.siteminderData)}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms', true, this.props.siteminderData)}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', true, this.props.siteminderData)}
-                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', true, this.props.siteminderData)}
+                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false, false, this.props.siteminderData)}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false, false, this.props.siteminderData)}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false, false, this.props.siteminderData)}
+                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', false, false, this.props.siteminderData)}
                     </div>
                 </div>
             </div>
