@@ -8,7 +8,7 @@ const hyperNymRoomTypes = ["HY1", "HY2", "HY3"];
 
 class SettingsModal extends Component {
     state = {
-        selectedScheme: null,
+        selectedSchemeName: null,
     };
 
     handleAddScheme = () => {
@@ -17,33 +17,47 @@ class SettingsModal extends Component {
         addScheme(newSchemeName);
     };
 
-    handleSelectScheme = (scheme) => {
-        this.setState({ selectedScheme: scheme });
+    handleSelectScheme = (schemeName) => {
+        this.setState({ selectedSchemeName: schemeName });
     };
 
-    handleAddRoom = (roomType, roomName) => {
-        const { addRoomToScheme } = this.props;
-        const { selectedScheme } = this.state;
-        if (selectedScheme) {
-            addRoomToScheme(selectedScheme.name, roomType, roomName);
+    handleToggleRoom = (roomType, roomName) => {
+        const { addRoomToScheme, removeRoomFromScheme, schemes } = this.props;
+        const { selectedSchemeName } = this.state;
+        if (selectedSchemeName) {
+            const selectedScheme = schemes.find(scheme => scheme.name === selectedSchemeName);
+            const roomList = selectedScheme[roomType];
+            if (roomList.includes(roomName)) {
+                removeRoomFromScheme(selectedSchemeName, roomType, roomName);
+            } else {
+                addRoomToScheme(selectedSchemeName, roomType, roomName);
+            }
         }
     };
 
     renderRoomButtons = (roomTypes, roomType) => {
-        return roomTypes.map((roomName, index) => (
-            <button
-                key={index}
-                className="room-button"
-                onClick={() => this.handleAddRoom(roomType, roomName)}
-            >
-                {roomName}
-            </button>
-        ));
+        const { schemes } = this.props;
+        const { selectedSchemeName } = this.state;
+        const selectedScheme = schemes.find(scheme => scheme.name === selectedSchemeName);
+
+        return roomTypes.map((roomName, index) => {
+            const isActive = selectedScheme && selectedScheme[roomType].includes(roomName);
+            return (
+                <button
+                    key={index}
+                    className={`room-button ${isActive ? 'active' : ''}`}
+                    onClick={() => this.handleToggleRoom(roomType, roomName)}
+                >
+                    {roomName}
+                </button>
+            );
+        });
     };
 
     render() {
         const { showSettingsModal, onClose, schemes } = this.props;
-        const { selectedScheme } = this.state;
+        const { selectedSchemeName } = this.state;
+        const selectedScheme = schemes.find(scheme => scheme.name === selectedSchemeName);
 
         if (!showSettingsModal) return null;
 
@@ -60,7 +74,7 @@ class SettingsModal extends Component {
                         <div className="settings-navbar">
                             <ul>
                                 {schemes.map((scheme, index) => (
-                                    <li key={index} onClick={() => this.handleSelectScheme(scheme)}>
+                                    <li key={index} onClick={() => this.handleSelectScheme(scheme.name)}>
                                         {scheme.name}
                                     </li>
                                 ))}

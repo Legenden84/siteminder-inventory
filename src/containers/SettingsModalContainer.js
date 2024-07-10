@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { toggleSettingsModal } from '../actions/NavbarActions';
-import { addScheme, addRoomToScheme } from '../actions/SettingsActions';
+import { addScheme, addRoomToScheme, removeRoomFromScheme } from '../actions/SettingsActions';
 import SettingsModal from '../components/SettingsModal';
 
 const mapStateToProps = (state) => ({
@@ -10,8 +10,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     onClose: () => dispatch(toggleSettingsModal()),
-    addRoomToScheme: (schemeName, roomType, roomName) => dispatch(addRoomToScheme(schemeName, roomType, roomName)),
     addScheme: (scheme) => dispatch(addScheme(scheme)),
+    addRoomToScheme: (schemeName, roomType, roomName) => dispatch(addRoomToScheme(schemeName, roomType, roomName)),
+    removeRoomFromScheme: (schemeName, roomType, roomName) => dispatch(removeRoomFromScheme(schemeName, roomType, roomName)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);
