@@ -193,10 +193,10 @@ class MainWindow extends Component {
                         {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms')}
                     </div>
                     <div className="table-section">
-                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false)}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false)}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false)}
-                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', false)}
+                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', true, this.props.siteminderData)}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms', true, this.props.siteminderData)}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', true, this.props.siteminderData)}
+                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', true, this.props.siteminderData)}
                     </div>
                 </div>
             </div>

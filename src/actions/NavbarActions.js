@@ -8,6 +8,8 @@ export const TRACK_UPLOADED_FILES = 'TRACK_UPLOADED_FILES';
 export const TOGGLE_SHOW_KAPACITET = 'TOGGLE_SHOW_KAPACITET';
 export const TOGGLE_SHOW_OCCUPANCY = 'TOGGLE_SHOW_OCCUPANCY';
 export const UPDATE_KAPACITET = 'UPDATE_KAPACITET';
+export const UPDATE_SITEMINDER_DATA = 'UPDATE_SITEMINDER_DATA';
+
 
 const checkForSkippedFiles = (uploadedFiles, newFiles) => {
     const files = [...uploadedFiles, ...newFiles];
@@ -118,6 +120,8 @@ export const parseHTMFiles = (files) => {
                     payload: updatedData,
                 });
 
+                dispatch(updateSiteMinderData(updatedData));
+
                 dispatch({
                     type: TRACK_UPLOADED_FILES,
                     payload: [...uploadedFiles, ...sortedFiles.map(file => ({ name: file.name, size: file.size }))],
@@ -144,4 +148,9 @@ export const toggleShowOccupancy = () => ({
 export const updateKapacitet = (roomType, date, newValue) => ({
     type: UPDATE_KAPACITET,
     payload: { roomType, date, newValue },
+});
+
+export const updateSiteMinderData = (data) => ({
+    type: UPDATE_SITEMINDER_DATA,
+    payload: data,
 });

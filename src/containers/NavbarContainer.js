@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
-import { clearWarning, parseHTMFiles, resetState, toggleShowOccupancy, toggleShowKapacitet } from '../actions/NavbarActions';
+import { clearWarning, parseHTMFiles, resetState, toggleShowOccupancy, toggleShowKapacitet, updateSiteMinderData } from '../actions/NavbarActions';
 import Navbar from '../components/Navbar';
 
 const mapStateToProps = (state) => ({
-    warning: state.navbar.warning,
     showKapacitet: state.navbar.showKapacitet,
     showOccupancy: state.navbar.showOccupancy,
-    uploadedFiles: state.navbar.uploadedFiles
+    siteminderData: state.navbar.siteminderData,
+    uploadedFiles: state.navbar.uploadedFiles,
+    warning: state.navbar.warning
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -14,7 +15,8 @@ const mapDispatchToProps = (dispatch) => ({
     parseHTMFiles: (files) => dispatch(parseHTMFiles(files)),
     resetState: () => dispatch(resetState()),
     toggleShowOccupancy: () => dispatch(toggleShowOccupancy()),
-    toggleShowKapacitet: () => dispatch(toggleShowKapacitet())
+    toggleShowKapacitet: () => dispatch(toggleShowKapacitet()),
+    updateSiteMinderData: (data) => dispatch(updateSiteMinderData(data))
 })
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({

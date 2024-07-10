@@ -6,11 +6,13 @@ import {
     TOGGLE_SHOW_KAPACITET,
     TOGGLE_SHOW_OCCUPANCY,
     TRACK_UPLOADED_FILES,
-    UPDATE_KAPACITET
+    UPDATE_KAPACITET,
+    UPDATE_SITEMINDER_DATA
 } from '../actions/NavbarActions';
 
 const initialState = {
     htmData: {},
+    siteminderData: {},
     uploadedFiles: [],
     warning: null,
     showKapacitet: false,
@@ -69,6 +71,11 @@ const navbarReducer = (state = initialState, action) => {
             return {
                 ...state,
                 htmData: updatedData,
+            };
+        case UPDATE_SITEMINDER_DATA:
+            return {
+                ...state,
+                siteminderData: action.payload,
             };
         default:
             return state;
