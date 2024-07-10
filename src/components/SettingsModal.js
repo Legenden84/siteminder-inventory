@@ -35,6 +35,18 @@ class SettingsModal extends Component {
         }
     };
 
+    handleStartDateChange = (e) => {
+        const { updateSchemeStartDate } = this.props;
+        const { selectedSchemeName } = this.state;
+        updateSchemeStartDate(selectedSchemeName, e.target.value);
+    };
+
+    handleEndDateChange = (e) => {
+        const { updateSchemeEndDate } = this.props;
+        const { selectedSchemeName } = this.state;
+        updateSchemeEndDate(selectedSchemeName, e.target.value);
+    };
+
     renderRoomButtons = (roomTypes, roomType) => {
         const { schemes } = this.props;
         const { selectedSchemeName } = this.state;
@@ -84,6 +96,24 @@ class SettingsModal extends Component {
                         <div className="settings-main-content">
                             {selectedScheme ? (
                                 <div className="scheme-details">
+                                    <div className="date-inputs">
+                                        <label>
+                                            Start Date:
+                                            <input
+                                                type="date"
+                                                value={selectedScheme.startDate}
+                                                onChange={this.handleStartDateChange}
+                                            />
+                                        </label>
+                                        <label>
+                                            End Date:
+                                            <input
+                                                type="date"
+                                                value={selectedScheme.endDate}
+                                                onChange={this.handleEndDateChange}
+                                            />
+                                        </label>
+                                    </div>
                                     <div className="room-type">
                                         <div>Ascot</div>
                                         {this.renderRoomButtons(ascotRoomTypes, 'ascotRooms')}

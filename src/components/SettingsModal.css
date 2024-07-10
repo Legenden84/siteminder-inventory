@@ -44,6 +44,30 @@
     width: 100%;
 }
 
+.settings-main-content {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.scheme-details {
+    margin-bottom: 20px;
+}
+
+.room-type {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.room-type div {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Modal Navbar
+---------------------------------------------------------------------*/
+
 .settings-navbar {
     width: 200px;
     background-color: #F1EEE9;
@@ -68,26 +92,20 @@
     background-color: #7DABB5;
 }
 
-.settings-main-content {
-    flex: 1;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.scheme-details {
+/* Date Input
+---------------------------------------------------------------------*/
+.date-inputs {
+    display: flex;
     margin-bottom: 20px;
 }
 
-.room-type {
+.date-inputs label {
     display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.room-type div {
-    font-weight: bold;
+    flex-direction: column;
+    align-items: flex-start;
     margin-right: 10px;
 }
+
 
 /* Buttons
 ---------------------------------------------------------------------*/
