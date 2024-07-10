@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import './SettingsModal.css';
 
 class SettingsModal extends Component {
+    handleAddScheme = () => {
+        const { addScheme } = this.props;
+        addScheme(`inventoryScheme${this.props.schemes.length + 1}`);
+    };
+
     render() {
-        const { showSettingsModal, onClose } = this.props;
+        const { showSettingsModal, onClose, schemes } = this.props;
         if (!showSettingsModal) return null;
 
         return (
@@ -18,9 +23,10 @@ class SettingsModal extends Component {
                     <div className="settings-modal-body">
                         <div className="settings-navbar">
                             <ul>
-                                <li>Option 1</li>
-                                <li>Option 2</li>
-                                <li>Option 3</li>
+                                {schemes.map((scheme, index) => (
+                                    <li key={index}>{scheme}</li>
+                                ))}
+                                <button className="button" onClick={this.handleAddScheme}>Add Scheme</button>
                             </ul>
                         </div>
                         <div className="settings-main-content">
