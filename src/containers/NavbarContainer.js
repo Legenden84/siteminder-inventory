@@ -1,8 +1,17 @@
 import { connect } from 'react-redux';
-import { clearWarning, parseHTMFiles, resetState, toggleShowOccupancy, toggleShowKapacitet, updateSiteMinderData } from '../actions/NavbarActions';
+import {
+    clearWarning,
+    parseHTMFiles,
+    resetState,
+    toggleSettingsModal,
+    toggleShowOccupancy,
+    toggleShowKapacitet,
+    updateSiteMinderData
+} from '../actions/NavbarActions';
 import Navbar from '../components/Navbar';
 
 const mapStateToProps = (state) => ({
+    showSettingsModal: state.navbar.showSettingsModal,
     showKapacitet: state.navbar.showKapacitet,
     showOccupancy: state.navbar.showOccupancy,
     siteminderData: state.navbar.siteminderData,
@@ -14,6 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
     clearWarning: () => dispatch(clearWarning()),
     parseHTMFiles: (files) => dispatch(parseHTMFiles(files)),
     resetState: () => dispatch(resetState()),
+    toggleSettingsModal: () => dispatch(toggleSettingsModal()),
     toggleShowOccupancy: () => dispatch(toggleShowOccupancy()),
     toggleShowKapacitet: () => dispatch(toggleShowKapacitet()),
     updateSiteMinderData: (data) => dispatch(updateSiteMinderData(data))

@@ -3,6 +3,7 @@ import {
     FILE_UPLOAD_WARNING,
     PARSE_HTM_FILES,
     RESET_STATE,
+    TOGGLE_SETTINGS_MODAL,
     TOGGLE_SHOW_KAPACITET,
     TOGGLE_SHOW_OCCUPANCY,
     TRACK_UPLOADED_FILES,
@@ -16,6 +17,7 @@ const initialState = {
     uploadedFiles: [],
     warning: null,
     showKapacitet: false,
+    showSettingsModal: false,
     showOccupancy: false,
 };
 
@@ -55,6 +57,11 @@ const navbarReducer = (state = initialState, action) => {
             return {
                 ...state,
                 uploadedFiles: action.payload
+            };
+        case TOGGLE_SETTINGS_MODAL:
+            return {
+                ...state,
+                showSettingsModal: !state.showSettingsModal
             };
         case UPDATE_KAPACITET:
             const { roomType, date, newValue } = action.payload;

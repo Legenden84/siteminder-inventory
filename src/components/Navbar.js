@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SettingsModal from './SettingsModal';
+import SettingsModalContainer from '../containers/SettingsModalContainer';
 import WarningModal from '../utils/WarningModal';
 import './Navbar.css';
 
@@ -70,7 +70,7 @@ class Navbar extends Component {
     };
 
     render() {
-        const { warning, toggleShowKapacitet, toggleShowOccupancy, showKapacitet, showOccupancy, uploadedFiles } = this.props;
+        const { warning, showSettingsModal, toggleShowKapacitet, toggleShowOccupancy, toggleSettingsModal, showKapacitet, showOccupancy, uploadedFiles } = this.props;
         const { showDropdown } = this.state;
 
         return (
@@ -129,11 +129,16 @@ class Navbar extends Component {
                         >
                             Occupancy
                         </button>
-                        <button className='button' onClick={this.handleToggleSettingsModal}>Settings</button>
-                        <SettingsModal
+                        <button
+                            className={`button ${showSettingsModal ? 'active' : ''}`}
+                            onClick={toggleSettingsModal}
+                        >
+                            Settings
+                        </button>
+                        <SettingsModalContainer
                             isOpen={this.state.isSettingsModalOpen}
-                            onClose={this.handleToggleSettingsModal}
-                        ></SettingsModal>
+                            onClose={toggleSettingsModal}
+                        ></SettingsModalContainer>
                     </div>
                 </div>
                 <WarningModal warning={warning} onClose={this.handleCloseModal} />
