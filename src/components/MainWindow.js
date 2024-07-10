@@ -177,11 +177,11 @@ class MainWindow extends Component {
                 <div className="header-titles">
                     <h2>Hotel Status</h2>
                     <div className="placeholder-buttons">
-                        <button className="placeholder-button" onClick={this.resetDate}>Today</button>
-                        <button className="placeholder-button" onClick={() => this.handleDateChange(-7)}>-7</button>
-                        <button className="placeholder-button" onClick={() => this.handleDateChange(-1)}>-1</button>
-                        <button className="placeholder-button" onClick={() => this.handleDateChange(1)}>+1</button>
-                        <button className="placeholder-button" onClick={() => this.handleDateChange(7)}>+7</button>
+                        <button className="button" onClick={this.resetDate}>Today</button>
+                        <button className="button" onClick={() => this.handleDateChange(-7)}>-7</button>
+                        <button className="button" onClick={() => this.handleDateChange(-1)}>-1</button>
+                        <button className="button" onClick={() => this.handleDateChange(1)}>+1</button>
+                        <button className="button" onClick={() => this.handleDateChange(7)}>+7</button>
                     </div>
                     <h2>SideMinder Statistics</h2>
                 </div>

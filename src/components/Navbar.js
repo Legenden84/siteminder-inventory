@@ -86,7 +86,7 @@ class Navbar extends Component {
                     </div>
                     <div className="uploaded-files-container">
                         <button
-                            className="uploaded-files-button"
+                            className="button"
                             onClick={this.handleToggleDropdown}
                             ref={this.dropdownButtonRef}
                         >
@@ -99,7 +99,7 @@ class Navbar extends Component {
                                 ))}
                             </ul>
                         )}
-                        <button className="reset-button" onClick={this.handleReset}>
+                        <button className="button" onClick={this.handleReset}>
                             Reset
                         </button>
                     </div>
@@ -107,18 +107,18 @@ class Navbar extends Component {
                 <div className="navbar-section right">
                     <div className="mode-div">
                         <button
-                            className={`mode-button ${showKapacitet ? 'active' : ''}`}
+                            className={`button ${showKapacitet ? 'active' : ''}`}
                             onClick={toggleShowKapacitet}
                         >
                             Inventory
                         </button>
                         <button
-                            className={`mode-button ${showOccupancy ? 'active' : ''}`}
+                            className={`button ${showOccupancy ? 'active' : ''}`}
                             onClick={toggleShowOccupancy}
                         >
                             Occupancy
                         </button>
-                        <button className='mode-button'>
+                        <button className='button'>
                             Settings
                         </button>
                     </div>
