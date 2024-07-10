@@ -89,7 +89,7 @@
 
 .uploaded-files-button {
     padding: 10px 20px;
-    background-color: #008cba;
+    background-color: #3F666E;
     color: white;
     border: none;
     border-radius: 4px;
@@ -99,7 +99,7 @@
 }
 
 .uploaded-files-button:hover {
-    background-color: #005f5f;
+    background-color: #7DABB5;
 }
 
 .uploaded-files-dropdown {
@@ -139,7 +139,7 @@
 
 .placeholder-button {
     padding: 10px 20px;
-    background-color: #008cba;
+    background-color: #3F666E;
     color: white;
     border: none;
     border-radius: 4px;
@@ -147,7 +147,7 @@
 }
 
 .placeholder-button:hover {
-    background-color: #005f5f;
+    background-color: #7DABB5;
 }
 
 .mode-div {
@@ -157,14 +157,14 @@
 }
 
 .mode-button.active {
-    background-color: #ff5733;
+    background-color: #7DABB5;
     color: white;
 }
 
 .mode-button {
     padding: 10px 20px;
     margin: 5px;
-    background-color: #008cba;
+    background-color: #3F666E;
     color: white;
     border: none;
     border-radius: 4px;
@@ -172,13 +172,13 @@
 }
 
 .mode-button:hover {
-    background-color: #005f5f;
+    background-color: #7DABB5;
 }
 
 .reset-button {
     padding: 10px 20px;
     margin-top: 5px;
-    background-color: #008cba;
+    background-color: #3F666E;
     color: white;
     border: none;
     border-radius: 4px;
@@ -186,5 +186,5 @@
 }
 
 .reset-button:hover {
-    background-color: #005f5f;
+    background-color: #7DABB5;
 }

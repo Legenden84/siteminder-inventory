@@ -196,7 +196,7 @@ class MainWindow extends Component {
                         {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false)}
                         {this.renderTable(wideRoomTypes, 'Wide Rooms', false)}
                         {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false)}
-                        {this.renderTable(hyperNymRoomTypes, 'Hyper Nym Rooms', false)}
+                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', false)}
                     </div>
                 </div>
             </div>
