@@ -1,4 +1,11 @@
-import { ADD_ROOM_TO_SCHEME, ADD_SCHEME, REMOVE_ROOM_FROM_SCHEME, UPDATE_SCHEME_START_DATE, UPDATE_SCHEME_END_DATE } from '../actions/SettingsActions';
+import {
+    ADD_ROOM_TO_SCHEME,
+    ADD_SCHEME,
+    DELETE_SCHEME,
+    REMOVE_ROOM_FROM_SCHEME,
+    UPDATE_SCHEME_START_DATE,
+    UPDATE_SCHEME_END_DATE
+} from '../actions/SettingsActions';
 
 const initialState = {
     schemes: [],
@@ -30,6 +37,11 @@ const settingsReducer = (state = initialState, action) => {
                         ...action.payload
                     }
                 ],
+            };
+        case DELETE_SCHEME:
+            return {
+                ...state,
+                schemes: state.schemes.filter(scheme => scheme.name !== action.payload.schemeName),
             };
         case REMOVE_ROOM_FROM_SCHEME:
             return {

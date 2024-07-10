@@ -1,5 +1,6 @@
 export const ADD_SCHEME = 'ADD_SCHEME';
 export const ADD_ROOM_TO_SCHEME = 'ADD_ROOM_TO_SCHEME';
+export const DELETE_SCHEME = 'DELETE_SCHEME';
 export const REMOVE_ROOM_FROM_SCHEME = 'REMOVE_ROOM_FROM_SCHEME';
 export const UPDATE_SCHEME_START_DATE = 'UPDATE_SCHEME_START_DATE';
 export const UPDATE_SCHEME_END_DATE = 'UPDATE_SCHEME_END_DATE';
@@ -32,6 +33,13 @@ export const removeRoomFromScheme = (schemeName, roomType, roomName) => ({
         schemeName,
         roomType,
         roomName,
+    },
+});
+
+export const deleteScheme = (schemeName) => ({
+    type: DELETE_SCHEME,
+    payload: {
+        schemeName,
     },
 });
 

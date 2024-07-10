@@ -21,6 +21,15 @@ class SettingsModal extends Component {
         this.setState({ selectedSchemeName: schemeName });
     };
 
+    handleDeleteScheme = () => {
+        const { deleteScheme } = this.props;
+        const { selectedSchemeName } = this.state;
+        if (selectedSchemeName) {
+            deleteScheme(selectedSchemeName);
+            this.setState({ selectedSchemeName: null });
+        }
+    };
+
     handleToggleRoom = (roomType, roomName) => {
         const { addRoomToScheme, removeRoomFromScheme, schemes } = this.props;
         const { selectedSchemeName } = this.state;
@@ -113,6 +122,9 @@ class SettingsModal extends Component {
                                             value={selectedScheme.endDate}
                                             onChange={this.handleEndDateChange}
                                         />
+                                        <button className="button" onClick={this.handleDeleteScheme}>
+                                            Delete Scheme
+                                        </button>
                                     </div>
                                     <div className="room-type">
                                         <div>Ascot</div>
