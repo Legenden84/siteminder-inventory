@@ -1,6 +1,14 @@
 export const ADD_SCHEME = 'ADD_SCHEME';
 
-export const addScheme = (scheme) => ({
+export const addScheme = (name) => ({
     type: ADD_SCHEME,
-    payload: scheme,
+    payload: {
+        name,
+        startDate: '',
+        endDate: '',
+        ascotRooms: [],
+        wideRooms: [],
+        house57Rooms: [],
+        hyperNymRooms: [],
+    },
 });

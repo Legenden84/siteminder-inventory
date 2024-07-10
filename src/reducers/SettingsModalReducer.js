@@ -12,13 +12,7 @@ const settingsReducer = (state = initialState, action) => {
                 schemes: [
                     ...state.schemes,
                     {
-                        name: action.payload,
-                        startDate: '',
-                        endDate: '',
-                        ascotRooms: [],
-                        wideRooms: [],
-                        house57Rooms: [],
-                        hyperNymRooms: []
+                        ...action.payload
                     }
                 ],
             };

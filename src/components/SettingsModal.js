@@ -2,14 +2,24 @@ import React, { Component } from 'react';
 import './SettingsModal.css';
 
 class SettingsModal extends Component {
+    state = {
+        selectedScheme: null,
+    };
+
     handleAddScheme = () => {
         const { addScheme, schemes } = this.props;
         const newSchemeName = `Scheme ${schemes.length + 1}`;
         addScheme(newSchemeName);
     };
 
+    handleSelectScheme = (scheme) => {
+        this.setState({ selectedScheme: scheme });
+    };
+
     render() {
         const { showSettingsModal, onClose, schemes } = this.props;
+        const { selectedScheme } = this.state;
+
         if (!showSettingsModal) return null;
 
         return (
@@ -25,24 +35,27 @@ class SettingsModal extends Component {
                         <div className="settings-navbar">
                             <ul>
                                 {schemes.map((scheme, index) => (
-                                    <li key={index}>{scheme.name}</li>
+                                    <li key={index} onClick={() => this.handleSelectScheme(scheme)}>
+                                        {scheme.name}
+                                    </li>
                                 ))}
                                 <button className="button" onClick={this.handleAddScheme}>Add Scheme</button>
                             </ul>
                         </div>
                         <div className="settings-main-content">
-                            <h2>Main Content</h2>
-                            {schemes.map((scheme, index) => (
-                                <div key={index} className="scheme-details">
-                                    <h3>{scheme.name}</h3>
-                                    <div>Start Date: {scheme.startDate}</div>
-                                    <div>End Date: {scheme.endDate}</div>
-                                    <div>Ascot Rooms: {scheme.ascotRooms.join(', ')}</div>
-                                    <div>Wide Rooms: {scheme.wideRooms.join(', ')}</div>
-                                    <div>57 House Rooms: {scheme.house57Rooms.join(', ')}</div>
-                                    <div>HyperNym Rooms: {scheme.hyperNymRooms.join(', ')}</div>
+                            {selectedScheme ? (
+                                <div className="scheme-details">
+                                    <h3>{selectedScheme.name}</h3>
+                                    <div>Start Date: {selectedScheme.startDate}</div>
+                                    <div>End Date: {selectedScheme.endDate}</div>
+                                    <div>Ascot Rooms: {selectedScheme.ascotRooms.join(', ')}</div>
+                                    <div>Wide Rooms: {selectedScheme.wideRooms.join(', ')}</div>
+                                    <div>57 House Rooms: {selectedScheme.house57Rooms.join(', ')}</div>
+                                    <div>HyperNym Rooms: {selectedScheme.hyperNymRooms.join(', ')}</div>
                                 </div>
-                            ))}
+                            ) : (
+                                <h2>Select a Scheme to view details</h2>
+                            )}
                         </div>
                     </div>
                 </div>
