@@ -23,6 +23,11 @@ class MainWindow extends Component {
         };
     }
 
+    componentDidMount() {
+        const { updateChosenDate } = this.props;
+        updateChosenDate(this.initialStartDate.format('YYYY-MM-DD'));
+    }
+
     generateDates = (startDate) => {
         const dates = [];
         const currentDate = startDate.clone();
@@ -95,6 +100,11 @@ class MainWindow extends Component {
                 slideDirection: ''
             }));
         }, 500); // Duration should match the CSS animation duration
+    };
+
+    handleChosenDateChange = (e) => {
+        const { updateChosenDate } = this.props;
+        updateChosenDate(e.target.value);
     };
 
     handleDoubleClick = (roomType, date) => {
@@ -179,6 +189,14 @@ class MainWindow extends Component {
                         <button className="button" onClick={() => this.handleDateChange(-1)}>-1</button>
                         <button className="button" onClick={() => this.handleDateChange(1)}>+1</button>
                         <button className="button" onClick={() => this.handleDateChange(7)}>+7</button>
+                        <label>
+                            Chosen Date:
+                            <input
+                                type="date"
+                                value={this.props.chosenDate}
+                                onChange={this.handleChosenDateChange}
+                            />
+                        </label>
                     </div>
                     <h2>SideMinder Statistics</h2>
                 </div>

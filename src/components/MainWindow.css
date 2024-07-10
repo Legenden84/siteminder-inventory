@@ -28,6 +28,22 @@
     display: block;
 }
 
+/* Date Picker
+---------------------------------------------------------------------*/
+
+.date-controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.date-controls label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 10px;
+}
+
 /* Buttons
 ---------------------------------------------------------------------*/
 
