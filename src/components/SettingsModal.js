@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import './SettingsModal.css';
 
+const ascotRoomTypes = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
+const wideRoomTypes = ["F1", "F2", "F2S", "F3D", "F3DS"];
+const house57RoomTypes = ["H1", "H2", "H3"];
+const hyperNymRoomTypes = ["HY1", "HY2", "HY3"];
+
 class SettingsModal extends Component {
     state = {
         selectedScheme: null,
@@ -14,6 +19,12 @@ class SettingsModal extends Component {
 
     handleSelectScheme = (scheme) => {
         this.setState({ selectedScheme: scheme });
+    };
+
+    renderRoomButtons = (roomTypes) => {
+        return roomTypes.map((roomType, index) => (
+            <button key={index} className="room-button">{roomType}</button>
+        ));
     };
 
     render() {
@@ -45,6 +56,22 @@ class SettingsModal extends Component {
                         <div className="settings-main-content">
                             {selectedScheme ? (
                                 <div className="scheme-details">
+                                    <div className="room-type">
+                                        <div>Ascot</div>
+                                        {this.renderRoomButtons(ascotRoomTypes)}
+                                    </div>
+                                    <div className="room-type">
+                                        <div>Wide</div>
+                                        {this.renderRoomButtons(wideRoomTypes)}
+                                    </div>
+                                    <div className="room-type">
+                                        <div>57 House</div>
+                                        {this.renderRoomButtons(house57RoomTypes)}
+                                    </div>
+                                    <div className="room-type">
+                                        <div>HyperNym</div>
+                                        {this.renderRoomButtons(hyperNymRoomTypes)}
+                                    </div>
                                     <h3>{selectedScheme.name}</h3>
                                     <div>Start Date: {selectedScheme.startDate}</div>
                                     <div>End Date: {selectedScheme.endDate}</div>
