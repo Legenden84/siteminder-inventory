@@ -12,9 +12,8 @@ class SettingsModal extends Component {
     };
 
     handleAddScheme = () => {
-        const { addScheme, schemes } = this.props;
-        const newSchemeName = `Scheme ${schemes.length + 1}`;
-        addScheme(newSchemeName);
+        const { addScheme } = this.props;
+        addScheme();
     };
 
     handleSelectScheme = (schemeName) => {

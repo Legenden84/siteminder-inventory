@@ -5,18 +5,30 @@ export const REMOVE_ROOM_FROM_SCHEME = 'REMOVE_ROOM_FROM_SCHEME';
 export const UPDATE_SCHEME_START_DATE = 'UPDATE_SCHEME_START_DATE';
 export const UPDATE_SCHEME_END_DATE = 'UPDATE_SCHEME_END_DATE';
 
-export const addScheme = (name) => ({
-    type: ADD_SCHEME,
-    payload: {
-        name,
-        startDate: '',
-        endDate: '',
-        ascotRooms: [],
-        wideRooms: [],
-        house57Rooms: [],
-        hyperNymRooms: [],
-    },
-});
+const getNextSchemeName = (schemes) => {
+    const schemeNumbers = schemes
+        .map(scheme => parseInt(scheme.name.split(' ')[1], 10))
+        .filter(number => !isNaN(number));
+    const nextNumber = schemeNumbers.length > 0 ? Math.max(...schemeNumbers) + 1 : 1;
+    return `Scheme ${nextNumber}`;
+};
+
+export const addScheme = () => (dispatch, getState) => {
+    const { schemes } = getState().settings;
+    const newSchemeName = getNextSchemeName(schemes);
+    dispatch({
+        type: ADD_SCHEME,
+        payload: {
+            name: newSchemeName,
+            startDate: '',
+            endDate: '',
+            ascotRooms: [],
+            wideRooms: [],
+            house57Rooms: [],
+            hyperNymRooms: [],
+        },
+    });
+};
 
 export const addRoomToScheme = (schemeName, roomType, roomName) => ({
     type: ADD_ROOM_TO_SCHEME,
