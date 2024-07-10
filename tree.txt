@@ -4,15 +4,19 @@
     ├── App.js
     ├── actions
     │   ├── MainWindowActions.js
-    │   └── NavbarActions.js
+    │   ├── NavbarActions.js
+    │   └── SettingsActions.js
     ├── components
     │   ├── MainWindow.css
     │   ├── MainWindow.js
     │   ├── Navbar.css
-    │   └── Navbar.js
+    │   ├── Navbar.js
+    │   ├── SettingsModal.css
+    │   └── SettingsModal.js
     ├── containers
     │   ├── MainWindowContainer.js
-    │   └── NavbarContainer.js
+    │   ├── NavbarContainer.js
+    │   └── SettingsModalContainer.js
     ├── index.css
     ├── index.js
     ├── reducers
@@ -27,4 +31,4 @@
         ├── WarningModal.js
         └── parseHTM.js
 
-7 directories, 20 files
+7 directories, 24 files

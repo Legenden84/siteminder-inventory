@@ -16,7 +16,16 @@ class SettingsModal extends Component {
                         </button>
                     </div>
                     <div className="settings-modal-body">
-                        <h2>Main Content</h2>
+                        <div className="settings-navbar">
+                            <ul>
+                                <li>Option 1</li>
+                                <li>Option 2</li>
+                                <li>Option 3</li>
+                            </ul>
+                        </div>
+                        <div className="settings-main-content">
+                            <h2>Main Content</h2>
+                        </div>
                     </div>
                 </div>
             </div>
