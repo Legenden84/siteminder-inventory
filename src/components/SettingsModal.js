@@ -86,7 +86,11 @@ class SettingsModal extends Component {
                         <div className="settings-navbar">
                             <ul>
                                 {schemes.map((scheme, index) => (
-                                    <li key={index} onClick={() => this.handleSelectScheme(scheme.name)}>
+                                    <li
+                                        key={index}
+                                        className={scheme.name === selectedSchemeName ? 'selected' : ''}
+                                        onClick={() => this.handleSelectScheme(scheme.name)}
+                                    >
                                         {scheme.name}
                                     </li>
                                 ))}
@@ -97,22 +101,18 @@ class SettingsModal extends Component {
                             {selectedScheme ? (
                                 <div className="scheme-details">
                                     <div className="date-inputs">
-                                        <label>
-                                            Start Date:
-                                            <input
-                                                type="date"
-                                                value={selectedScheme.startDate}
-                                                onChange={this.handleStartDateChange}
-                                            />
-                                        </label>
-                                        <label>
-                                            End Date:
-                                            <input
-                                                type="date"
-                                                value={selectedScheme.endDate}
-                                                onChange={this.handleEndDateChange}
-                                            />
-                                        </label>
+                                        <input
+                                            type="date"
+                                            className="date-picker button"
+                                            value={selectedScheme.startDate}
+                                            onChange={this.handleStartDateChange}
+                                        />
+                                        <input
+                                            type="date"
+                                            className="date-picker button"
+                                            value={selectedScheme.endDate}
+                                            onChange={this.handleEndDateChange}
+                                        />
                                     </div>
                                     <div className="room-type">
                                         <div>Ascot</div>

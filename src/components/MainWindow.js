@@ -8,29 +8,34 @@ const hyperNymRoomTypes = ["HY1", "HY2", "HY3"];
 const wideRoomTypes = ["W2B", "W2D", "W3B", "W4B", "WE1"];
 
 class MainWindow extends Component {
-    initialStartDate = moment();
-
     constructor(props) {
         super(props);
         this.state = {
             editing: {}, // { 'roomType-date': true }
             editedValues: {}, // { 'roomType-date': value }
             slideDirection: '', // 'left' or 'right'
-            startDate: this.initialStartDate,
-            preloadedDates: this.generateDates(this.initialStartDate),
+            preloadedDates: this.generateDates(props.chosenDate),
             preloadedData: {},
             daysToShift: 1, // New state to differentiate the number of days to shift
         };
     }
 
     componentDidMount() {
-        const { updateChosenDate } = this.props;
-        updateChosenDate(this.initialStartDate.format('YYYY-MM-DD'));
+        const { chosenDate, updateChosenDate } = this.props;
+        if (!chosenDate) {
+            updateChosenDate(moment().format('YYYY-MM-DD'));
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.chosenDate !== this.props.chosenDate) {
+            this.setState({ preloadedDates: this.generateDates(this.props.chosenDate) });
+        }
     }
 
     generateDates = (startDate) => {
         const dates = [];
-        const currentDate = startDate.clone();
+        const currentDate = moment(startDate);
 
         for (let i = 0; i < 14; i++) {
             dates.push({
@@ -76,11 +81,12 @@ class MainWindow extends Component {
     };
 
     handleDateChange = (days) => {
+        const { chosenDate, updateChosenDate } = this.props;
         const direction = days > 0 ? 'left' : 'right';
-        const newStartDate = this.state.startDate.clone().add(days, 'days');
-        const preloadedDates = this.generateDates(newStartDate);
+        const newChosenDate = moment(chosenDate).add(days, 'days').format('YYYY-MM-DD');
+        updateChosenDate(newChosenDate);
 
-        // Preload new data
+        const preloadedDates = this.generateDates(newChosenDate);
         const preloadedData = {};
         preloadedDates.forEach(({ fullDate }) => {
             ascotRoomTypes.concat(fiftySevenRoomTypes, hyperNymRoomTypes, wideRoomTypes).forEach(roomType => {
@@ -94,11 +100,11 @@ class MainWindow extends Component {
             preloadedData,
             daysToShift: Math.abs(days)
         });
+
         setTimeout(() => {
-            this.setState((prevState) => ({
-                startDate: newStartDate,
+            this.setState({
                 slideDirection: ''
-            }));
+            });
         }, 500); // Duration should match the CSS animation duration
     };
 
@@ -126,7 +132,7 @@ class MainWindow extends Component {
     };
 
     renderTable = (roomTypes, title, showKapacitet, showOccupancy, data, displayValues = true) => {
-        const dates = this.state.slideDirection ? this.state.preloadedDates : this.generateDates(this.state.startDate);
+        const dates = this.state.slideDirection ? this.state.preloadedDates : this.generateDates(this.props.chosenDate);
         const { slideDirection, daysToShift } = this.state;
         const slideClass = daysToShift === 7
             ? (slideDirection === 'left' ? 'slide-left-7' : 'slide-right-7')
@@ -175,7 +181,8 @@ class MainWindow extends Component {
     };
 
     resetDate = () => {
-        this.setState({ startDate: this.initialStartDate });
+        const today = moment().format('YYYY-MM-DD');
+        this.props.updateChosenDate(today);
     };
 
     render() {
@@ -189,14 +196,12 @@ class MainWindow extends Component {
                         <button className="button" onClick={() => this.handleDateChange(-1)}>-1</button>
                         <button className="button" onClick={() => this.handleDateChange(1)}>+1</button>
                         <button className="button" onClick={() => this.handleDateChange(7)}>+7</button>
-                        <label>
-                            Chosen Date:
-                            <input
-                                type="date"
-                                value={this.props.chosenDate}
-                                onChange={this.handleChosenDateChange}
-                            />
-                        </label>
+                        <input
+                            type="date"
+                            className="date-picker button"
+                            value={this.props.chosenDate || ''}
+                            onChange={this.handleChosenDateChange}
+                        />
                     </div>
                     <h2>SideMinder Statistics</h2>
                 </div>
