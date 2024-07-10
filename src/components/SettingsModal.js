@@ -21,9 +21,23 @@ class SettingsModal extends Component {
         this.setState({ selectedScheme: scheme });
     };
 
-    renderRoomButtons = (roomTypes) => {
-        return roomTypes.map((roomType, index) => (
-            <button key={index} className="room-button">{roomType}</button>
+    handleAddRoom = (roomType, roomName) => {
+        const { addRoomToScheme } = this.props;
+        const { selectedScheme } = this.state;
+        if (selectedScheme) {
+            addRoomToScheme(selectedScheme.name, roomType, roomName);
+        }
+    };
+
+    renderRoomButtons = (roomTypes, roomType) => {
+        return roomTypes.map((roomName, index) => (
+            <button
+                key={index}
+                className="room-button"
+                onClick={() => this.handleAddRoom(roomType, roomName)}
+            >
+                {roomName}
+            </button>
         ));
     };
 
@@ -58,19 +72,19 @@ class SettingsModal extends Component {
                                 <div className="scheme-details">
                                     <div className="room-type">
                                         <div>Ascot</div>
-                                        {this.renderRoomButtons(ascotRoomTypes)}
+                                        {this.renderRoomButtons(ascotRoomTypes, 'ascotRooms')}
                                     </div>
                                     <div className="room-type">
                                         <div>Wide</div>
-                                        {this.renderRoomButtons(wideRoomTypes)}
+                                        {this.renderRoomButtons(wideRoomTypes, 'wideRooms')}
                                     </div>
                                     <div className="room-type">
                                         <div>57 House</div>
-                                        {this.renderRoomButtons(house57RoomTypes)}
+                                        {this.renderRoomButtons(house57RoomTypes, 'house57Rooms')}
                                     </div>
                                     <div className="room-type">
                                         <div>HyperNym</div>
-                                        {this.renderRoomButtons(hyperNymRoomTypes)}
+                                        {this.renderRoomButtons(hyperNymRoomTypes, 'hyperNymRooms')}
                                     </div>
                                     <h3>{selectedScheme.name}</h3>
                                     <div>Start Date: {selectedScheme.startDate}</div>
