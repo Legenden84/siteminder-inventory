@@ -9,7 +9,18 @@ const settingsReducer = (state = initialState, action) => {
         case ADD_SCHEME:
             return {
                 ...state,
-                schemes: [...state.schemes, action.payload],
+                schemes: [
+                    ...state.schemes,
+                    {
+                        name: action.payload,
+                        startDate: '',
+                        endDate: '',
+                        ascotRooms: [],
+                        wideRooms: [],
+                        house57Rooms: [],
+                        hyperNymRooms: []
+                    }
+                ],
             };
         default:
             return state;
