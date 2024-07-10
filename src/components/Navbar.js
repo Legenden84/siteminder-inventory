@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import SettingsModal from './SettingsModal';
 import WarningModal from '../utils/WarningModal';
 import './Navbar.css';
 
 class Navbar extends Component {
     state = {
+        isSettingsModalOpen: false,
         showDropdown: false,
     };
 
@@ -56,6 +58,15 @@ class Navbar extends Component {
     handleReset = () => {
         this.props.resetState();
         localStorage.removeItem('state');
+    };
+
+    handleToggleSettingsModal = () => {
+        console.log("Toggling modal from:", this.state.isSettingsModalOpen);
+        this.setState(prevState => ({
+            isSettingsModalOpen: !prevState.isSettingsModalOpen
+        }), () => {
+            console.log("Modal open state is now:", this.state.isSettingsModalOpen);
+        });
     };
 
     render() {
@@ -118,9 +129,11 @@ class Navbar extends Component {
                         >
                             Occupancy
                         </button>
-                        <button className='button'>
-                            Settings
-                        </button>
+                        <button className='button' onClick={this.handleToggleSettingsModal}>Settings</button>
+                        <SettingsModal
+                            isOpen={this.state.isSettingsModalOpen}
+                            onClose={this.handleToggleSettingsModal}
+                        ></SettingsModal>
                     </div>
                 </div>
                 <WarningModal warning={warning} onClose={this.handleCloseModal} />
