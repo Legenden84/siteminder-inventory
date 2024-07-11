@@ -114,7 +114,6 @@
 }
 
 .settings-navbar ul {
-
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -178,6 +177,15 @@
 /* Buttons
 ---------------------------------------------------------------------*/
 
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+    width: 100%;
+}
+
 .button {
     padding: 10px 20px;
     background-color: #3F666E;
@@ -190,6 +198,21 @@
 }
 
 .button:hover {
+    background-color: #7DABB5;
+}
+
+.button-mini {
+    padding: 5px 10px;
+    background-color: #3F666E;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    margin: 5px;
+}
+
+.button-mini:hover {
     background-color: #7DABB5;
 }
 

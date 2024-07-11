@@ -58,6 +58,12 @@ class SettingsModal extends Component {
         updateSchemeEndDate(selectedSchemeName, e.target.value);
     };
 
+    handleResetSchemes = () => {
+        const { resetSchemes } = this.props;
+        resetSchemes();
+        this.setState({ selectedSchemeName: null });
+    };
+
     renderRoomButtons = (roomTypes, roomType) => {
         const { schemes } = this.props;
         const { selectedSchemeName } = this.state;
@@ -105,10 +111,20 @@ class SettingsModal extends Component {
                                         {scheme.name}
                                     </li>
                                 ))}
-
                             </ul>
-                            <div className="add-scheme-container">
-                                <button className="button" onClick={this.handleAddScheme}>Add Scheme</button>
+                            <div className="button-container">
+                                <button
+                                    className="button-mini"
+                                    onClick={this.handleAddScheme}
+                                >
+                                    <i className="fa-solid fa-square-plus"></i>
+                                </button>
+                                <button
+                                    className="button-mini"
+                                    onClick={this.handleResetSchemes}
+                                >
+                                    <i className="fa-solid fa-trash-arrow-up"></i>
+                                </button>
                             </div>
                         </div>
                         <div className="settings-main-content">

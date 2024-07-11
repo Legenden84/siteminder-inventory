@@ -4,7 +4,8 @@ import {
     DELETE_SCHEME,
     REMOVE_ROOM_FROM_SCHEME,
     UPDATE_SCHEME_START_DATE,
-    UPDATE_SCHEME_END_DATE
+    UPDATE_SCHEME_END_DATE,
+    RESET_SCHEMES,
 } from '../actions/SettingsActions';
 
 const initialState = {
@@ -79,6 +80,8 @@ const settingsReducer = (state = initialState, action) => {
                         : scheme
                 )
             };
+        case RESET_SCHEMES: // Add this case
+            return initialState;
         default:
             return state;
     }
