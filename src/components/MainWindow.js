@@ -140,7 +140,7 @@ class MainWindow extends Component {
         });
     };
 
-    renderTable = (roomTypes, title, showKapacitet, showOccupancy, data, displayValues = true) => {
+    renderTable = (roomTypes, title, showKapacitet, showOccupancy, data, displayValues = true, enableDoubleClick = false) => {
         const dates = this.state.slideDirection ? this.state.preloadedDates : this.generateDates(this.props.chosenDate);
         const { slideDirection, daysToShift } = this.state;
         const slideClass = daysToShift === 7
@@ -167,7 +167,7 @@ class MainWindow extends Component {
                                 <td style={{ zIndex: 2 }}>{room}</td>
                                 {dates.map(({ fullDate }, index) => (
                                     <td key={index} className={slideDirection ? slideClass : ''}
-                                        onDoubleClick={() => this.handleDoubleClick(room, fullDate)}>
+                                        onDoubleClick={enableDoubleClick ? () => this.handleDoubleClick(room, fullDate) : null}>
                                         {displayValues && this.state.editing[`${room}-${fullDate}`] ? (
                                             <input
                                                 className="edit-input"
@@ -216,16 +216,16 @@ class MainWindow extends Component {
                 </div>
                 <div className="tables-container">
                     <div className="table-section">
-                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
-                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
+                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
+                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
                     </div>
                     <div className="table-section">
-                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false, false, this.props.siteminderData)}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false, false, this.props.siteminderData)}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false, false, this.props.siteminderData)}
-                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', false, false, this.props.siteminderData)}
+                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false, false, this.props.siteminderData, false, false)}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false, false, this.props.siteminderData, false, false)}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false, false, this.props.siteminderData, false, false)}
+                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', false, false, this.props.siteminderData, false, false)}
                     </div>
                 </div>
             </div>
