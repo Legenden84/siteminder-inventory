@@ -56,8 +56,11 @@ class Navbar extends Component {
     };
 
     handleReset = () => {
-        this.props.resetState();
-        localStorage.removeItem('state');
+        const confirmReset = window.confirm("Are you sure you want to reset all Hotel statisctics?");
+        if (confirmReset) {
+            this.props.resetState();
+            localStorage.removeItem('state');
+        }
     };
 
     handleToggleSettingsModal = () => {
