@@ -39,8 +39,8 @@ class MainWindow extends Component {
 
         for (let i = 0; i < 14; i++) {
             const date = currentDate.clone().add(i, 'days');
-            const displayDate = date.format('DD-MM');
-            const fullDate = date.format('DD-MM-YYYY');
+            const displayDate = date.isValid() ? date.format('DD-MM') : 'Invalid date';
+            const fullDate = date.isValid() ? date.format('DD-MM-YYYY') : `Invalid-${i}`;
             dates.push({
                 displayDate,
                 fullDate
@@ -52,13 +52,18 @@ class MainWindow extends Component {
 
     getDisplayValue = (roomType, fullDate, showKapacitet, showOccupancy, data) => {
         const date = moment(fullDate, 'DD-MM-YYYY');
+        if (!date.isValid()) {
+            // console.error('Invalid date:', fullDate);
+            return '';
+        }
+
         const day = date.format('DD');
         const month = date.format('MM');
         const year = date.format('YYYY');
 
         // Check if the data for the specified room type and date exists
         if (!data || !data[roomType] || !data[roomType][`${day}-${month}`]) {
-            console.error('Data is missing for:', roomType, fullDate);
+            // console.error('Data is missing for:', roomType, fullDate);
             return ''; // Return empty string if data is missing
         }
 
@@ -115,7 +120,7 @@ class MainWindow extends Component {
 
     handleChosenDateChange = (e) => {
         const { updateChosenDate } = this.props;
-        updateChosenDate(moment(e.target.value).format('DD-MM-YYYY'));
+        updateChosenDate(moment(e.target.value, 'YYYY-MM-DD').format('DD-MM-YYYY'));
     };
 
     handleDoubleClick = (roomType, date) => {
@@ -149,8 +154,8 @@ class MainWindow extends Component {
                     <thead>
                         <tr>
                             <th>Room</th>
-                            {dates.map(({ displayDate }) => (
-                                <th key={displayDate} className={slideDirection ? slideClass : ''}>
+                            {dates.map(({ displayDate }, index) => (
+                                <th key={index} className={slideDirection ? slideClass : ''}>
                                     {displayDate}
                                 </th>
                             ))}
@@ -160,8 +165,8 @@ class MainWindow extends Component {
                         {roomTypes.map(room => (
                             <tr key={room}>
                                 <td style={{ zIndex: 2 }}>{room}</td>
-                                {dates.map(({ fullDate }) => (
-                                    <td key={fullDate} className={slideDirection ? slideClass : ''}
+                                {dates.map(({ fullDate }, index) => (
+                                    <td key={index} className={slideDirection ? slideClass : ''}
                                         onDoubleClick={() => this.handleDoubleClick(room, fullDate)}>
                                         {displayValues && this.state.editing[`${room}-${fullDate}`] ? (
                                             <input
