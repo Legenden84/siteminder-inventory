@@ -198,7 +198,7 @@ class MainWindow extends Component {
         return (
             <div className="main-window">
                 <div className="header-titles">
-                    <h2>Hotel Status</h2>
+                    <h2>Hotel Statistics</h2>
                     <div className="placeholder-buttons">
                         <button className="button" onClick={this.resetDate}>Today</button>
                         <button className="button" onClick={() => this.handleDateChange(-7)}>-7</button>
@@ -212,7 +212,7 @@ class MainWindow extends Component {
                             onChange={this.handleChosenDateChange}
                         />
                     </div>
-                    <h2>SideMinder Statistics</h2>
+                    <h2>SideMinder Inventory</h2>
                 </div>
                 <div className="tables-container">
                     <div className="table-section">
