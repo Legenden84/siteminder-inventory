@@ -137,7 +137,7 @@ class SettingsModal extends Component {
                                                 />
                                             </div>
                                             <button className="delete-button" onClick={this.handleDeleteScheme}>
-                                                <i class="fa-solid fa-trash"></i>
+                                                <i className="fa-solid fa-trash"></i>
                                             </button>
                                         </div>
                                         <div className="settings-details-container">
