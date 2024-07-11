@@ -23,24 +23,27 @@ class MainWindow extends Component {
     componentDidMount() {
         const { chosenDate, updateChosenDate } = this.props;
         if (!chosenDate) {
-            updateChosenDate(moment().format('YYYY-MM-DD'));
+            updateChosenDate(moment().format('DD-MM-YYYY'));
         }
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.chosenDate !== this.props.chosenDate) {
+        if (prevProps.chosenDate !== this.props.chosenDate || prevProps.htmData !== this.props.htmData || prevProps.siteminderData !== this.props.siteminderData) {
             this.setState({ preloadedDates: this.generateDates(this.props.chosenDate) });
         }
     }
 
     generateDates = (startDate) => {
         const dates = [];
-        const currentDate = moment(startDate);
+        const currentDate = moment(startDate, 'DD-MM-YYYY');
 
         for (let i = 0; i < 14; i++) {
+            const date = currentDate.clone().add(i, 'days');
+            const displayDate = date.format('DD-MM');
+            const fullDate = date.format('DD-MM-YYYY');
             dates.push({
-                displayDate: currentDate.clone().add(i, 'days').format('DD-MM'),
-                fullDate: currentDate.clone().add(i, 'days').format('DD-MM-YYYY')
+                displayDate,
+                fullDate
             });
         }
 
@@ -48,8 +51,10 @@ class MainWindow extends Component {
     };
 
     getDisplayValue = (roomType, fullDate, showKapacitet, showOccupancy, data) => {
-        const [day, month] = fullDate.split('-');
-        const year = new Date().getFullYear().toString(); // or other logic to handle the year if necessary
+        const date = moment(fullDate, 'DD-MM-YYYY');
+        const day = date.format('DD');
+        const month = date.format('MM');
+        const year = date.format('YYYY');
 
         // Check if the data for the specified room type and date exists
         if (!data || !data[roomType] || !data[roomType][`${day}-${month}`]) {
@@ -83,14 +88,14 @@ class MainWindow extends Component {
     handleDateChange = (days) => {
         const { chosenDate, updateChosenDate } = this.props;
         const direction = days > 0 ? 'left' : 'right';
-        const newChosenDate = moment(chosenDate).add(days, 'days').format('YYYY-MM-DD');
+        const newChosenDate = moment(chosenDate, 'DD-MM-YYYY').add(days, 'days').format('DD-MM-YYYY');
         updateChosenDate(newChosenDate);
 
         const preloadedDates = this.generateDates(newChosenDate);
         const preloadedData = {};
         preloadedDates.forEach(({ fullDate }) => {
             ascotRoomTypes.concat(fiftySevenRoomTypes, hyperNymRoomTypes, wideRoomTypes).forEach(roomType => {
-                preloadedData[`${roomType}-${fullDate}`] = this.getDisplayValue(roomType, fullDate);
+                preloadedData[`${roomType}-${fullDate}`] = this.getDisplayValue(roomType, fullDate, this.props.showKapacitet, this.props.showOccupancy, this.props.htmData);
             });
         });
 
@@ -110,15 +115,14 @@ class MainWindow extends Component {
 
     handleChosenDateChange = (e) => {
         const { updateChosenDate } = this.props;
-        updateChosenDate(e.target.value);
+        updateChosenDate(moment(e.target.value).format('DD-MM-YYYY'));
     };
 
     handleDoubleClick = (roomType, date) => {
-        console.log("this.props.showKapacitet", this.props.showKapacitet);
         if (this.props.showKapacitet) {
             this.setState({
                 editing: { ...this.state.editing, [`${roomType}-${date}`]: true },
-                editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date) }
+                editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date, this.props.showKapacitet, this.props.showOccupancy, this.props.htmData) }
             });
         }
     };
@@ -181,7 +185,7 @@ class MainWindow extends Component {
     };
 
     resetDate = () => {
-        const today = moment().format('YYYY-MM-DD');
+        const today = moment().format('DD-MM-YYYY');
         this.props.updateChosenDate(today);
     };
 
@@ -199,7 +203,7 @@ class MainWindow extends Component {
                         <input
                             type="date"
                             className="date-picker button"
-                            value={this.props.chosenDate || ''}
+                            value={moment(this.props.chosenDate, 'DD-MM-YYYY').format('YYYY-MM-DD')}
                             onChange={this.handleChosenDateChange}
                         />
                     </div>
