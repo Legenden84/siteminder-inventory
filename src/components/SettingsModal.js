@@ -159,7 +159,7 @@ class SettingsModal extends Component {
                                     <i className="fa-solid fa-trash-arrow-up"></i>
                                 </button>
                                 <button
-                                    className="button-mini"
+                                    className={`button-mini ${isEditing ? 'active' : ''}`}
                                     onClick={this.handleEditToggle}
                                 >
                                     <i className="fa-solid fa-pen-to-square"></i>
