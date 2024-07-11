@@ -122,7 +122,7 @@ class Navbar extends Component {
                             </ul>
                         )}
                         <button className="button" onClick={this.handleReset}>
-                            <i className="fa-solid fa-power-off"></i>
+                        <i className="fa-solid fa-trash-arrow-up"></i>
                         </button>
                     </div>
                 </div>
