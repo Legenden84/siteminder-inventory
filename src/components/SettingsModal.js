@@ -9,6 +9,8 @@ const hyperNymRoomTypes = ["HY1", "HY2", "HY3"];
 class SettingsModal extends Component {
     state = {
         selectedSchemeName: null,
+        isEditing: false,
+        editedNames: {}
     };
 
     handleAddScheme = () => {
@@ -64,6 +66,28 @@ class SettingsModal extends Component {
         this.setState({ selectedSchemeName: null });
     };
 
+    handleEditToggle = () => {
+        this.setState(prevState => ({ isEditing: !prevState.isEditing }));
+    };
+
+    handleNameChange = (index, e) => {
+        const { value } = e.target;
+        this.setState(prevState => ({
+            editedNames: {
+                ...prevState.editedNames,
+                [index]: value
+            }
+        }));
+    };
+
+    handleNameBlur = (index) => {
+        const { editedNames } = this.state;
+        const { updateSchemeName } = this.props;
+        if (editedNames[index]) {
+            updateSchemeName(index, editedNames[index]);
+        }
+    };
+
     renderRoomButtons = (roomTypes, roomType) => {
         const { schemes } = this.props;
         const { selectedSchemeName } = this.state;
@@ -85,7 +109,7 @@ class SettingsModal extends Component {
 
     render() {
         const { showSettingsModal, onClose, schemes } = this.props;
-        const { selectedSchemeName } = this.state;
+        const { selectedSchemeName, isEditing, editedNames } = this.state;
         const selectedScheme = schemes.find(scheme => scheme.name === selectedSchemeName);
 
         if (!showSettingsModal) return null;
@@ -108,7 +132,16 @@ class SettingsModal extends Component {
                                         className={scheme.name === selectedSchemeName ? 'selected' : ''}
                                         onClick={() => this.handleSelectScheme(scheme.name)}
                                     >
-                                        {scheme.name}
+                                        {isEditing ? (
+                                            <input
+                                                type="text"
+                                                value={editedNames[index] || scheme.name}
+                                                onChange={(e) => this.handleNameChange(index, e)}
+                                                onBlur={() => this.handleNameBlur(index)}
+                                            />
+                                        ) : (
+                                            scheme.name
+                                        )}
                                     </li>
                                 ))}
                             </ul>
@@ -124,6 +157,12 @@ class SettingsModal extends Component {
                                     onClick={this.handleResetSchemes}
                                 >
                                     <i className="fa-solid fa-trash-arrow-up"></i>
+                                </button>
+                                <button
+                                    className="button-mini"
+                                    onClick={this.handleEditToggle}
+                                >
+                                    <i className="fa-solid fa-pen-to-square"></i>
                                 </button>
                             </div>
                         </div>

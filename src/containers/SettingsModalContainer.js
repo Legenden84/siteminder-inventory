@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { toggleSettingsModal } from '../actions/NavbarActions';
-import { addScheme, addRoomToScheme, deleteScheme, removeRoomFromScheme, updateSchemeStartDate, updateSchemeEndDate, resetSchemes } from '../actions/SettingsActions'; // Add resetSchemes
+import { addScheme, addRoomToScheme, deleteScheme, removeRoomFromScheme, updateSchemeStartDate, updateSchemeEndDate, updateSchemeName, resetSchemes } from '../actions/SettingsActions';
 import SettingsModal from '../components/SettingsModal';
 
 const mapStateToProps = (state) => ({
@@ -16,6 +16,7 @@ const mapDispatchToProps = (dispatch) => ({
     removeRoomFromScheme: (schemeName, roomType, roomName) => dispatch(removeRoomFromScheme(schemeName, roomType, roomName)),
     updateSchemeStartDate: (schemeName, startDate) => dispatch(updateSchemeStartDate(schemeName, startDate)),
     updateSchemeEndDate: (schemeName, endDate) => dispatch(updateSchemeEndDate(schemeName, endDate)),
+    updateSchemeName: (index, name) => dispatch(updateSchemeName(index, name)),
     resetSchemes: () => dispatch(resetSchemes())
 });
 

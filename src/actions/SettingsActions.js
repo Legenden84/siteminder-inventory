@@ -5,6 +5,7 @@ export const REMOVE_ROOM_FROM_SCHEME = 'REMOVE_ROOM_FROM_SCHEME';
 export const RESET_SCHEMES = 'RESET_SCHEMES';
 export const UPDATE_SCHEME_START_DATE = 'UPDATE_SCHEME_START_DATE';
 export const UPDATE_SCHEME_END_DATE = 'UPDATE_SCHEME_END_DATE';
+export const UPDATE_SCHEME_NAME = 'UPDATE_SCHEME_NAME';
 
 const getNextSchemeName = (schemes) => {
     const schemeNumbers = schemes
@@ -73,5 +74,13 @@ export const updateSchemeEndDate = (schemeName, endDate) => ({
     payload: {
         schemeName,
         endDate,
+    },
+});
+
+export const updateSchemeName = (index, name) => ({
+    type: UPDATE_SCHEME_NAME,
+    payload: {
+        index,
+        name,
     },
 });
