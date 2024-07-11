@@ -85,29 +85,55 @@
 }
 
 .scheme-details {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 20px;
+}
+
+.settings-top-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.settings-bottom-container {
+    display: flex;
+    align-items: center;
 }
 
 /* Modal Navbar
 ---------------------------------------------------------------------*/
 .settings-navbar {
     width: 200px;
-    background-color: #F1EEE9;
+    background-color: #F5F5F5;
     color: black;
+    border-radius: 20px;
     padding: 10px;
     box-sizing: border-box;
     border-right: 1px solid #ccc;
 }
 
 .settings-navbar ul {
+
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
 .settings-navbar li {
+    background-color: #F1EEE9;
     padding: 10px;
     cursor: pointer;
+}
+
+.settings-navbar li:first-child {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.settings-navbar li:last-child {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .settings-navbar li:hover,

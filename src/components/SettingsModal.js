@@ -105,60 +105,72 @@ class SettingsModal extends Component {
                                         {scheme.name}
                                     </li>
                                 ))}
-                                <button className="button" onClick={this.handleAddScheme}>Add Scheme</button>
+
                             </ul>
+                            <div className="add-scheme-container">
+                                <button className="button" onClick={this.handleAddScheme}>Add Scheme</button>
+                            </div>
                         </div>
                         <div className="settings-main-content">
                             {selectedScheme ? (
                                 <div className="scheme-details">
-                                    <div className="date-inputs">
-                                        <div className="date-picker-container">
-                                            <label htmlFor="start-date" className="date-label">Start Date</label>
-                                            <input
-                                                id="start-date"
-                                                type="date"
-                                                className="date-picker button"
-                                                value={selectedScheme.startDate}
-                                                onChange={this.handleStartDateChange}
-                                            />
+                                    <div className="settings-top-container">
+                                        <div className="date-inputs">
+                                            <div className="date-picker-container">
+                                                <label htmlFor="start-date" className="date-label">Start Date</label>
+                                                <input
+                                                    id="start-date"
+                                                    type="date"
+                                                    className="date-picker button"
+                                                    value={selectedScheme.startDate}
+                                                    onChange={this.handleStartDateChange}
+                                                />
+                                            </div>
+                                            <div className="date-picker-container">
+                                                <label htmlFor="end-date" className="date-label">End Date</label>
+                                                <input
+                                                    id="end-date"
+                                                    type="date"
+                                                    className="date-picker button"
+                                                    value={selectedScheme.endDate}
+                                                    onChange={this.handleEndDateChange}
+                                                />
+                                            </div>
+                                            <button className="delete-button" onClick={this.handleDeleteScheme}>
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
                                         </div>
-                                        <div className="date-picker-container">
-                                            <label htmlFor="end-date" className="date-label">End Date</label>
-                                            <input
-                                                id="end-date"
-                                                type="date"
-                                                className="date-picker button"
-                                                value={selectedScheme.endDate}
-                                                onChange={this.handleEndDateChange}
-                                            />
+                                        <div className="settings-details-container">
+                                            <h3>{selectedScheme.name}</h3>
+                                            <div>Start Date: {selectedScheme.startDate}</div>
+                                            <div>End Date: {selectedScheme.endDate}</div>
+                                            <div>Ascot Rooms: {selectedScheme.ascotRooms.join(', ')}</div>
+                                            <div>Wide Rooms: {selectedScheme.wideRooms.join(', ')}</div>
+                                            <div>57 House Rooms: {selectedScheme.house57Rooms.join(', ')}</div>
+                                            <div>HyperNym Rooms: {selectedScheme.hyperNymRooms.join(', ')}</div>
                                         </div>
-                                        <button className="delete-button" onClick={this.handleDeleteScheme}>
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
                                     </div>
-                                    <div className="room-type">
-                                        <div>Ascot</div>
-                                        {this.renderRoomButtons(ascotRoomTypes, 'ascotRooms')}
+                                    <div className="settings-middle-container">
+                                        <div className="room-type">
+                                            <div>Ascot</div>
+                                            {this.renderRoomButtons(ascotRoomTypes, 'ascotRooms')}
+                                        </div>
+                                        <div className="room-type">
+                                            <div>Wide</div>
+                                            {this.renderRoomButtons(wideRoomTypes, 'wideRooms')}
+                                        </div>
+                                        <div className="room-type">
+                                            <div>57 House</div>
+                                            {this.renderRoomButtons(house57RoomTypes, 'house57Rooms')}
+                                        </div>
+                                        <div className="room-type">
+                                            <div>HyperNym</div>
+                                            {this.renderRoomButtons(hyperNymRoomTypes, 'hyperNymRooms')}
+                                        </div>
                                     </div>
-                                    <div className="room-type">
-                                        <div>Wide</div>
-                                        {this.renderRoomButtons(wideRoomTypes, 'wideRooms')}
+                                    <div className="settings-bottom-container">
+                                        <h2>Settings Bottom Container</h2>
                                     </div>
-                                    <div className="room-type">
-                                        <div>57 House</div>
-                                        {this.renderRoomButtons(house57RoomTypes, 'house57Rooms')}
-                                    </div>
-                                    <div className="room-type">
-                                        <div>HyperNym</div>
-                                        {this.renderRoomButtons(hyperNymRoomTypes, 'hyperNymRooms')}
-                                    </div>
-                                    <h3>{selectedScheme.name}</h3>
-                                    <div>Start Date: {selectedScheme.startDate}</div>
-                                    <div>End Date: {selectedScheme.endDate}</div>
-                                    <div>Ascot Rooms: {selectedScheme.ascotRooms.join(', ')}</div>
-                                    <div>Wide Rooms: {selectedScheme.wideRooms.join(', ')}</div>
-                                    <div>57 House Rooms: {selectedScheme.house57Rooms.join(', ')}</div>
-                                    <div>HyperNym Rooms: {selectedScheme.hyperNymRooms.join(', ')}</div>
                                 </div>
                             ) : (
                                 <h2>Select a Scheme to view details</h2>
