@@ -10,7 +10,7 @@ class Navbar extends Component {
     };
 
     fileInputRef = React.createRef();
-    dropdownButtonRef = React.createRef(); // Reference to the dropdown button
+    dropdownButtonRef = React.createRef();
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleOutsideClick);
@@ -56,7 +56,7 @@ class Navbar extends Component {
     };
 
     handleReset = () => {
-        const confirmReset = window.confirm("Are you sure you want to reset all Hotel statisctics?");
+        const confirmReset = window.confirm("Are you sure you want to reset all Hotel statistics?");
         if (confirmReset) {
             this.props.resetState();
             localStorage.removeItem('state');
@@ -89,7 +89,15 @@ class Navbar extends Component {
                         onDragOver={this.handleDragOver}
                         onClick={this.handleClick}
                     >
-                        Tryk eller træk og slip Belægningsstatistik filer (.HTM)
+                        <div>
+                            Tryk eller træk og slip Belægningsstatistik filer (.HTM)
+                            {uploadedFiles.length > 0 && (
+                                <>
+                                    <br />
+                                    <span>{uploadedFiles.length} files uploaded</span>
+                                </>
+                            )}
+                        </div>
                         <input
                             ref={this.fileInputRef}
                             type="file"
@@ -104,7 +112,7 @@ class Navbar extends Component {
                             onClick={this.handleToggleDropdown}
                             ref={this.dropdownButtonRef}
                         >
-                            <i className="fa-solid fa-file-arrow-up"></i> {uploadedFiles.length > 0 && `(${uploadedFiles.length})`}
+                            <i className="fa-solid fa-file-arrow-up"></i>
                         </button>
                         {showDropdown && (
                             <ul className="uploaded-files-dropdown">
