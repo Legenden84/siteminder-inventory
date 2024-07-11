@@ -101,7 +101,7 @@ class Navbar extends Component {
                             onClick={this.handleToggleDropdown}
                             ref={this.dropdownButtonRef}
                         >
-                            Uploaded Files {uploadedFiles.length > 0 && `(${uploadedFiles.length})`}
+                            <i class="fa-solid fa-file-arrow-up"></i> {uploadedFiles.length > 0 && `(${uploadedFiles.length})`}
                         </button>
                         {showDropdown && (
                             <ul className="uploaded-files-dropdown">
@@ -111,7 +111,7 @@ class Navbar extends Component {
                             </ul>
                         )}
                         <button className="button" onClick={this.handleReset}>
-                            Reset
+                            <i class="fa-solid fa-power-off"></i>
                         </button>
                     </div>
                 </div>
@@ -133,7 +133,7 @@ class Navbar extends Component {
                             className={`button ${showSettingsModal ? 'active' : ''}`}
                             onClick={toggleSettingsModal}
                         >
-                            Settings
+                            <i class="fa-solid fa-gear"></i>
                         </button>
                         <SettingsModalContainer
                             isOpen={this.state.isSettingsModalOpen}
