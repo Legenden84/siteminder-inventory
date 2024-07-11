@@ -61,9 +61,12 @@ class SettingsModal extends Component {
     };
 
     handleResetSchemes = () => {
-        const { resetSchemes } = this.props;
-        resetSchemes();
-        this.setState({ selectedSchemeName: null });
+        const confirmReset = window.confirm("Are you sure you want to reset all SiteMinder Schemes?");
+        if (confirmReset) {
+            const { resetSchemes } = this.props;
+            resetSchemes();
+            this.setState({ selectedSchemeName: null });
+        }
     };
 
     handleEditToggle = () => {
