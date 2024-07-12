@@ -32,7 +32,6 @@ class SettingsModal extends Component {
         const { toggleRoomToScheme } = this.props;
         const { selectedSchemeName, currentRoomCategory, currentRoomType } = this.state;
         toggleRoomToScheme(selectedSchemeName, currentRoomCategory, currentRoomType, newRoomName);
-        this.handleCloseRoomPopup();
     };
 
     handleSelectScheme = (schemeName) => {
