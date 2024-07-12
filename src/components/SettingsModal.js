@@ -28,10 +28,10 @@ class SettingsModal extends Component {
         this.setState({ isRoomPopupOpen: false, currentRoomType: null });
     };
 
-    handleAddRoomToScheme = (newRoomName) => {
-        const { addRoomToScheme } = this.props;
+    handleToggleRoomToScheme = (newRoomName) => {
+        const { toggleRoomToScheme } = this.props;
         const { selectedSchemeName, currentRoomCategory, currentRoomType } = this.state;
-        addRoomToScheme(selectedSchemeName, currentRoomCategory, currentRoomType, newRoomName);
+        toggleRoomToScheme(selectedSchemeName, currentRoomCategory, currentRoomType, newRoomName);
         this.handleCloseRoomPopup();
     };
 
@@ -125,7 +125,7 @@ class SettingsModal extends Component {
                     {roomTypes.map(roomName => (
                         <button
                             key={roomName}
-                            onClick={() => this.handleAddRoomToScheme(roomName)}
+                            onClick={() => this.handleToggleRoomToScheme(roomName)}
                         >
                             {roomName}
                         </button>

@@ -1,8 +1,7 @@
 export const ADD_SCHEME = 'ADD_SCHEME';
-export const ADD_ROOM_TO_SCHEME = 'ADD_ROOM_TO_SCHEME';
 export const DELETE_SCHEME = 'DELETE_SCHEME';
-export const REMOVE_ROOM_FROM_SCHEME = 'REMOVE_ROOM_FROM_SCHEME';
 export const RESET_SCHEMES = 'RESET_SCHEMES';
+export const TOGGLE_ROOM_TO_SCHEME = 'TOGGLE_ROOM_TO_SCHEME';
 export const UPDATE_SCHEME_START_DATE = 'UPDATE_SCHEME_START_DATE';
 export const UPDATE_SCHEME_END_DATE = 'UPDATE_SCHEME_END_DATE';
 export const UPDATE_SCHEME_NAME = 'UPDATE_SCHEME_NAME';
@@ -34,22 +33,10 @@ export const addScheme = () => (dispatch, getState) => {
     });
 };
 
-export const addRoomToScheme = (schemeName, roomCategory, roomType, roomName) => ({
-    type: ADD_ROOM_TO_SCHEME,
+export const deleteScheme = (schemeName) => ({
+    type: DELETE_SCHEME,
     payload: {
         schemeName,
-        roomCategory,
-        roomType,
-        roomName,
-    },
-});
-
-export const removeRoomFromScheme = (schemeName, roomType, roomName) => ({
-    type: REMOVE_ROOM_FROM_SCHEME,
-    payload: {
-        schemeName,
-        roomType,
-        roomName,
     },
 });
 
@@ -57,10 +44,13 @@ export const resetSchemes = () => ({
     type: RESET_SCHEMES,
 });
 
-export const deleteScheme = (schemeName) => ({
-    type: DELETE_SCHEME,
+export const toggleRoomToScheme = (schemeName, roomCategory, roomType, roomName) => ({
+    type: TOGGLE_ROOM_TO_SCHEME,
     payload: {
         schemeName,
+        roomCategory,
+        roomType,
+        roomName,
     },
 });
 
