@@ -39,8 +39,8 @@ class MainWindow extends Component {
 
         for (let i = 0; i < 14; i++) {
             const date = currentDate.clone().add(i, 'days');
-            const displayDate = date.format('DD-MM');
-            const fullDate = date.format('DD-MM-YYYY');
+            const displayDate = date.isValid() ? date.format('DD-MM') : 'Invalid date';
+            const fullDate = date.isValid() ? date.format('DD-MM-YYYY') : `Invalid-${i}`;
             dates.push({
                 displayDate,
                 fullDate
@@ -52,13 +52,18 @@ class MainWindow extends Component {
 
     getDisplayValue = (roomType, fullDate, showKapacitet, showOccupancy, data) => {
         const date = moment(fullDate, 'DD-MM-YYYY');
+        if (!date.isValid()) {
+            // console.error('Invalid date:', fullDate);
+            return '';
+        }
+
         const day = date.format('DD');
         const month = date.format('MM');
         const year = date.format('YYYY');
 
         // Check if the data for the specified room type and date exists
         if (!data || !data[roomType] || !data[roomType][`${day}-${month}`]) {
-            console.error('Data is missing for:', roomType, fullDate);
+            // console.error('Data is missing for:', roomType, fullDate);
             return ''; // Return empty string if data is missing
         }
 
@@ -115,7 +120,7 @@ class MainWindow extends Component {
 
     handleChosenDateChange = (e) => {
         const { updateChosenDate } = this.props;
-        updateChosenDate(moment(e.target.value).format('DD-MM-YYYY'));
+        updateChosenDate(moment(e.target.value, 'YYYY-MM-DD').format('DD-MM-YYYY'));
     };
 
     handleDoubleClick = (roomType, date) => {
@@ -135,7 +140,7 @@ class MainWindow extends Component {
         });
     };
 
-    renderTable = (roomTypes, title, showKapacitet, showOccupancy, data, displayValues = true) => {
+    renderTable = (roomTypes, title, showKapacitet, showOccupancy, data, displayValues = true, enableDoubleClick = false) => {
         const dates = this.state.slideDirection ? this.state.preloadedDates : this.generateDates(this.props.chosenDate);
         const { slideDirection, daysToShift } = this.state;
         const slideClass = daysToShift === 7
@@ -149,8 +154,8 @@ class MainWindow extends Component {
                     <thead>
                         <tr>
                             <th>Room</th>
-                            {dates.map(({ displayDate }) => (
-                                <th key={displayDate} className={slideDirection ? slideClass : ''}>
+                            {dates.map(({ displayDate }, index) => (
+                                <th key={index} className={slideDirection ? slideClass : ''}>
                                     {displayDate}
                                 </th>
                             ))}
@@ -160,9 +165,9 @@ class MainWindow extends Component {
                         {roomTypes.map(room => (
                             <tr key={room}>
                                 <td style={{ zIndex: 2 }}>{room}</td>
-                                {dates.map(({ fullDate }) => (
-                                    <td key={fullDate} className={slideDirection ? slideClass : ''}
-                                        onDoubleClick={() => this.handleDoubleClick(room, fullDate)}>
+                                {dates.map(({ fullDate }, index) => (
+                                    <td key={index} className={slideDirection ? slideClass : ''}
+                                        onDoubleClick={enableDoubleClick ? () => this.handleDoubleClick(room, fullDate) : null}>
                                         {displayValues && this.state.editing[`${room}-${fullDate}`] ? (
                                             <input
                                                 className="edit-input"
@@ -193,7 +198,7 @@ class MainWindow extends Component {
         return (
             <div className="main-window">
                 <div className="header-titles">
-                    <h2>Hotel Status</h2>
+                    <h2>Hotel Statistics</h2>
                     <div className="placeholder-buttons">
                         <button className="button" onClick={this.resetDate}>Today</button>
                         <button className="button" onClick={() => this.handleDateChange(-7)}>-7</button>
@@ -207,20 +212,20 @@ class MainWindow extends Component {
                             onChange={this.handleChosenDateChange}
                         />
                     </div>
-                    <h2>SideMinder Statistics</h2>
+                    <h2>SideMinder Inventory</h2>
                 </div>
                 <div className="tables-container">
                     <div className="table-section">
-                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
-                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData)}
+                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
+                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
                     </div>
                     <div className="table-section">
-                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false, false, this.props.siteminderData)}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false, false, this.props.siteminderData)}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false, false, this.props.siteminderData)}
-                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', false, false, this.props.siteminderData)}
+                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false, false, this.props.siteminderData, false, false)}
+                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false, false, this.props.siteminderData, false, false)}
+                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false, false, this.props.siteminderData, false, false)}
+                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', false, false, this.props.siteminderData, false, false)}
                     </div>
                 </div>
             </div>

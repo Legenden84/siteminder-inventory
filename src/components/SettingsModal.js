@@ -9,11 +9,30 @@ const hyperNymRoomTypes = ["HY1", "HY2", "HY3"];
 class SettingsModal extends Component {
     state = {
         selectedSchemeName: null,
+        isEditing: false,
+        editedNames: {},
+        isRoomPopupOpen: false,
+        currentRoomType: null
     };
 
     handleAddScheme = () => {
         const { addScheme } = this.props;
         addScheme();
+    };
+
+    handleOpenRoomPopup = (roomCategory, roomType) => {
+        this.setState({ isRoomPopupOpen: true, currentRoomCategory: roomCategory, currentRoomType: roomType });
+    };
+
+    handleCloseRoomPopup = () => {
+        this.setState({ isRoomPopupOpen: false, currentRoomType: null });
+    };
+
+    handleToggleRoomToScheme = (newRoomName) => {
+        const { toggleRoomToScheme } = this.props;
+        const { selectedSchemeName, currentRoomCategory, currentRoomType } = this.state;
+        toggleRoomToScheme(selectedSchemeName, currentRoomCategory, currentRoomType, newRoomName);
+        this.handleCloseRoomPopup();
     };
 
     handleSelectScheme = (schemeName) => {
@@ -32,20 +51,6 @@ class SettingsModal extends Component {
         }
     };
 
-    handleToggleRoom = (roomType, roomName) => {
-        const { addRoomToScheme, removeRoomFromScheme, schemes } = this.props;
-        const { selectedSchemeName } = this.state;
-        if (selectedSchemeName) {
-            const selectedScheme = schemes.find(scheme => scheme.name === selectedSchemeName);
-            const roomList = selectedScheme[roomType];
-            if (roomList.includes(roomName)) {
-                removeRoomFromScheme(selectedSchemeName, roomType, roomName);
-            } else {
-                addRoomToScheme(selectedSchemeName, roomType, roomName);
-            }
-        }
-    };
-
     handleStartDateChange = (e) => {
         const { updateSchemeStartDate } = this.props;
         const { selectedSchemeName } = this.state;
@@ -58,28 +63,83 @@ class SettingsModal extends Component {
         updateSchemeEndDate(selectedSchemeName, e.target.value);
     };
 
-    renderRoomButtons = (roomTypes, roomType) => {
-        const { schemes } = this.props;
-        const { selectedSchemeName } = this.state;
-        const selectedScheme = schemes.find(scheme => scheme.name === selectedSchemeName);
-
-        return roomTypes.map((roomName, index) => {
-            const isActive = selectedScheme && selectedScheme[roomType].includes(roomName);
-            return (
-                <button
-                    key={index}
-                    className={`room-button ${isActive ? 'active' : ''}`}
-                    onClick={() => this.handleToggleRoom(roomType, roomName)}
-                >
-                    {roomName}
-                </button>
-            );
-        });
+    handleResetSchemes = () => {
+        const confirmReset = window.confirm("Are you sure you want to reset all SiteMinder Schemes?");
+        if (confirmReset) {
+            const { resetSchemes } = this.props;
+            resetSchemes();
+            this.setState({ selectedSchemeName: null });
+        }
     };
+
+    handleEditToggle = () => {
+        this.setState(prevState => ({ isEditing: !prevState.isEditing }));
+    };
+
+    handleNameChange = (index, e) => {
+        const { value } = e.target;
+        this.setState(prevState => ({
+            editedNames: {
+                ...prevState.editedNames,
+                [index]: value
+            }
+        }));
+    };
+
+    handleNameBlur = (index) => {
+        const { editedNames } = this.state;
+        const { updateSchemeName } = this.props;
+        if (editedNames[index]) {
+            updateSchemeName(index, editedNames[index]);
+        }
+    };
+
+    renderRoomButtons = (roomTypes, roomCategory) => {
+        return roomTypes.map((roomType, index) => (
+            <button
+                key={index}
+                className="room-button"
+                onClick={() => this.handleOpenRoomPopup(roomCategory, roomType)}
+            >
+                {roomType}
+            </button>
+        ));
+    };
+
+    renderRoomPopup = () => {
+        if (!this.state.isRoomPopupOpen || !this.state.currentRoomType || !this.state.currentRoomCategory) return null;
+
+        const roomTypes = {
+            ascotRooms: ascotRoomTypes,
+            wideRooms: wideRoomTypes,
+            house57Rooms: house57RoomTypes,
+            hyperNymRooms: hyperNymRoomTypes
+        }[this.state.currentRoomCategory];
+
+        if (!roomTypes) return null; // Ensure roomTypes is defined
+
+        return (
+            <div className="modal-overlay">
+                <div className="modal-content">
+                    <h2>Add Room to {this.state.currentRoomType}</h2>
+                    {roomTypes.map(roomName => (
+                        <button
+                            key={roomName}
+                            onClick={() => this.handleToggleRoomToScheme(roomName)}
+                        >
+                            {roomName}
+                        </button>
+                    ))}
+                    <button onClick={this.handleCloseRoomPopup}>Close</button>
+                </div>
+            </div>
+        );
+    };
+
 
     render() {
         const { showSettingsModal, onClose, schemes } = this.props;
-        const { selectedSchemeName } = this.state;
+        const { selectedSchemeName, isEditing, editedNames } = this.state;
         const selectedScheme = schemes.find(scheme => scheme.name === selectedSchemeName);
 
         if (!showSettingsModal) return null;
@@ -102,68 +162,128 @@ class SettingsModal extends Component {
                                         className={scheme.name === selectedSchemeName ? 'selected' : ''}
                                         onClick={() => this.handleSelectScheme(scheme.name)}
                                     >
-                                        {scheme.name}
+                                        {isEditing ? (
+                                            <input
+                                                type="text"
+                                                value={editedNames[index] || scheme.name}
+                                                onChange={(e) => this.handleNameChange(index, e)}
+                                                onBlur={() => this.handleNameBlur(index)}
+                                            />
+                                        ) : (
+                                            scheme.name
+                                        )}
                                     </li>
                                 ))}
-                                <button className="button" onClick={this.handleAddScheme}>Add Scheme</button>
                             </ul>
+                            <button
+                                className="button-mini"
+                                onClick={this.handleAddScheme}
+                            >
+                                <i className="fa-solid fa-square-plus"></i>
+                            </button>
+                            <button
+                                className="button-mini"
+                                onClick={this.handleResetSchemes}
+                            >
+                                <i className="fa-solid fa-trash-arrow-up"></i>
+                            </button>
+                            <button
+                                className={`button-mini ${isEditing ? 'active' : ''}`}
+                                onClick={this.handleEditToggle}
+                            >
+                                <i className="fa-solid fa-pen-to-square"></i>
+                            </button>
                         </div>
                         <div className="settings-main-content">
                             {selectedScheme ? (
                                 <div className="scheme-details">
-                                    <div className="date-inputs">
-                                        <div className="date-picker-container">
+                                    <div className="settings-top-container">
+                                        <div className="date-inputs">
                                             <label htmlFor="start-date" className="date-label">Start Date</label>
                                             <input
                                                 id="start-date"
                                                 type="date"
                                                 className="date-picker button"
-                                                value={selectedScheme.startDate}
+                                                value={selectedScheme.startDate || ''}
                                                 onChange={this.handleStartDateChange}
                                             />
-                                        </div>
-                                        <div className="date-picker-container">
                                             <label htmlFor="end-date" className="date-label">End Date</label>
                                             <input
                                                 id="end-date"
                                                 type="date"
                                                 className="date-picker button"
-                                                value={selectedScheme.endDate}
+                                                value={selectedScheme.endDate || ''}
                                                 onChange={this.handleEndDateChange}
                                             />
+                                            <button className="delete-button" onClick={this.handleDeleteScheme}>
+                                                <i className="fa-solid fa-trash"></i>
+                                            </button>
                                         </div>
-                                        <button className="delete-button" onClick={this.handleDeleteScheme}>
-                                            Delete Scheme
-                                        </button>
+                                        <div className="settings-details-container">
+                                            <h3>{selectedScheme.name}</h3>
+                                            <div>Start Date: {selectedScheme.startDate}</div>
+                                            <div>End Date: {selectedScheme.endDate}</div>
+                                            <div>
+                                                Ascot Rooms:
+                                                {Object.entries(selectedScheme.roomDistribution.ascotRooms).map(([roomType, nestedRooms]) => (
+                                                    <div key={roomType}>
+                                                        {roomType}: {(nestedRooms || []).join(', ')}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div>
+                                                Wide Rooms:
+                                                {Object.entries(selectedScheme.roomDistribution.wideRooms).map(([roomType, nestedRooms]) => (
+                                                    <div key={roomType}>
+                                                        {roomType}: {(nestedRooms || []).join(', ')}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div>
+                                                57 House Rooms:
+                                                {Object.entries(selectedScheme.roomDistribution.house57Rooms).map(([roomType, nestedRooms]) => (
+                                                    <div key={roomType}>
+                                                        {roomType}: {(nestedRooms || []).join(', ')}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div>
+                                                HyperNym Rooms:
+                                                {Object.entries(selectedScheme.roomDistribution.hyperNymRooms).map(([roomType, nestedRooms]) => (
+                                                    <div key={roomType}>
+                                                        {roomType}: {(nestedRooms || []).join(', ')}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="room-type">
-                                        <div>Ascot</div>
-                                        {this.renderRoomButtons(ascotRoomTypes, 'ascotRooms')}
+                                    <div className="settings-middle-container">
+                                        <div className="room-type">
+                                            <div>Ascot</div>
+                                            {this.renderRoomButtons(ascotRoomTypes, 'ascotRooms')}
+                                        </div>
+                                        <div className="room-type">
+                                            <div>Wide</div>
+                                            {this.renderRoomButtons(wideRoomTypes, 'wideRooms')}
+                                        </div>
+                                        <div className="room-type">
+                                            <div>57 House</div>
+                                            {this.renderRoomButtons(house57RoomTypes, 'house57Rooms')}
+                                        </div>
+                                        <div className="room-type">
+                                            <div>HyperNym</div>
+                                            {this.renderRoomButtons(hyperNymRoomTypes, 'hyperNymRooms')}
+                                        </div>
                                     </div>
-                                    <div className="room-type">
-                                        <div>Wide</div>
-                                        {this.renderRoomButtons(wideRoomTypes, 'wideRooms')}
+                                    <div className="settings-bottom-container">
+                                        <h2>Settings Bottom Container</h2>
                                     </div>
-                                    <div className="room-type">
-                                        <div>57 House</div>
-                                        {this.renderRoomButtons(house57RoomTypes, 'house57Rooms')}
-                                    </div>
-                                    <div className="room-type">
-                                        <div>HyperNym</div>
-                                        {this.renderRoomButtons(hyperNymRoomTypes, 'hyperNymRooms')}
-                                    </div>
-                                    <h3>{selectedScheme.name}</h3>
-                                    <div>Start Date: {selectedScheme.startDate}</div>
-                                    <div>End Date: {selectedScheme.endDate}</div>
-                                    <div>Ascot Rooms: {selectedScheme.ascotRooms.join(', ')}</div>
-                                    <div>Wide Rooms: {selectedScheme.wideRooms.join(', ')}</div>
-                                    <div>57 House Rooms: {selectedScheme.house57Rooms.join(', ')}</div>
-                                    <div>HyperNym Rooms: {selectedScheme.hyperNymRooms.join(', ')}</div>
                                 </div>
                             ) : (
                                 <h2>Select a Scheme to view details</h2>
                             )}
                         </div>
+                        {this.renderRoomPopup()}
                     </div>
                 </div>
             </div>
