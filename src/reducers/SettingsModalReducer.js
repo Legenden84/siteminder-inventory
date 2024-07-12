@@ -22,24 +22,33 @@ const settingsReducer = (state = initialState, action) => {
                     scheme.name === action.payload.schemeName
                         ? {
                             ...scheme,
-                            [action.payload.roomType]: [
-                                ...scheme[action.payload.roomType],
-                                action.payload.roomName
-                            ]
+                            roomDistribution: {
+                                ...scheme.roomDistribution,
+                                [action.payload.roomType]: [
+                                    ...scheme.roomDistribution[action.payload.roomType],
+                                    action.payload.roomName
+                                ]
+                            }
                         }
                         : scheme
                 )
             };
-        case ADD_SCHEME:
-            return {
-                ...state,
-                schemes: [
-                    ...state.schemes,
-                    {
-                        ...action.payload
-                    }
-                ],
-            };
+            case ADD_SCHEME:
+                return {
+                    ...state,
+                    schemes: [
+                        ...state.schemes,
+                        {
+                            ...action.payload,
+                            roomDistribution: {
+                                ascotRooms: [],
+                                wideRooms: [],
+                                house57Rooms: [],
+                                hyperNymRooms: []
+                            }
+                        }
+                    ],
+                };
         case DELETE_SCHEME:
             return {
                 ...state,
@@ -52,7 +61,10 @@ const settingsReducer = (state = initialState, action) => {
                     scheme.name === action.payload.schemeName
                         ? {
                             ...scheme,
-                            [action.payload.roomType]: scheme[action.payload.roomType].filter(room => room !== action.payload.roomName)
+                            roomDistribution: {
+                                ...scheme.roomDistribution,
+                                [action.payload.roomType]: scheme.roomDistribution[action.payload.roomType].filter(room => room !== action.payload.roomName)
+                            }
                         }
                         : scheme
                 )

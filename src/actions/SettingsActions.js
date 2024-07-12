@@ -24,13 +24,16 @@ export const addScheme = () => (dispatch, getState) => {
             name: newSchemeName,
             startDate: '',
             endDate: '',
-            ascotRooms: [],
-            wideRooms: [],
-            house57Rooms: [],
-            hyperNymRooms: [],
+            roomDistribution: {
+                ascotRooms: [],
+                wideRooms: [],
+                house57Rooms: [],
+                hyperNymRooms: []
+            }
         },
     });
 };
+
 
 export const addRoomToScheme = (schemeName, roomType, roomName) => ({
     type: ADD_ROOM_TO_SCHEME,
