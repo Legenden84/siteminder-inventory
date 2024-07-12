@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import RoomPopup from './RoomPopup';
 import './SettingsModal.css';
 
 const ascotRoomTypes = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
@@ -12,7 +13,8 @@ class SettingsModal extends Component {
         isEditing: false,
         editedNames: {},
         isRoomPopupOpen: false,
-        currentRoomType: null
+        currentRoomType: null,
+        currentRoomCategory: null,
     };
 
     handleAddScheme = () => {
@@ -25,7 +27,7 @@ class SettingsModal extends Component {
     };
 
     handleCloseRoomPopup = () => {
-        this.setState({ isRoomPopupOpen: false, currentRoomType: null });
+        this.setState({ isRoomPopupOpen: false, currentRoomType: null, currentRoomCategory: null });
     };
 
     handleToggleRoomToScheme = (newRoomName) => {
@@ -105,41 +107,17 @@ class SettingsModal extends Component {
         ));
     };
 
-    renderRoomPopup = () => {
-        if (!this.state.isRoomPopupOpen || !this.state.currentRoomType || !this.state.currentRoomCategory) return null;
+    render() {
+        const { showSettingsModal, onClose, schemes } = this.props;
+        const { selectedSchemeName, isEditing, editedNames, isRoomPopupOpen, currentRoomType, currentRoomCategory } = this.state;
+        const selectedScheme = schemes.find(scheme => scheme.name === selectedSchemeName);
 
         const roomTypes = {
             ascotRooms: ascotRoomTypes,
             wideRooms: wideRoomTypes,
             house57Rooms: house57RoomTypes,
             hyperNymRooms: hyperNymRoomTypes
-        }[this.state.currentRoomCategory];
-
-        if (!roomTypes) return null; // Ensure roomTypes is defined
-
-        return (
-            <div className="modal-overlay">
-                <div className="modal-content">
-                    <h2>Add Room to {this.state.currentRoomType}</h2>
-                    {roomTypes.map(roomName => (
-                        <button
-                            key={roomName}
-                            onClick={() => this.handleToggleRoomToScheme(roomName)}
-                        >
-                            {roomName}
-                        </button>
-                    ))}
-                    <button onClick={this.handleCloseRoomPopup}>Close</button>
-                </div>
-            </div>
-        );
-    };
-
-
-    render() {
-        const { showSettingsModal, onClose, schemes } = this.props;
-        const { selectedSchemeName, isEditing, editedNames } = this.state;
-        const selectedScheme = schemes.find(scheme => scheme.name === selectedSchemeName);
+        };
 
         if (!showSettingsModal) return null;
 
@@ -282,8 +260,15 @@ class SettingsModal extends Component {
                                 <h2>Select a Scheme to view details</h2>
                             )}
                         </div>
-                        {this.renderRoomPopup()}
                     </div>
+                    <RoomPopup
+                        isRoomPopupOpen={isRoomPopupOpen}
+                        currentRoomType={currentRoomType}
+                        currentRoomCategory={currentRoomCategory}
+                        roomTypes={roomTypes[currentRoomCategory] || []}
+                        handleToggleRoomToScheme={this.handleToggleRoomToScheme}
+                        handleCloseRoomPopup={this.handleCloseRoomPopup}
+                    />
                 </div>
             </div>
         );
