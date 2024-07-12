@@ -8,15 +8,17 @@ const RoomPopup = ({ isRoomPopupOpen, currentRoomType, currentRoomCategory, room
         <div className="room-popup-overlay">
             <div className="room-popup-content">
                 <h2>Add Room to {currentRoomType}</h2>
-                {roomTypes.map(roomName => (
-                    <button
-                        key={roomName}
-                        className="room-button"
-                        onClick={() => handleToggleRoomToScheme(roomName)}
-                    >
-                        {roomName}
-                    </button>
-                ))}
+                <div className="button-container">
+                    {roomTypes.map(roomName => (
+                        <button
+                            key={roomName}
+                            className="room-button"
+                            onClick={() => handleToggleRoomToScheme(roomName)}
+                        >
+                            {roomName}
+                        </button>
+                    ))}
+                </div>
                 <button className="close-button" onClick={handleCloseRoomPopup}>Close</button>
             </div>
         </div>
