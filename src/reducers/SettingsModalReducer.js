@@ -24,31 +24,36 @@ const settingsReducer = (state = initialState, action) => {
                             ...scheme,
                             roomDistribution: {
                                 ...scheme.roomDistribution,
-                                [action.payload.roomType]: [
-                                    ...scheme.roomDistribution[action.payload.roomType],
-                                    action.payload.roomName
-                                ]
+                                [action.payload.roomCategory]: {
+                                    ...scheme.roomDistribution[action.payload.roomCategory],
+                                    [action.payload.roomType]: scheme.roomDistribution[action.payload.roomCategory][action.payload.roomType]?.includes(action.payload.roomName)
+                                        ? scheme.roomDistribution[action.payload.roomCategory][action.payload.roomType].filter(room => room !== action.payload.roomName)
+                                        : [
+                                            ...(scheme.roomDistribution[action.payload.roomCategory][action.payload.roomType] || []),
+                                            action.payload.roomName
+                                        ]
+                                }
                             }
                         }
                         : scheme
                 )
             };
-            case ADD_SCHEME:
-                return {
-                    ...state,
-                    schemes: [
-                        ...state.schemes,
-                        {
-                            ...action.payload,
-                            roomDistribution: {
-                                ascotRooms: [],
-                                wideRooms: [],
-                                house57Rooms: [],
-                                hyperNymRooms: []
-                            }
+        case ADD_SCHEME:
+            return {
+                ...state,
+                schemes: [
+                    ...state.schemes,
+                    {
+                        ...action.payload,
+                        roomDistribution: {
+                            ascotRooms: [],
+                            wideRooms: [],
+                            house57Rooms: [],
+                            hyperNymRooms: []
                         }
-                    ],
-                };
+                    }
+                ],
+            };
         case DELETE_SCHEME:
             return {
                 ...state,

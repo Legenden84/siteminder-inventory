@@ -34,11 +34,11 @@ export const addScheme = () => (dispatch, getState) => {
     });
 };
 
-
-export const addRoomToScheme = (schemeName, roomType, roomName) => ({
+export const addRoomToScheme = (schemeName, roomCategory, roomType, roomName) => ({
     type: ADD_ROOM_TO_SCHEME,
     payload: {
         schemeName,
+        roomCategory,
         roomType,
         roomName,
     },

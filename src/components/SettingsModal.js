@@ -20,18 +20,18 @@ class SettingsModal extends Component {
         addScheme();
     };
 
-    handleOpenRoomPopup = (roomType) => {
-        this.setState({ isRoomPopupOpen: true, currentRoomType: roomType });
+    handleOpenRoomPopup = (roomCategory, roomType) => {
+        this.setState({ isRoomPopupOpen: true, currentRoomCategory: roomCategory, currentRoomType: roomType });
     };
 
     handleCloseRoomPopup = () => {
         this.setState({ isRoomPopupOpen: false, currentRoomType: null });
     };
 
-    handleAddRoomToScheme = (roomName) => {
+    handleAddRoomToScheme = (newRoomName) => {
         const { addRoomToScheme } = this.props;
-        const { selectedSchemeName, currentRoomType } = this.state;
-        addRoomToScheme(selectedSchemeName, currentRoomType, roomName);
+        const { selectedSchemeName, currentRoomCategory, currentRoomType } = this.state;
+        addRoomToScheme(selectedSchemeName, currentRoomCategory, currentRoomType, newRoomName);
         this.handleCloseRoomPopup();
     };
 
@@ -94,32 +94,34 @@ class SettingsModal extends Component {
         }
     };
 
-    renderRoomButtons = (roomTypes, roomType) => {
-        return roomTypes.map((roomName, index) => (
+    renderRoomButtons = (roomTypes, roomCategory) => {
+        return roomTypes.map((roomType, index) => (
             <button
                 key={index}
                 className="room-button"
-                onClick={() => this.handleOpenRoomPopup(roomType)}
+                onClick={() => this.handleOpenRoomPopup(roomCategory, roomType)}
             >
-                {roomName}
+                {roomType}
             </button>
         ));
     };
 
     renderRoomPopup = () => {
-        if (!this.state.isRoomPopupOpen || !this.state.currentRoomType) return null;
+        if (!this.state.isRoomPopupOpen || !this.state.currentRoomType || !this.state.currentRoomCategory) return null;
 
         const roomTypes = {
-            "ascotRooms": ascotRoomTypes,
-            "wideRooms": wideRoomTypes,
-            "house57Rooms": house57RoomTypes,
-            "hyperNymRooms": hyperNymRoomTypes
-        }[this.state.currentRoomType];
+            ascotRooms: ascotRoomTypes,
+            wideRooms: wideRoomTypes,
+            house57Rooms: house57RoomTypes,
+            hyperNymRooms: hyperNymRoomTypes
+        }[this.state.currentRoomCategory];
+
+        if (!roomTypes) return null; // Ensure roomTypes is defined
 
         return (
             <div className="modal-overlay">
                 <div className="modal-content">
-                    <h2>Add Room to {this.state.currentRoomType.replace('Rooms', '')}</h2>
+                    <h2>Add Room to {this.state.currentRoomType}</h2>
                     {roomTypes.map(roomName => (
                         <button
                             key={roomName}
@@ -133,6 +135,7 @@ class SettingsModal extends Component {
             </div>
         );
     };
+
 
     render() {
         const { showSettingsModal, onClose, schemes } = this.props;
@@ -220,10 +223,38 @@ class SettingsModal extends Component {
                                             <h3>{selectedScheme.name}</h3>
                                             <div>Start Date: {selectedScheme.startDate}</div>
                                             <div>End Date: {selectedScheme.endDate}</div>
-                                            <div>Ascot Rooms: {selectedScheme.ascotRooms ? selectedScheme.ascotRooms.join(', ') : 'None'}</div>
-                                            <div>Wide Rooms: {selectedScheme.wideRooms ? selectedScheme.wideRooms.join(', ') : 'None'}</div>
-                                            <div>57 House Rooms: {selectedScheme.house57Rooms ? selectedScheme.house57Rooms.join(', ') : 'None'}</div>
-                                            <div>HyperNym Rooms: {selectedScheme.hyperNymRooms ? selectedScheme.hyperNymRooms.join(', ') : 'None'}</div>
+                                            <div>
+                                                Ascot Rooms:
+                                                {Object.entries(selectedScheme.roomDistribution.ascotRooms).map(([roomType, nestedRooms]) => (
+                                                    <div key={roomType}>
+                                                        {roomType}: {(nestedRooms || []).join(', ')}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div>
+                                                Wide Rooms:
+                                                {Object.entries(selectedScheme.roomDistribution.wideRooms).map(([roomType, nestedRooms]) => (
+                                                    <div key={roomType}>
+                                                        {roomType}: {(nestedRooms || []).join(', ')}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div>
+                                                57 House Rooms:
+                                                {Object.entries(selectedScheme.roomDistribution.house57Rooms).map(([roomType, nestedRooms]) => (
+                                                    <div key={roomType}>
+                                                        {roomType}: {(nestedRooms || []).join(', ')}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div>
+                                                HyperNym Rooms:
+                                                {Object.entries(selectedScheme.roomDistribution.hyperNymRooms).map(([roomType, nestedRooms]) => (
+                                                    <div key={roomType}>
+                                                        {roomType}: {(nestedRooms || []).join(', ')}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="settings-middle-container">
