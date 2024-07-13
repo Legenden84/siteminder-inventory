@@ -1,3 +1,4 @@
+// RoomPopup.js
 import React, { Component } from 'react';
 import './RoomPopup.css';
 
@@ -18,6 +19,15 @@ class RoomPopup extends Component {
             return;
         }
         this.props.toggleRoomToScheme(selectedScheme.name, currentRoomCategory, currentRoomType, roomName);
+    };
+
+    handleClearRooms = () => {
+        const { selectedScheme, currentRoomCategory, currentRoomType } = this.props;
+        if (!selectedScheme) {
+            console.error("No scheme selected");
+            return;
+        }
+        this.props.clearSelectedRooms(selectedScheme.name, currentRoomCategory, currentRoomType);
     };
 
     renderRoomButtons = (roomTypes) => {
@@ -52,7 +62,7 @@ class RoomPopup extends Component {
             <div className="room-popup-overlay">
                 <div className="room-popup-content">
                     <div className="room-popup-header">
-                        <h2>Add Room to {currentRoomType}</h2>
+                        <h2>Add Room to {currentRoomType} Priority List</h2>
                     </div>
                     <div className="button-container">
                         {this.renderRoomButtons(roomTypes)}
@@ -75,7 +85,15 @@ class RoomPopup extends Component {
                             </div>
                         </div>
                     </div>
-                    <button className="close-button" onClick={closeRoomPopup}>Close</button>
+                    <div className="clear-button-container">
+                        <button className="close-button" onClick={closeRoomPopup}>
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                        <button className="clear-button" onClick={this.handleClearRooms}>
+                            <i className="fas fa-sync-alt"></i>
+                        </button>
+                    </div >
+
                 </div>
             </div>
         );

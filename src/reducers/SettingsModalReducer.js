@@ -1,5 +1,6 @@
 import {
     ADD_SCHEME,
+    CLEAR_SELECTED_ROOMS,
     DELETE_SCHEME,
     RESET_SCHEMES,
     TOGGLE_ROOM_TO_SCHEME,
@@ -35,6 +36,26 @@ const settingsReducer = (state = initialState, action) => {
                 ...state,
                 schemes: [...state.schemes, newScheme],
                 selectedScheme: newScheme
+            };
+        case CLEAR_SELECTED_ROOMS:
+            const schemesAfterClear = state.schemes.map(scheme =>
+                scheme.name === action.payload.schemeName
+                    ? {
+                        ...scheme,
+                        roomDistribution: {
+                            ...scheme.roomDistribution,
+                            [action.payload.roomCategory]: {
+                                ...scheme.roomDistribution[action.payload.roomCategory],
+                                [action.payload.roomType]: []
+                            }
+                        }
+                    }
+                    : scheme
+            );
+            return {
+                ...state,
+                schemes: schemesAfterClear,
+                selectedScheme: schemesAfterClear.find(scheme => scheme.name === state.selectedScheme?.name)
             };
         case DELETE_SCHEME:
             const updatedSchemes = state.schemes.filter(scheme => scheme.name !== action.payload.schemeName);

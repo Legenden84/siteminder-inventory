@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { toggleRoomToScheme, openRoomPopup, closeRoomPopup } from '../actions/SettingsActions';
+import { toggleRoomToScheme, openRoomPopup, closeRoomPopup, clearSelectedRooms } from '../actions/SettingsActions';
 import RoomPopup from '../components/RoomPopup';
 
 const mapStateToProps = (state) => ({
@@ -13,7 +13,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     toggleRoomToScheme: (schemeName, roomCategory, roomType, roomName) => dispatch(toggleRoomToScheme(schemeName, roomCategory, roomType, roomName)),
     openRoomPopup: (roomCategory, roomType) => dispatch(openRoomPopup(roomCategory, roomType)),
-    closeRoomPopup: () => dispatch(closeRoomPopup())
+    closeRoomPopup: () => dispatch(closeRoomPopup()),
+    clearSelectedRooms: (schemeName, roomCategory, roomType) => dispatch(clearSelectedRooms(schemeName, roomCategory, roomType))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomPopup);

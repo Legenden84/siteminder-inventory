@@ -1,4 +1,5 @@
 export const ADD_SCHEME = 'ADD_SCHEME';
+export const CLEAR_SELECTED_ROOMS = 'CLEAR_SELECTED_ROOMS';
 export const DELETE_SCHEME = 'DELETE_SCHEME';
 export const RESET_SCHEMES = 'RESET_SCHEMES';
 export const TOGGLE_ROOM_TO_SCHEME = 'TOGGLE_ROOM_TO_SCHEME';
@@ -36,6 +37,15 @@ export const addScheme = () => (dispatch, getState) => {
     });
     return newScheme;
 };
+
+export const clearSelectedRooms = (schemeName, roomCategory, roomType) => ({
+    type: CLEAR_SELECTED_ROOMS,
+    payload: {
+        schemeName,
+        roomCategory,
+        roomType
+    }
+});
 
 export const deleteScheme = (schemeName) => ({
     type: DELETE_SCHEME,
