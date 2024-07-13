@@ -35,8 +35,8 @@ const settingsReducer = (state = initialState, action) => {
                 ...state,
                 schemes: state.schemes.filter(scheme => scheme.name !== action.payload.schemeName),
             };
-            case RESET_SCHEMES:
-                return initialState;
+        case RESET_SCHEMES:
+            return initialState;
             case TOGGLE_ROOM_TO_SCHEME:
                 return {
                     ...state,

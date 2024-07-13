@@ -4,8 +4,8 @@ import { toggleSettingsModal } from '../actions/NavbarActions';
 import SettingsModal from '../components/SettingsModal';
 
 const mapStateToProps = (state) => ({
-    showSettingsModal: state.navbar.showSettingsModal,
     schemes: state.settings.schemes,
+    showSettingsModal: state.navbar.showSettingsModal,
 });
 
 const mapDispatchToProps = (dispatch) => ({

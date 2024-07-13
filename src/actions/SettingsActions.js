@@ -51,8 +51,9 @@ export const toggleRoomToScheme = (schemeName, roomCategory, roomType, roomName)
         roomCategory,
         roomType,
         roomName,
-    },
+    }
 });
+
 
 export const updateSchemeStartDate = (schemeName, startDate) => ({
     type: UPDATE_SCHEME_START_DATE,

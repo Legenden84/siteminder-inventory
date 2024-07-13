@@ -1,6 +1,4 @@
-/* SettingsModal.css */
-/* Modal content
----------------------------------------------------------------------*/
+/* Modal content */
 .settings-modal-overlay {
     position: fixed;
     top: 0;
@@ -39,7 +37,7 @@
     border-bottom: 1px solid #ccc;
 }
 
-.settings-modal-header h2{
+.settings-modal-header h2 {
     margin-left: 20px;
 }
 
@@ -51,19 +49,42 @@
     width: 100%;
 }
 
-
+.settings-main-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
 
 .settings-main-content {
-    margin-left: 15px;
-    flex: 1;
+    flex: 3;
     padding: 20px;
     box-sizing: border-box;
     background-color: #F5F5F5;
     border-radius: 20px;
 }
 
-/* Modal Main Window
----------------------------------------------------------------------*/
+.settings-top-container {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    margin-left: 20px;
+    padding: 15px;
+    background-color: #F5F5F5;
+    border-radius: 20px;
+}
+
+.date-inputs {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.room-buttons-container {
+    display: flex;
+    flex-direction: column; /* Flex in column direction */
+    gap: 10px;
+}
+
 .room-type {
     display: flex;
     align-items: center;
@@ -93,16 +114,16 @@
     background-color: #2A4B53;
 }
 
-.scheme-details {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+.settings-details-container {
+    flex: 1;
+    width: 25%; /* Take only 25% of the width */
+    margin-left: 20px;
 }
 
-.settings-top-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.scheme-details {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
 }
 
 .settings-bottom-container {
@@ -110,8 +131,7 @@
     align-items: center;
 }
 
-/* Modal Navbar
----------------------------------------------------------------------*/
+/* Modal Navbar */
 .settings-navbar {
     width: 200px;
     background-color: #F5F5F5;
@@ -149,14 +169,7 @@
     background-color: #7DABB5;
 }
 
-/* Date Input
----------------------------------------------------------------------*/
-.date-inputs {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
+/* Date Input */
 .date-picker-container {
     display: flex;
     flex-direction: column;
@@ -183,9 +196,7 @@
     background-color: #7DABB5;
 }
 
-/* Buttons
----------------------------------------------------------------------*/
-
+/* Buttons */
 .button-container {
     display: flex;
     align-items: center;
@@ -229,6 +240,7 @@
     background-color: #7DABB5;
     color: white;
 }
+
 .delete-button {
     align-self: flex-end;
     padding: 10px 20px;

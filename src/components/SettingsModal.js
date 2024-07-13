@@ -31,9 +31,14 @@ class SettingsModal extends Component {
     };
 
     handleToggleRoomToScheme = (newRoomName) => {
-        const { toggleRoomToScheme } = this.props;
         const { selectedSchemeName, currentRoomCategory, currentRoomType } = this.state;
-        toggleRoomToScheme(selectedSchemeName, currentRoomCategory, currentRoomType, newRoomName);
+        console.log('Dispatching TOGGLE_ROOM_TO_SCHEME with payload:', {
+            selectedSchemeName,
+            currentRoomCategory,
+            currentRoomType,
+            newRoomName
+        });
+        this.props.toggleRoomToScheme(selectedSchemeName, currentRoomCategory, currentRoomType, newRoomName);
     };
 
     handleSelectScheme = (schemeName) => {
@@ -171,94 +176,91 @@ class SettingsModal extends Component {
                                 <i className="fa-solid fa-pen-to-square"></i>
                             </button>
                         </div>
-                        <div className="settings-main-content">
-                            {selectedScheme ? (
-                                <div className="scheme-details">
-                                    <div className="settings-top-container">
-                                        <div className="date-inputs">
-                                            <label htmlFor="start-date" className="date-label">Start Date</label>
-                                            <input
-                                                id="start-date"
-                                                type="date"
-                                                className="date-picker button"
-                                                value={selectedScheme.startDate || ''}
-                                                onChange={this.handleStartDateChange}
-                                            />
-                                            <label htmlFor="end-date" className="date-label">End Date</label>
-                                            <input
-                                                id="end-date"
-                                                type="date"
-                                                className="date-picker button"
-                                                value={selectedScheme.endDate || ''}
-                                                onChange={this.handleEndDateChange}
-                                            />
-                                            <button className="delete-button" onClick={this.handleDeleteScheme}>
-                                                <i className="fa-solid fa-trash"></i>
-                                            </button>
-                                        </div>
-                                        <div className="settings-details-container">
-                                            <h3>{selectedScheme.name}</h3>
-                                            <div>Start Date: {selectedScheme.startDate}</div>
-                                            <div>End Date: {selectedScheme.endDate}</div>
-                                            <div>
-                                                Ascot Rooms:
-                                                {Object.entries(selectedScheme.roomDistribution.ascotRooms).map(([roomType, nestedRooms]) => (
-                                                    <div key={roomType}>
-                                                        {roomType}: {(nestedRooms || []).join(', ')}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                            <div>
-                                                Wide Rooms:
-                                                {Object.entries(selectedScheme.roomDistribution.wideRooms).map(([roomType, nestedRooms]) => (
-                                                    <div key={roomType}>
-                                                        {roomType}: {(nestedRooms || []).join(', ')}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                            <div>
-                                                57 House Rooms:
-                                                {Object.entries(selectedScheme.roomDistribution.house57Rooms).map(([roomType, nestedRooms]) => (
-                                                    <div key={roomType}>
-                                                        {roomType}: {(nestedRooms || []).join(', ')}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                            <div>
-                                                HyperNym Rooms:
-                                                {Object.entries(selectedScheme.roomDistribution.hyperNymRooms).map(([roomType, nestedRooms]) => (
-                                                    <div key={roomType}>
-                                                        {roomType}: {(nestedRooms || []).join(', ')}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
+                        <div className="settings-main-container">
+                            <div className="settings-top-container">
+                                <div className="date-inputs">
+                                    <label htmlFor="start-date" className="date-label">Start Date</label>
+                                    <input
+                                        id="start-date"
+                                        type="date"
+                                        className="date-picker button"
+                                        value={selectedScheme?.startDate || ''}
+                                        onChange={this.handleStartDateChange}
+                                    />
+                                    <label htmlFor="end-date" className="date-label">End Date</label>
+                                    <input
+                                        id="end-date"
+                                        type="date"
+                                        className="date-picker button"
+                                        value={selectedScheme?.endDate || ''}
+                                        onChange={this.handleEndDateChange}
+                                    />
+                                    <button className="delete-button" onClick={this.handleDeleteScheme}>
+                                        <i className="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div className="room-buttons-container">
+                                    <div className="room-type">
+                                        <div>Ascot</div>
+                                        {this.renderRoomButtons(ascotRoomTypes, 'ascotRooms')}
                                     </div>
-                                    <div className="settings-middle-container">
-                                        <div className="room-type">
-                                            <div>Ascot</div>
-                                            {this.renderRoomButtons(ascotRoomTypes, 'ascotRooms')}
-                                        </div>
-                                        <div className="room-type">
-                                            <div>Wide</div>
-                                            {this.renderRoomButtons(wideRoomTypes, 'wideRooms')}
-                                        </div>
-                                        <div className="room-type">
-                                            <div>57 House</div>
-                                            {this.renderRoomButtons(house57RoomTypes, 'house57Rooms')}
-                                        </div>
-                                        <div className="room-type">
-                                            <div>HyperNym</div>
-                                            {this.renderRoomButtons(hyperNymRoomTypes, 'hyperNymRooms')}
-                                        </div>
+                                    <div className="room-type">
+                                        <div>Wide</div>
+                                        {this.renderRoomButtons(wideRoomTypes, 'wideRooms')}
                                     </div>
-                                    <div className="settings-bottom-container">
-                                        <h2>Settings Bottom Container</h2>
+                                    <div className="room-type">
+                                        <div>57 House</div>
+                                        {this.renderRoomButtons(house57RoomTypes, 'house57Rooms')}
+                                    </div>
+                                    <div className="room-type">
+                                        <div>HyperNym</div>
+                                        {this.renderRoomButtons(hyperNymRoomTypes, 'hyperNymRooms')}
                                     </div>
                                 </div>
-                            ) : (
-                                <h2>Select a Scheme to view details</h2>
-                            )}
+                            </div>
+                            <div className="settings-details-container">
+                                {selectedScheme ? (
+                                    <div className="scheme-details">
+                                        <h3>{selectedScheme.name}</h3>
+                                        <div>Start Date: {selectedScheme.startDate}</div>
+                                        <div>End Date: {selectedScheme.endDate}</div>
+                                        <div>
+                                            Ascot Rooms:
+                                            {Object.entries(selectedScheme.roomDistribution.ascotRooms).map(([roomType, nestedRooms]) => (
+                                                <div key={roomType}>
+                                                    {roomType}: {(nestedRooms || []).join(', ')}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div>
+                                            Wide Rooms:
+                                            {Object.entries(selectedScheme.roomDistribution.wideRooms).map(([roomType, nestedRooms]) => (
+                                                <div key={roomType}>
+                                                    {roomType}: {(nestedRooms || []).join(', ')}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div>
+                                            57 House Rooms:
+                                            {Object.entries(selectedScheme.roomDistribution.house57Rooms).map(([roomType, nestedRooms]) => (
+                                                <div key={roomType}>
+                                                    {roomType}: {(nestedRooms || []).join(', ')}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div>
+                                            HyperNym Rooms:
+                                            {Object.entries(selectedScheme.roomDistribution.hyperNymRooms).map(([roomType, nestedRooms]) => (
+                                                <div key={roomType}>
+                                                    {roomType}: {(nestedRooms || []).join(', ')}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <h2>Select a Scheme to view details</h2>
+                                )}
+                            </div>
                         </div>
                     </div>
                     <RoomPopup
