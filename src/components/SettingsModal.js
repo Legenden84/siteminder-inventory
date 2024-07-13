@@ -3,8 +3,8 @@ import RoomPopup from './RoomPopup';
 import './SettingsModal.css';
 
 const ascotRoomTypes = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
-const wideRoomTypes = ["F1", "F2", "F2S", "F3D", "F3DS"];
-const house57RoomTypes = ["H1", "H2", "H3"];
+const wideRoomTypes = ["W2B", "W2D", "W3B", "W4B", "WE1"];
+const house57RoomTypes = ["F1", "F2", "F2S", "F3D", "F3DS"];
 const hyperNymRoomTypes = ["HY1", "HY2", "HY3"];
 
 class SettingsModal extends Component {

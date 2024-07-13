@@ -71,6 +71,7 @@
     padding: 15px;
     background-color: #F5F5F5;
     border-radius: 20px;
+    width: 75%;
 }
 
 .date-inputs {
@@ -116,14 +117,15 @@
 
 .settings-details-container {
     flex: 1;
-    width: 25%; /* Take only 25% of the width */
+    width: 25%;
+    height: fit-content;
     margin-left: 20px;
+    background-color: #F5F5F5;
+    border-radius: 20px;
 }
 
 .scheme-details {
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
 }
 
 .settings-bottom-container {
