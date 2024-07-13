@@ -119,6 +119,11 @@
 }
 
 .room-popup-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.room-popup-header-name {
     background-color: #F5F5F5;
     width: 100%;
     display: flex;
@@ -126,6 +131,14 @@
     align-items: center;
     border-radius: 15px;
     padding-top: 15px;
+}
+
+.room-popup-header-selector {
+    margin-left: 20px;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 20px;
+    background-color: #F5F5F5;
 }
 
 .priority-list-content {

@@ -1,8 +1,21 @@
-// RoomPopup.js
 import React, { Component } from 'react';
 import './RoomPopup.css';
 
 class RoomPopup extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedCategory: props.currentRoomCategory || 'ascotRooms', // Initialize based on the prop
+        };
+    }
+
+    componentDidUpdate(prevProps) {
+        // Update selectedCategory when the currentRoomCategory prop changes
+        if (prevProps.currentRoomCategory !== this.props.currentRoomCategory) {
+            this.setState({ selectedCategory: this.props.currentRoomCategory });
+        }
+    }
+
     handleToggleRoomToScheme = (newRoomName) => {
         const { selectedScheme, currentRoomCategory, currentRoomType } = this.props;
         if (!selectedScheme) {
@@ -30,6 +43,10 @@ class RoomPopup extends Component {
         this.props.clearSelectedRooms(selectedScheme.name, currentRoomCategory, currentRoomType);
     };
 
+    handleCategoryChange = (e) => {
+        this.setState({ selectedCategory: e.target.value });
+    };
+
     renderRoomButtons = (roomTypes) => {
         if (!Array.isArray(roomTypes)) return null;
         return roomTypes.map(roomName => (
@@ -45,6 +62,7 @@ class RoomPopup extends Component {
 
     render() {
         const { isRoomPopupOpen, currentRoomType, currentRoomCategory, selectedScheme, closeRoomPopup } = this.props;
+        const { selectedCategory } = this.state;
 
         if (!isRoomPopupOpen || !currentRoomType || !currentRoomCategory || !selectedScheme) return null;
 
@@ -55,14 +73,24 @@ class RoomPopup extends Component {
             hyperNymRooms: ["HY1", "HY2", "HY3"]
         };
 
-        const roomTypes = roomTypesMap[currentRoomCategory] || [];
+        const roomTypes = roomTypesMap[selectedCategory] || [];
         const addedRooms = selectedScheme?.roomDistribution[currentRoomCategory]?.[currentRoomType] || [];
 
         return (
             <div className="room-popup-overlay">
                 <div className="room-popup-content">
                     <div className="room-popup-header">
-                        <h2>Add Room to {currentRoomType} Priority List</h2>
+                        <div className="room-popup-header-name">
+                            <h2>Add Room to {currentRoomType} Priority List</h2>
+                        </div>
+                        <div className="room-popup-header-selector">
+                            <select value={selectedCategory} onChange={this.handleCategoryChange}>
+                                <option value="ascotRooms">Ascot Rooms</option>
+                                <option value="wideRooms">Wide Rooms</option>
+                                <option value="house57Rooms">House 57 Rooms</option>
+                                <option value="hyperNymRooms">HyperNym Rooms</option>
+                            </select>
+                        </div>
                     </div>
                     <div className="button-container">
                         {this.renderRoomButtons(roomTypes)}
@@ -87,13 +115,12 @@ class RoomPopup extends Component {
                     </div>
                     <div className="clear-button-container">
                         <button className="close-button" onClick={closeRoomPopup}>
-                            <i class="fa-solid fa-circle-xmark"></i>
+                            <i className="fa-solid fa-circle-xmark"></i>
                         </button>
                         <button className="clear-button" onClick={this.handleClearRooms}>
                             <i className="fas fa-sync-alt"></i>
                         </button>
                     </div >
-
                 </div>
             </div>
         );
