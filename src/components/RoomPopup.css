@@ -107,7 +107,7 @@
     padding: 5px 10px;
     margin: 5px;
     text-align: center;
-    white-space: nowrap; /* Prevent text from wrapping */
+    white-space: nowrap;
     cursor: pointer;
     border: none;
     transition: background-color 0.3s;
@@ -123,7 +123,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%; /* Make the header 100% width */
+    width: 100%;
 }
 
 .room-popup-header-name {
@@ -135,8 +135,8 @@
     border-radius: 15px;
     padding-top: 15px;
     padding-bottom: 15px;
-    margin-bottom: 10px; /* Add margin to create space */
-    width: 100%; /* Make the div 100% width */
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 .room-popup-header-selector {
@@ -160,5 +160,5 @@
 }
 
 .no-wrap {
-    white-space: nowrap; /* Prevent text wrapping */
+    white-space: nowrap;
 }

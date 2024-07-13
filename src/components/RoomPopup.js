@@ -5,12 +5,11 @@ class RoomPopup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedCategory: props.currentRoomCategory || 'ascotRooms', // Initialize based on the prop
+            selectedCategory: props.currentRoomCategory || 'ascotRooms'
         };
     }
 
     componentDidUpdate(prevProps) {
-        // Update selectedCategory when the currentRoomCategory prop changes
         if (prevProps.currentRoomCategory !== this.props.currentRoomCategory) {
             this.setState({ selectedCategory: this.props.currentRoomCategory });
         }
