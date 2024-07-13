@@ -81,9 +81,11 @@
 }
 
 .room-popup-content .room-priority {
+    background-color: #F5F5F5;
     margin-top: 20px;
     width: 100%;
     text-align: center;
+    border-radius: 15px;
 }
 
 .room-popup-content .room-priority h3 {
@@ -105,4 +107,14 @@
     margin: 5px 0;
     text-align: center;
     white-space: nowrap;
+}
+
+.room-priority-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background-color: #F5F5F5;
+    width: 100%;
+    padding-top: 15px;
 }

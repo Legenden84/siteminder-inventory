@@ -9,7 +9,9 @@ const RoomPopup = ({ isRoomPopupOpen, currentRoomType, currentRoomCategory, room
     return (
         <div className="room-popup-overlay">
             <div className="room-popup-content">
-                <h2>Add Room to {currentRoomType}</h2>
+                <div className="room-priority-header">
+                    <h2>Add Room to {currentRoomType}</h2>
+                </div>
                 <div className="button-container">
                     {roomTypes.map(roomName => (
                         <button
