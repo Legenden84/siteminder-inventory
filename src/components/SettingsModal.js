@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import RoomPopup from './RoomPopup';
+import RoomPopupContainer from '../containers/RoomPopupContainer';
 import './SettingsModal.css';
 
 const ascotRoomTypes = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
-const wideRoomTypes = ["W2B", "W2D", "W3B", "W4B", "WE1"];
-const house57RoomTypes = ["F1", "F2", "F2S", "F3D", "F3DS"];
+const wideRoomTypes = ["F1", "F2", "F2S", "F3D", "F3DS"];
+const house57RoomTypes = ["H1", "H2", "H3"];
 const hyperNymRoomTypes = ["HY1", "HY2", "HY3"];
 
 class SettingsModal extends Component {
@@ -12,9 +12,6 @@ class SettingsModal extends Component {
         selectedSchemeName: null,
         isEditing: false,
         editedNames: {},
-        isRoomPopupOpen: false,
-        currentRoomType: null,
-        currentRoomCategory: null,
     };
 
     handleAddScheme = () => {
@@ -23,22 +20,14 @@ class SettingsModal extends Component {
     };
 
     handleOpenRoomPopup = (roomCategory, roomType) => {
-        this.setState({ isRoomPopupOpen: true, currentRoomCategory: roomCategory, currentRoomType: roomType });
-    };
-
-    handleCloseRoomPopup = () => {
-        this.setState({ isRoomPopupOpen: false, currentRoomType: null, currentRoomCategory: null });
-    };
-
-    handleToggleRoomToScheme = (newRoomName) => {
-        const { selectedSchemeName, currentRoomCategory, currentRoomType } = this.state;
-        console.log('Dispatching TOGGLE_ROOM_TO_SCHEME with payload:', {
-            selectedSchemeName,
-            currentRoomCategory,
-            currentRoomType,
-            newRoomName
-        });
-        this.props.toggleRoomToScheme(selectedSchemeName, currentRoomCategory, currentRoomType, newRoomName);
+        const roomTypesMap = {
+            ascotRooms: ascotRoomTypes,
+            wideRooms: wideRoomTypes,
+            house57Rooms: house57RoomTypes,
+            hyperNymRooms: hyperNymRoomTypes
+        };
+        const roomTypes = roomTypesMap[roomCategory] || [];
+        this.props.openRoomPopup(roomCategory, roomType, roomTypes);
     };
 
     handleSelectScheme = (schemeName) => {
@@ -114,15 +103,8 @@ class SettingsModal extends Component {
 
     render() {
         const { showSettingsModal, onClose, schemes } = this.props;
-        const { selectedSchemeName, isEditing, editedNames, isRoomPopupOpen, currentRoomType, currentRoomCategory } = this.state;
+        const { selectedSchemeName, isEditing, editedNames } = this.state;
         const selectedScheme = schemes.find(scheme => scheme.name === selectedSchemeName);
-
-        const roomTypes = {
-            ascotRooms: ascotRoomTypes,
-            wideRooms: wideRoomTypes,
-            house57Rooms: house57RoomTypes,
-            hyperNymRooms: hyperNymRoomTypes
-        };
 
         if (!showSettingsModal) return null;
 
@@ -263,15 +245,7 @@ class SettingsModal extends Component {
                             </div>
                         </div>
                     </div>
-                    <RoomPopup
-                        isRoomPopupOpen={isRoomPopupOpen}
-                        currentRoomType={currentRoomType}
-                        currentRoomCategory={currentRoomCategory}
-                        roomTypes={roomTypes[currentRoomCategory] || []}
-                        handleToggleRoomToScheme={this.handleToggleRoomToScheme}
-                        handleCloseRoomPopup={this.handleCloseRoomPopup}
-                        selectedScheme={selectedScheme}
-                    />
+                    <RoomPopupContainer />
                 </div>
             </div>
         );

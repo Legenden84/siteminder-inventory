@@ -5,6 +5,8 @@ export const TOGGLE_ROOM_TO_SCHEME = 'TOGGLE_ROOM_TO_SCHEME';
 export const UPDATE_SCHEME_START_DATE = 'UPDATE_SCHEME_START_DATE';
 export const UPDATE_SCHEME_END_DATE = 'UPDATE_SCHEME_END_DATE';
 export const UPDATE_SCHEME_NAME = 'UPDATE_SCHEME_NAME';
+export const OPEN_ROOM_POPUP = 'OPEN_ROOM_POPUP';
+export const CLOSE_ROOM_POPUP = 'CLOSE_ROOM_POPUP';
 
 const getNextSchemeName = (schemes) => {
     const schemeNumbers = schemes
@@ -54,7 +56,6 @@ export const toggleRoomToScheme = (schemeName, roomCategory, roomType, roomName)
     }
 });
 
-
 export const updateSchemeStartDate = (schemeName, startDate) => ({
     type: UPDATE_SCHEME_START_DATE,
     payload: {
@@ -77,4 +78,13 @@ export const updateSchemeName = (index, name) => ({
         index,
         name,
     },
+});
+
+export const openRoomPopup = (roomCategory, roomType, roomTypes) => ({
+    type: OPEN_ROOM_POPUP,
+    payload: { roomCategory, roomType, roomTypes }
+});
+
+export const closeRoomPopup = () => ({
+    type: CLOSE_ROOM_POPUP
 });

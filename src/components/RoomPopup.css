@@ -81,11 +81,9 @@
 }
 
 .room-popup-content .room-priority {
-    background-color: #F5F5F5;
     margin-top: 20px;
     width: 100%;
     text-align: center;
-    border-radius: 15px;
 }
 
 .room-popup-content .room-priority h3 {
@@ -96,25 +94,40 @@
 .room-popup-content .priority-list {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     gap: 10px;
+    border-radius: 15px;
+    background-color: #F5F5F5;
 }
 
 .room-popup-content .priority-item {
-    background-color: #F5F5F5;
+    background-color: #7DABB5;
     border-radius: 4px;
     padding: 5px 10px;
-    margin: 5px 0;
+    margin: 5px;
     text-align: center;
-    white-space: nowrap;
+    white-space: nowrap; /* Prevent text from wrapping */
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
 }
 
-.room-priority-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
+.room-popup-content .priority-item:hover {
+    background-color: #be4032;
+    color: white;
+}
+
+.room-popup-header {
     background-color: #F5F5F5;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
     padding-top: 15px;
+}
+
+.priority-list-content {
+    padding-bottom: 15px;
 }
