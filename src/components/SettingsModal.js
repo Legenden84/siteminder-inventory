@@ -270,6 +270,7 @@ class SettingsModal extends Component {
                         roomTypes={roomTypes[currentRoomCategory] || []}
                         handleToggleRoomToScheme={this.handleToggleRoomToScheme}
                         handleCloseRoomPopup={this.handleCloseRoomPopup}
+                        selectedScheme={selectedScheme}
                     />
                 </div>
             </div>
