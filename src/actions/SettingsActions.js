@@ -19,20 +19,22 @@ const getNextSchemeName = (schemes) => {
 export const addScheme = () => (dispatch, getState) => {
     const { schemes } = getState().settings;
     const newSchemeName = getNextSchemeName(schemes);
+    const newScheme = {
+        name: newSchemeName,
+        startDate: '',
+        endDate: '',
+        roomDistribution: {
+            ascotRooms: [],
+            wideRooms: [],
+            house57Rooms: [],
+            hyperNymRooms: []
+        }
+    };
     dispatch({
         type: ADD_SCHEME,
-        payload: {
-            name: newSchemeName,
-            startDate: '',
-            endDate: '',
-            roomDistribution: {
-                ascotRooms: [],
-                wideRooms: [],
-                house57Rooms: [],
-                hyperNymRooms: []
-            }
-        },
+        payload: newScheme,
     });
+    return newScheme;
 };
 
 export const deleteScheme = (schemeName) => ({

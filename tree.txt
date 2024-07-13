@@ -11,17 +11,21 @@
     │   ├── MainWindow.js
     │   ├── Navbar.css
     │   ├── Navbar.js
+    │   ├── RoomPopup.css
+    │   ├── RoomPopup.js
     │   ├── SettingsModal.css
     │   └── SettingsModal.js
     ├── containers
     │   ├── MainWindowContainer.js
     │   ├── NavbarContainer.js
+    │   ├── RoomPopupContainer.js
     │   └── SettingsModalContainer.js
     ├── index.css
     ├── index.js
     ├── reducers
     │   ├── MainWindowReducer.js
     │   ├── NavbarReducer.js
+    │   ├── SettingsModalReducer.js
     │   └── index.js
     ├── store
     │   ├── localStorage.js
@@ -31,4 +35,4 @@
         ├── WarningModal.js
         └── parseHTM.js
 
-7 directories, 24 files
+7 directories, 28 files

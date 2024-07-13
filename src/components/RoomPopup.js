@@ -36,7 +36,7 @@ class RoomPopup extends Component {
     render() {
         const { isRoomPopupOpen, currentRoomType, currentRoomCategory, selectedScheme, closeRoomPopup } = this.props;
 
-        if (!isRoomPopupOpen || !currentRoomType || !currentRoomCategory) return null;
+        if (!isRoomPopupOpen || !currentRoomType || !currentRoomCategory || !selectedScheme) return null;
 
         const roomTypesMap = {
             ascotRooms: ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"],
@@ -58,7 +58,6 @@ class RoomPopup extends Component {
                         {this.renderRoomButtons(roomTypes)}
                     </div>
                     <div className="room-priority">
-
                         <div className="priority-list">
                             <div className="priority-list-header">
                                 <h3>Room Priority</h3>
@@ -74,7 +73,6 @@ class RoomPopup extends Component {
                                     </button>
                                 ))}
                             </div>
-
                         </div>
                     </div>
                     <button className="close-button" onClick={closeRoomPopup}>Close</button>
