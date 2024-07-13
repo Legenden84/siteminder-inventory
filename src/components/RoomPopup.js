@@ -81,15 +81,15 @@ class RoomPopup extends Component {
                 <div className="room-popup-content">
                     <div className="room-popup-header">
                         <div className="room-popup-header-name">
-                            <h2>Add Room to {currentRoomType} Priority List</h2>
-                        </div>
-                        <div className="room-popup-header-selector">
-                            <select value={selectedCategory} onChange={this.handleCategoryChange}>
-                                <option value="ascotRooms">Ascot Rooms</option>
-                                <option value="wideRooms">Wide Rooms</option>
-                                <option value="house57Rooms">House 57 Rooms</option>
-                                <option value="hyperNymRooms">HyperNym Rooms</option>
-                            </select>
+                            <h2 className="no-wrap">Add Room to {currentRoomType} Priority List</h2>
+                            <div className="room-popup-header-selector">
+                                <select value={selectedCategory} onChange={this.handleCategoryChange}>
+                                    <option value="ascotRooms">Ascot Rooms</option>
+                                    <option value="wideRooms">Wide Rooms</option>
+                                    <option value="house57Rooms">House 57 Rooms</option>
+                                    <option value="hyperNymRooms">HyperNym Rooms</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div className="button-container">
