@@ -179,6 +179,7 @@
 .date-inputs {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Ensures the first two items are at the start and the last item is at the end */
     margin-bottom: 20px;
 }
 

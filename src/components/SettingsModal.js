@@ -168,22 +168,24 @@ class SettingsModal extends Component {
                                 <>
                                     <div className="settings-top-container">
                                         <div className="date-inputs">
-                                            <label htmlFor="start-date" className="date-label">Start Date</label>
-                                            <input
-                                                id="start-date"
-                                                type="date"
-                                                className="date-picker button"
-                                                value={selectedScheme.startDate || ''}
-                                                onChange={this.handleStartDateChange}
-                                            />
-                                            <label htmlFor="end-date" className="date-label">End Date</label>
-                                            <input
-                                                id="end-date"
-                                                type="date"
-                                                className="date-picker button"
-                                                value={selectedScheme.endDate || ''}
-                                                onChange={this.handleEndDateChange}
-                                            />
+                                            <div className="date-pickers">
+                                                <label htmlFor="start-date" className="date-label">Start Date</label>
+                                                <input
+                                                    id="start-date"
+                                                    type="date"
+                                                    className="date-picker button"
+                                                    value={selectedScheme.startDate || ''}
+                                                    onChange={this.handleStartDateChange}
+                                                />
+                                                <label htmlFor="end-date" className="date-label">End Date</label>
+                                                <input
+                                                    id="end-date"
+                                                    type="date"
+                                                    className="date-picker button"
+                                                    value={selectedScheme.endDate || ''}
+                                                    onChange={this.handleEndDateChange}
+                                                />
+                                            </div>
                                             <button className="delete-button" onClick={this.handleDeleteScheme}>
                                                 <i className="fa-solid fa-trash"></i>
                                             </button>
