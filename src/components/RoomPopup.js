@@ -47,8 +47,9 @@ class RoomPopup extends Component {
     };
 
     renderRoomButtons = (roomTypes) => {
+        const { currentRoomType } = this.props;
         if (!Array.isArray(roomTypes)) return null;
-        return roomTypes.map(roomName => (
+        return roomTypes.filter(roomName => roomName !== currentRoomType).map(roomName => (
             <button
                 key={roomName}
                 className="room-button"
@@ -67,7 +68,7 @@ class RoomPopup extends Component {
 
         const roomTypesMap = {
             ascotRooms: ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"],
-            wideRooms: ["W2B", "W2D", "W3B", "W3D", "W4D"],
+            wideRooms: ["W2B", "W2D", "W3B", "W3D", "W4D", "WE1"],
             house57Rooms: ["F1", "F2", "F2S", "F3D", "F3DS"],
             hyperNymRooms: ["HY1", "HY2", "HY3"]
         };

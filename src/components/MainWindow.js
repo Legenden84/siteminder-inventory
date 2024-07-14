@@ -3,7 +3,7 @@ import moment from 'moment';
 import './MainWindow.css';
 
 const ascotRoom = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
-const wideRoom= ["W2B", "W2D", "W3B", "W4B", "WE1"];
+const wideRoom= ["W2B", "W2D", "W3B", "W3D", "W4D", "WE1"];
 const fiftySevenRoom = ["F1", "F2", "F2S", "F3D", "F3DS"];
 const hyperNymRoom = ["HY1", "HY2", "HY3"];
 
