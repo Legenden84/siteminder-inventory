@@ -21,11 +21,16 @@ class MainWindow extends Component {
     }
 
     componentDidMount() {
-        const { chosenDate, updateChosenDate } = this.props;
-        if (!chosenDate) {
-            updateChosenDate(moment().format('DD-MM-YYYY'));
-        }
+        this.checkAndUpdateChosenDate();
     }
+
+    checkAndUpdateChosenDate = () => {
+        const { chosenDate, updateChosenDate } = this.props;
+        const today = moment().format('DD-MM-YYYY');
+        if (chosenDate !== today) {
+            updateChosenDate(today);
+        }
+    };
 
     componentDidUpdate(prevProps) {
         if (prevProps.chosenDate !== this.props.chosenDate || prevProps.htmData !== this.props.htmData || prevProps.siteminderData !== this.props.siteminderData) {
