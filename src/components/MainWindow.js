@@ -53,35 +53,26 @@ class MainWindow extends Component {
     getDisplayValue = (roomType, fullDate, showKapacitet, showOccupancy, data) => {
         const date = moment(fullDate, 'DD-MM-YYYY');
         if (!date.isValid()) {
-            // console.error('Invalid date:', fullDate);
-            return '';
+            return { kapacitet: 0, available: 0 };
         }
 
         const day = date.format('DD');
         const month = date.format('MM');
         const year = date.format('YYYY');
 
-        // Check if the data for the specified room type and date exists
         if (!data || !data[roomType] || !data[roomType][`${day}-${month}`]) {
-            // console.error('Data is missing for:', roomType, fullDate);
-            return ''; // Return empty string if data is missing
+            return { kapacitet: 0, available: 0 };
         }
 
         const dateEntries = data[roomType][`${day}-${month}`];
         const dateEntry = dateEntries.find(entry => entry.År === year);
-        if (!dateEntry) return '';
-
-        if (showKapacitet) {
-            return dateEntry.Kapacitet;
-        } else if (showOccupancy) {
-            return dateEntry.BelægnProcent;
-        }
+        if (!dateEntry) return { kapacitet: 0, available: 0 };
 
         const kapacitet = parseInt(dateEntry.Kapacitet, 10);
         const reserveret = parseInt(dateEntry.Reserveret, 10);
-        const available = isNaN(kapacitet - reserveret) ? '' : (kapacitet - reserveret).toString();
+        const available = isNaN(kapacitet - reserveret) ? 0 : (kapacitet - reserveret);
 
-        return available;
+        return { kapacitet, available };
     };
 
     handleChange = (e, roomType, date) => {
@@ -127,7 +118,7 @@ class MainWindow extends Component {
         if (this.props.showKapacitet) {
             this.setState({
                 editing: { ...this.state.editing, [`${roomType}-${date}`]: true },
-                editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date, this.props.showKapacitet, this.props.showOccupancy, this.props.htmData) }
+                editedValues: { ...this.state.editedValues, [`${roomType}-${date}`]: this.getDisplayValue(roomType, date, this.props.showKapacitet, this.props.showOccupancy, this.props.htmData).available }
             });
         }
     };
@@ -140,12 +131,23 @@ class MainWindow extends Component {
         });
     };
 
+    calculateTotal = (roomTypes, dates, showKapacitet, data) => {
+        return dates.map(({ fullDate }) => {
+            return roomTypes.reduce((total, roomType) => {
+                const { kapacitet, available } = this.getDisplayValue(roomType, fullDate, showKapacitet, false, data);
+                return total + (showKapacitet ? kapacitet : available);
+            }, 0);
+        });
+    };
+
     renderTable = (roomTypes, title, showKapacitet, showOccupancy, data, displayValues = true, enableDoubleClick = false) => {
         const dates = this.state.slideDirection ? this.state.preloadedDates : this.generateDates(this.props.chosenDate);
         const { slideDirection, daysToShift } = this.state;
         const slideClass = daysToShift === 7
             ? (slideDirection === 'left' ? 'slide-left-7' : 'slide-right-7')
             : (slideDirection === 'left' ? 'slide-left' : 'slide-right');
+
+        const totals = this.calculateTotal(roomTypes, dates, showKapacitet, data);
 
         return (
             <div className="table-container">
@@ -177,17 +179,28 @@ class MainWindow extends Component {
                                                 onBlur={() => this.handleBlur(room, fullDate)}
                                             />
                                         ) : (
-                                            this.getDisplayValue(room, fullDate, showKapacitet, showOccupancy, data)
+                                            showKapacitet
+                                                ? this.getDisplayValue(room, fullDate, showKapacitet, showOccupancy, data).kapacitet
+                                                : this.getDisplayValue(room, fullDate, showKapacitet, showOccupancy, data).available
                                         )}
                                     </td>
                                 ))}
                             </tr>
                         ))}
+                        <tr className="total-row">
+                            <td style={{ fontWeight: 'bold' }}>Total</td>
+                            {totals.map((total, index) => (
+                                <td key={index} className={slideDirection ? slideClass : ''} style={{ fontWeight: 'bold' }}>
+                                    {total}
+                                </td>
+                            ))}
+                        </tr>
                     </tbody>
                 </table>
             </div>
         );
     };
+
 
     resetDate = () => {
         const today = moment().format('DD-MM-YYYY');

@@ -131,6 +131,11 @@ td {
     z-index: 1;
 }
 
+.total-row td {
+    background-color: #fff;
+    font-weight: bold;
+}
+
 /* Animation
 ---------------------------------------------------------------------*/
 
