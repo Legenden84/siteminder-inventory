@@ -130,7 +130,7 @@ class SettingsModal extends Component {
                                         onClick={() => this.handleSelectScheme(scheme.name)}
                                     >
                                         {isEditing ? (
-                                            <input
+                                            <input className="text-input"
                                                 type="text"
                                                 value={editedNames[index] || scheme.name}
                                                 onChange={(e) => this.handleNameChange(index, e)}

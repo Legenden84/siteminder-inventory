@@ -73,12 +73,6 @@
     width: 75%;
 }
 
-.date-inputs {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
 .room-buttons-container {
     display: flex;
     flex-direction: column; /* Flex in column direction */
@@ -176,7 +170,18 @@
     align-items: center;
 }
 
+/* Text Input*/
+.text-input {
+    width: 95%;
+}
+
 /* Date Input */
+.date-inputs {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 .date-picker-container {
     display: flex;
     flex-direction: column;
