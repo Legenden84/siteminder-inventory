@@ -67,8 +67,8 @@ class RoomPopup extends Component {
 
         const roomTypesMap = {
             ascotRooms: ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"],
-            wideRooms: ["F1", "F2", "F2S", "F3D", "F3DS"],
-            house57Rooms: ["H1", "H2", "H3"],
+            wideRooms: ["W2B", "W2D", "W3B", "W3D", "W4D"],
+            house57Rooms: ["F1", "F2", "F2S", "F3D", "F3DS"],
             hyperNymRooms: ["HY1", "HY2", "HY3"]
         };
 

@@ -52,12 +52,12 @@
     background-color: #7DABB5;
 }
 
-.room-popup-content .close-button {
-    background-color: #C0392B;
+.room-popup-content .clear-button {
+    background-color: #E74C3C;
     margin-top: 20px;
 }
 
-.room-popup-content .close-button:hover {
+.room-popup-content .clear-button:hover {
     background-color: #E74C3C;
 }
 

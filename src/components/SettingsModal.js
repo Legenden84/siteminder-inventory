@@ -142,24 +142,26 @@ class SettingsModal extends Component {
                                     </li>
                                 ))}
                             </ul>
-                            <button
-                                className="button-mini"
-                                onClick={this.handleAddScheme}
-                            >
-                                <i className="fa-solid fa-square-plus"></i>
-                            </button>
-                            <button
-                                className="button-mini"
-                                onClick={this.handleResetSchemes}
-                            >
-                                <i className="fa-solid fa-trash-arrow-up"></i>
-                            </button>
-                            <button
-                                className={`button-mini ${isEditing ? 'active' : ''}`}
-                                onClick={this.handleEditToggle}
-                            >
-                                <i className="fa-solid fa-pen-to-square"></i>
-                            </button>
+                            <div className="settings-navbar-button-mini-container">
+                                <button
+                                    className="button-mini"
+                                    onClick={this.handleAddScheme}
+                                >
+                                    <i className="fa-solid fa-square-plus"></i>
+                                </button>
+                                <button
+                                    className="button-mini"
+                                    onClick={this.handleResetSchemes}
+                                >
+                                    <i className="fa-solid fa-trash-arrow-up"></i>
+                                </button>
+                                <button
+                                    className={`button-mini ${isEditing ? 'active' : ''}`}
+                                    onClick={this.handleEditToggle}
+                                >
+                                    <i className="fa-solid fa-pen-to-square"></i>
+                                </button>
+                            </div>
                         </div>
                         <div className="settings-main-container">
                             {selectedScheme ? (

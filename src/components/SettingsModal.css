@@ -170,6 +170,12 @@
     background-color: #7DABB5;
 }
 
+.settings-navbar-button-mini-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 /* Date Input */
 .date-picker-container {
     display: flex;

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import './MainWindow.css';
 
-const ascotRoomTypes = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
-const fiftySevenRoomTypes = ["F1", "F2", "F2S", "F3D", "F3DS"];
-const hyperNymRoomTypes = ["HY1", "HY2", "HY3"];
-const wideRoomTypes = ["W2B", "W2D", "W3B", "W4B", "WE1"];
+const ascotRoom = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
+const wideRoom= ["W2B", "W2D", "W3B", "W4B", "WE1"];
+const fiftySevenRoom = ["F1", "F2", "F2S", "F3D", "F3DS"];
+const hyperNymRoom = ["HY1", "HY2", "HY3"];
 
 class MainWindow extends Component {
     constructor(props) {
@@ -99,7 +99,7 @@ class MainWindow extends Component {
         const preloadedDates = this.generateDates(newChosenDate);
         const preloadedData = {};
         preloadedDates.forEach(({ fullDate }) => {
-            ascotRoomTypes.concat(fiftySevenRoomTypes, hyperNymRoomTypes, wideRoomTypes).forEach(roomType => {
+            ascotRoom.concat(fiftySevenRoom, hyperNymRoom, wideRoom).forEach(roomType => {
                 preloadedData[`${roomType}-${fullDate}`] = this.getDisplayValue(roomType, fullDate, this.props.showKapacitet, this.props.showOccupancy, this.props.htmData);
             });
         });
@@ -216,16 +216,16 @@ class MainWindow extends Component {
                 </div>
                 <div className="tables-container">
                     <div className="table-section">
-                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
-                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
+                        {this.renderTable(ascotRoom, 'Ascot Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
+                        {this.renderTable(wideRoom, 'Wide Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
+                        {this.renderTable(fiftySevenRoom, 'Fifty-Seven Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
+                        {this.renderTable(hyperNymRoom, 'HyperNym Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
                     </div>
                     <div className="table-section">
-                        {this.renderTable(ascotRoomTypes, 'Ascot Rooms', false, false, this.props.siteminderData, false, false)}
-                        {this.renderTable(wideRoomTypes, 'Wide Rooms', false, false, this.props.siteminderData, false, false)}
-                        {this.renderTable(fiftySevenRoomTypes, 'Fifty-Seven Rooms', false, false, this.props.siteminderData, false, false)}
-                        {this.renderTable(hyperNymRoomTypes, 'HyperNym Rooms', false, false, this.props.siteminderData, false, false)}
+                        {this.renderTable(ascotRoom, 'Ascot Rooms', false, false, this.props.siteminderData, false, false)}
+                        {this.renderTable(wideRoom, 'Wide Rooms', false, false, this.props.siteminderData, false, false)}
+                        {this.renderTable(fiftySevenRoom, 'Fifty-Seven Rooms', false, false, this.props.siteminderData, false, false)}
+                        {this.renderTable(hyperNymRoom, 'HyperNym Rooms', false, false, this.props.siteminderData, false, false)}
                     </div>
                 </div>
             </div>
