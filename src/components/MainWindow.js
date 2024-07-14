@@ -3,7 +3,7 @@ import moment from 'moment';
 import './MainWindow.css';
 
 const ascotRoom = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
-const wideRoom= ["W2B", "W2D", "W3B", "W3D", "W4D", "WE1"];
+const wideRoom= ["W2B", "W2D", "W3B", "W4B", "WE1"];
 const fiftySevenRoom = ["F1", "F2", "F2S", "F3D", "F3DS"];
 const hyperNymRoom = ["HY1", "HY2", "HY3"];
 
@@ -58,7 +58,7 @@ class MainWindow extends Component {
     getDisplayValue = (roomType, fullDate, showKapacitet, showOccupancy, data) => {
         const date = moment(fullDate, 'DD-MM-YYYY');
         if (!date.isValid()) {
-            return { kapacitet: 0, available: 0 };
+            return { kapacitet: 0, available: 0, occupancy: 0 };
         }
 
         const day = date.format('DD');
@@ -66,18 +66,19 @@ class MainWindow extends Component {
         const year = date.format('YYYY');
 
         if (!data || !data[roomType] || !data[roomType][`${day}-${month}`]) {
-            return { kapacitet: 0, available: 0 };
+            return { kapacitet: 0, available: 0, occupancy: 0 };
         }
 
         const dateEntries = data[roomType][`${day}-${month}`];
         const dateEntry = dateEntries.find(entry => entry.År === year);
-        if (!dateEntry) return { kapacitet: 0, available: 0 };
+        if (!dateEntry) return { kapacitet: 0, available: 0, occupancy: 0 };
 
         const kapacitet = parseInt(dateEntry.Kapacitet, 10);
         const reserveret = parseInt(dateEntry.Reserveret, 10);
         const available = isNaN(kapacitet - reserveret) ? 0 : (kapacitet - reserveret);
+        const occupancy = dateEntry.BelægnProcent;
 
-        return { kapacitet, available };
+        return { kapacitet, available, occupancy };
     };
 
     handleChange = (e, roomType, date) => {
@@ -186,7 +187,9 @@ class MainWindow extends Component {
                                         ) : (
                                             showKapacitet
                                                 ? this.getDisplayValue(room, fullDate, showKapacitet, showOccupancy, data).kapacitet
-                                                : this.getDisplayValue(room, fullDate, showKapacitet, showOccupancy, data).available
+                                                : showOccupancy
+                                                    ? this.getDisplayValue(room, fullDate, showKapacitet, showOccupancy, data).occupancy
+                                                    : this.getDisplayValue(room, fullDate, showKapacitet, showOccupancy, data).available
                                         )}
                                     </td>
                                 ))}
@@ -205,7 +208,6 @@ class MainWindow extends Component {
             </div>
         );
     };
-
 
     resetDate = () => {
         const today = moment().format('DD-MM-YYYY');
