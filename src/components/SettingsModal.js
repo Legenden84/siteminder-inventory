@@ -153,7 +153,7 @@ class SettingsModal extends Component {
                                     className="button-mini"
                                     onClick={this.handleResetSchemes}
                                 >
-                                    <i className="fa-solid fa-trash-arrow-up"></i>
+                                    <i className="fa-solid fa-trash"></i>
                                 </button>
                                 <button
                                     className={`button-mini ${isEditing ? 'active' : ''}`}
