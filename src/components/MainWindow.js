@@ -3,7 +3,7 @@ import moment from 'moment';
 import './MainWindow.css';
 
 const ascotRoom = ["D2", "D2D", "D2G", "D3", "D3D", "D4D", "E1", "TRP"];
-const wideRoom= ["W2B", "W2D", "W3B", "W4B", "WE1"];
+const wideRoom = ["W2B", "W2D", "W3B", "W4B", "WE1"];
 const fiftySevenRoom = ["F1", "F2", "F2S", "F3D", "F3DS"];
 const hyperNymRoom = ["HY1", "HY2", "HY3"];
 
@@ -209,6 +209,42 @@ class MainWindow extends Component {
         );
     };
 
+    renderTotalTable = (roomTypes, title, showKapacitet, data) => {
+        const dates = this.state.slideDirection ? this.state.preloadedDates : this.generateDates(this.props.chosenDate);
+        const { slideDirection } = this.state;
+        const slideClass = slideDirection === 'left' ? 'slide-left' : 'slide-right';
+
+        const totals = this.calculateTotal(roomTypes, dates, showKapacitet, data);
+
+        return (
+            <div className="table-container">
+                <h3>{title}</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Total</th>
+                            {dates.map(({ displayDate }, index) => (
+                                <th key={index} className={slideDirection ? slideClass : ''}>
+                                    {displayDate}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr className="total-row">
+                            <td style={{ fontWeight: 'bold' }}>Total</td>
+                            {totals.map((total, index) => (
+                                <td key={index} className={slideDirection ? slideClass : ''} style={{ fontWeight: 'bold' }}>
+                                    {total}
+                                </td>
+                            ))}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        );
+    };
+
     resetDate = () => {
         const today = moment().format('DD-MM-YYYY');
         this.props.updateChosenDate(today);
@@ -240,12 +276,14 @@ class MainWindow extends Component {
                         {this.renderTable(wideRoom, 'Wide Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
                         {this.renderTable(fiftySevenRoom, 'Fifty-Seven Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
                         {this.renderTable(hyperNymRoom, 'HyperNym Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
+                        {this.renderTotalTable(ascotRoom.concat(wideRoom, fiftySevenRoom, hyperNymRoom), 'Total Available Rooms', this.props.showKapacitet, this.props.htmData)}
                     </div>
                     <div className="table-section">
                         {this.renderTable(ascotRoom, 'Ascot Rooms', false, false, this.props.siteminderData, false, false)}
                         {this.renderTable(wideRoom, 'Wide Rooms', false, false, this.props.siteminderData, false, false)}
                         {this.renderTable(fiftySevenRoom, 'Fifty-Seven Rooms', false, false, this.props.siteminderData, false, false)}
                         {this.renderTable(hyperNymRoom, 'HyperNym Rooms', false, false, this.props.siteminderData, false, false)}
+                        {this.renderTotalTable(ascotRoom.concat(wideRoom, fiftySevenRoom, hyperNymRoom), 'Total Available Rooms', false, this.props.siteminderData)}
                     </div>
                 </div>
             </div>
