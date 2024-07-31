@@ -7,11 +7,16 @@
 }
 
 .header-titles {
-    display: flex;
-    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
     width: 100%;
-    align-items: center;
-    padding: 10px 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
 }
 
 .header-titles h2 {
@@ -69,6 +74,7 @@
     border-radius: 15px;
     justify-content: center;
     gap: 10px;
+    width: fit-content;
 }
 
 /* html table

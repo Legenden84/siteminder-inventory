@@ -276,14 +276,14 @@ class MainWindow extends Component {
                         {this.renderTable(wideRoom, 'Wide Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
                         {this.renderTable(fiftySevenRoom, 'Fifty-Seven Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
                         {this.renderTable(hyperNymRoom, 'HyperNym Rooms', this.props.showKapacitet, this.props.showOccupancy, this.props.htmData, true, true)}
-                        {this.renderTotalTable(ascotRoom.concat(wideRoom, fiftySevenRoom, hyperNymRoom), 'Total Available Rooms', this.props.showKapacitet, this.props.htmData)}
+                        {this.renderTotalTable(ascotRoom.concat(wideRoom, fiftySevenRoom, hyperNymRoom), 'Total Rooms', this.props.showKapacitet, this.props.htmData)}
                     </div>
                     <div className="table-section">
                         {this.renderTable(ascotRoom, 'Ascot Rooms', false, false, this.props.siteminderData, false, false)}
                         {this.renderTable(wideRoom, 'Wide Rooms', false, false, this.props.siteminderData, false, false)}
                         {this.renderTable(fiftySevenRoom, 'Fifty-Seven Rooms', false, false, this.props.siteminderData, false, false)}
                         {this.renderTable(hyperNymRoom, 'HyperNym Rooms', false, false, this.props.siteminderData, false, false)}
-                        {this.renderTotalTable(ascotRoom.concat(wideRoom, fiftySevenRoom, hyperNymRoom), 'Total Available Rooms', false, this.props.siteminderData)}
+                        {this.renderTotalTable(ascotRoom.concat(wideRoom, fiftySevenRoom, hyperNymRoom), 'Total Rooms', false, this.props.siteminderData)}
                     </div>
                 </div>
             </div>
